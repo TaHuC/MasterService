@@ -2,10 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Type;
 use Illuminate\Http\Request;
 
 class TypeController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,6 +36,7 @@ class TypeController extends Controller
     public function create()
     {
         //
+
     }
 
     /**
@@ -34,7 +47,17 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //save in database
+        $this->validate($request, [
+            'title' => 'required|unique:types|string'
+        ]);
+
+        //Is valid
+        $type = new Type();
+        $type->title = $request->title;
+        $type->save();
+
+        return view('type.index');
     }
 
     /**
