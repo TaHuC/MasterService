@@ -15,6 +15,12 @@ class CreateRepairsTable extends Migration
     {
         Schema::create('repairs', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('orderId')->unsigned();
+            $table->foreign('orderId')->references('id')->on('orders');
+            $table->integer('userId')->unsigned();
+            $table->foreign('userId')->references('id')->on('users');
+            $table->string('repair');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

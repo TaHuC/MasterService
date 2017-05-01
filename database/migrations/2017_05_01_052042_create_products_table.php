@@ -25,6 +25,8 @@ class CreateProductsTable extends Migration
             $table->foreign('modelId')->references('id')->on('models');
             $table->integer('userId')->unsigned();
             $table->foreign('userId')->references('id')->on('users');
+            $table->string('serial');
+            $table->boolean('random')->default(false);
             $table->timestamps();
         });
     }
