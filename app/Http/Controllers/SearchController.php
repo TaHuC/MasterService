@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Client;
 use Illuminate\Http\Request;
 
-class ClientController extends Controller
+class SearchController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,22 @@ class ClientController extends Controller
     public function index()
     {
         //
-        return 'All client';
+
+        $search = request('search');
+
+        if($search != null)
+        {
+            $clients = Client::where('name', 'like', '%'.$search.'%')
+                ->orWhere('email', 'like', '%'.$search.'%')
+                ->orWhere('phone', 'like', '%'.$search.'%')
+                ->get();
+        }
+        else
+        {
+            $clients = Client::All();
+        }
+
+        return view('search.index', ['clients' => $clients]);
     }
 
     /**
@@ -25,8 +40,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        // View create form
-        return view('client.create');
+        //
     }
 
     /**
@@ -38,19 +52,6 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         //
-        $this->validate($request, [
-           'name' => 'required|max:255',
-            'email' => 'min:3|max:255|unique:clients',
-            'phone' => 'required|unique:clients|numeric'
-        ]);
-
-        $client = new Client();
-        $client->name = $request->name;
-        $client->email = $request->email;
-        $client->phone = $request->phone;
-        $client->save();
-
-        return view('client.show', ['id' => $client->id]);
     }
 
     /**

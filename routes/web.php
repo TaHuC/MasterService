@@ -19,3 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/type', 'TypeController');
+Route::resource('/brand', 'BrandController');
+Route::resource('/model', 'ModelController');
+Route::resource('/client', 'ClientController');
+Route::resource('/search', 'SearchController');
