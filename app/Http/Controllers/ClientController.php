@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use function Sodium\compare;
 
 class ClientController extends Controller
 {
@@ -50,7 +52,7 @@ class ClientController extends Controller
         $client->phone = $request->phone;
         $client->save();
 
-        return view('client.show', ['id' => $client->id]);
+        return view('client.show', compact('client'));
     }
 
     /**
@@ -62,6 +64,9 @@ class ClientController extends Controller
     public function show($id)
     {
         //
+        $client = Client::find($id);
+
+        return view('client.show', compact('client'));
     }
 
     /**
@@ -73,6 +78,9 @@ class ClientController extends Controller
     public function edit($id)
     {
         //
+        $client = Client::find($id);
+
+        return view('client.edit', compact('client'));
     }
 
     /**
@@ -85,6 +93,20 @@ class ClientController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $client = Client::find($id);
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'email' => 'min:3|max:255',
+                Rule::unique('client')->ignore($client->id),
+            'phone' => 'required|numeric',
+                Rule::unique('client')->ignore($client->id),
+        ]);
+        $client->name = $request->name;
+        $client->email = $request->email;
+        $client->phone = $request->phone;
+        $client->save();
+
+        return view('client.show', compact('client'));
     }
 
     /**
