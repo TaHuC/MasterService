@@ -36,7 +36,7 @@ class TypeController extends Controller
     public function create()
     {
         //
-
+        return view('type.create');
     }
 
     /**
