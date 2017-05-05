@@ -31,3 +31,7 @@
         </div>
     </div>
 @endsection
+
+@section('jsImport')
+    <script src="{{ asset('js/showClient.js') }}"></script>
+@endsection

@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @yield('cssImport')
 
     <!-- Scripts -->
     <script>
@@ -93,5 +94,6 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    @yield('jsImport')
 </body>
 </html>
