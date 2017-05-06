@@ -23,3 +23,5 @@ Route::resource('/brand', 'BrandController');
 Route::resource('/model', 'ModelController');
 Route::resource('/client', 'ClientController');
 Route::resource('/search', 'SearchController');
+Route::resource('/product', 'ProductController');
+Route::get('/product/serial/{serial}', 'ProductController@getSerial');

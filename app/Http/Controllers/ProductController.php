@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -14,6 +15,13 @@ class ProductController extends Controller
     public function index()
     {
         //
+    }
+
+    public function getSerial($serial)
+    {
+        $get = Product::where('serial', 'LIKE', '%'.$serial.'%')->get();
+
+        return response()->json($get);
     }
 
     /**

@@ -19,6 +19,8 @@ class CreateOrdersTable extends Migration
             $table->foreign('productId')->references('id')->on('products');
             $table->integer('statusId')->unsigned();
             $table->foreign('statusId')->references('id')->on('statuses');
+            $table->integer('userId')->unsigned();
+            $table->foreign('userId')->references('id')->on('users');
             $table->string('price')->nullable();
             $table->string('now');
             $table->string('problem');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Client;
+use App\Type;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use function Sodium\compare;
@@ -65,8 +66,9 @@ class ClientController extends Controller
     {
         //
         $client = Client::find($id);
+        $types = Type::all();
 
-        return view('client.show', compact('client'));
+        return view('client.show', compact('client', 'types'));
     }
 
     /**
