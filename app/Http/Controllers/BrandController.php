@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class BrandController extends Controller
 {
@@ -14,6 +16,21 @@ class BrandController extends Controller
     public function index()
     {
         //
+    }
+
+    public function findBrand($brand, $type)
+    {
+
+        if(is_numeric($type))
+        {
+            $brands = Brand::where([
+                ['typeId', '=', $type],
+                ['title', 'like', '%'.$brand.'%']
+            ])->get();
+
+            return response()->json($brands);
+        }
+        return false;
     }
 
     /**
@@ -34,7 +51,18 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Valideite data
+        $this->validate($request, [
+            'type' => 'required|numeric',
+            'brand' => 'required|unique:brands,typeId,'.$request->type,
+        ]);
+
+        $brand = new Brand();
+        $brand->typeId = $request->type;
+        $brand->title = $request->brand;
+        $brand->save();
+
+        return response()->json($brand);
     }
 
     /**

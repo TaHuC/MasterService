@@ -72,7 +72,7 @@
                         <div class="form-group{{ $errors->has('brand') ? ' has-error' : '' }}" id="brandDiv">
                             <label for="brand" class="col-md-4 control-label">Brand</label>
 
-                            <div class="col-md-6">
+                            <div class="col-md-6" id="brandInputDiv">
                                 <input id="brand" type="brand" autocomplete="off" class="form-control" name="brand" value="{{ old('brand') }}" required>
 
                                 @if ($errors->has('brand'))
@@ -80,7 +80,7 @@
                                         <strong>{{ $errors->first('brand') }}</strong>
                                     </span>
                                 @else
-                                    <span id="showSerial" class="help-block"></span>
+                                    <span id="showBrand" class="help-block"></span>
                                 @endif
                             </div>
                         </div>
@@ -88,7 +88,7 @@
                         <div class="form-group{{ $errors->has('model') ? ' has-error' : '' }}" id="modelDiv">
                             <label for="model" class="col-md-4 control-label">Model</label>
 
-                            <div class="col-md-6">
+                            <div class="col-md-6" id="modelInputDiv">
                                 <input id="model" type="text" autocomplete="off" class="form-control" name="model" value="{{ old('model') }}" required>
 
                                 @if ($errors->has('model'))
@@ -96,7 +96,7 @@
                                         <strong>{{ $errors->first('model') }}</strong>
                                     </span>
                                 @else
-                                    <span id="showSerial" class="help-block"></span>
+                                    <span id="showModel" class="help-block"></span>
                                 @endif
                             </div>
                         </div>
@@ -167,4 +167,43 @@
 
 @section('jsImport')
     <script src="{{ asset('js/showClient.js') }}"></script>
+    <script>
+        var token = $('input[name=_token]').val();
+
+        function addNewBrand() {
+            var getTypeId = $('#type').val();
+            var getBrand = $('#brand').val();
+            $.post('{{ asset('brand/') }}', {_token: token, type: getTypeId, brand: getBrand}, function (data) {
+                $('#brand').val(data.id).hide();
+                $('#brandInputDiv').append("<input class='form-control' type='text' value='"+data.title+"' disabled>");
+                $('#showBrand').hide();
+                $('#modelDiv').fadeIn('slow');
+            });
+        }
+
+        function addNewModel() {
+            var getBrandId = $('#brand').val();
+            var getModel = $('#model').val();
+            $.post('{{ asset('model/') }}', {_token: token, brand: getBrandId, model: getModel}, function (data) {
+                $('#model').val(data.id).hide();
+                $('#modelInputDiv').append("<input class='form-control' type='text' value='"+data.title+"' disabled>");
+                $('#showModel').hide();
+                $('#orderDiv').fadeIn('slow');
+            });
+        }
+
+        function selectBrand(id, brand) {
+            $('#brand').val(id).hide();
+            $('#brandInputDiv').append("<input class='form-control' type='text' value='"+brand+"' disabled>");
+            $('#showBrand').hide();
+            $('#modelDiv').fadeIn('slow');
+        }
+
+        function selectModel(id, model) {
+            $('#model').val(id).hide();
+            $('#modelInputDiv').append("<input class='form-control' type='text' value='"+model+"' disabled>");
+            $('#showModel').hide();
+            $('#orderDiv').fadeIn('slow');
+        }
+    </script>
 @endsection

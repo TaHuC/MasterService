@@ -40,10 +40,34 @@ $(document).ready(function () {
 
        if(getType != null) {
            $('#brandDiv').fadeIn('slow');
-
-            $.get('../brand/select/'+getType, function (data) {
-                
-            });
        }
+       return typeId = getType;
     });
+
+    $('#brand').keyup(function () {
+        var brand = $(this).val();
+        $.get('../brand/select/'+brand+'/'+typeId, function (data) {
+            $('#showBrand').html("<p>"+brand+" <button class='btn btn-xs btn-success' onclick='addNewBrand()'>+</button></p>");
+            if(data.length != 0) {
+                for(var i = 0; i < data.length; i++) {
+                    $('#showBrand').append("<p class='text-info' id='"+data[i].id+"'>"+data[i].title+" <span class='btn btn-xs btn-primary' onclick=\"selectBrand("+data[i].id+", '"+data[i].title+"')\">Get</span></p>");
+                }
+            }
+        });
+    });
+
+    $('#model').keyup(function () {
+        var model = $(this).val();
+        var brandId = $('#brand').val();
+
+        $.get('../model/select/'+model+'/'+brandId, function (data) {
+            $('#showModel').html("<p>"+model+" <button class='btn btn-xs btn-success' onclick='addNewModel()'>+</button></p>");
+            if(data.length != 0) {
+                for(var i = 0; i < data.length; i++) {
+                    $('#showModel').append("<p class='text-info' id='"+data[i].id+"'>"+data[i].title+" <span class='btn btn-xs btn-primary' onclick=\"selectModel("+data[i].id+", '"+data[i].title+"')\">Get</span></p>");
+                }
+            }
+        });
+    });
+
 });
