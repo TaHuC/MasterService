@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -42,7 +44,36 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'serial' => 'required|min:5|max:255|unique:products',
+            'type' => 'required|integer',
+            'brand' => 'required|integer',
+            'model' => 'required|integer',
+            'client' => 'required|integer',
+            'now' => 'required|min:2',
+            'problem' => 'required|min:2',
+        ]);
+
+
+        $product = new Product();
+        $product->clientId = $request->client;
+        $product->typeId = $request->type;
+        $product->brandId = $request->brand;
+        $product->modelId = $request->model;
+        $product->userId = Auth::user()->id;
+        $product->serial = $request->serial;
+        $product->save();
+
+        $order = new Order();
+        $order->productId = $product->id;
+        $order->statusId = 1;
+        $order->now = $request->now;
+        $order->problem = $request->problem;
+        $order->password = $request->password;
+        $order->description = $request->description;
+        $order->save();
+
+        return $order->id;
     }
 
     /**

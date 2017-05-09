@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Order;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -35,6 +36,12 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request, [
+            'product' => 'required|integer',
+            'now' => 'required|min:5',
+            'problem' => 'required|min:5',
+        ]);
+
     }
 
     /**

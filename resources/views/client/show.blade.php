@@ -35,10 +35,11 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" onclick="window.location.reload()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Add Device</h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="productModalDiv">
+                    <div id="formDiv">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('client.store') }}">
                         {{ csrf_field() }}
 
@@ -155,11 +156,13 @@
                             </div>
                         </div>
                     </form>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-default" onclick="window.location.reload()" data-dismiss="modal">Close</button>
+                    <button type="button" id="addProductButton" onclick="addPrandOrder('{{$client->id}}')" class="btn btn-primary">Save</button>
                 </div>
+
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
@@ -204,6 +207,30 @@
             $('#modelInputDiv').append("<input class='form-control' type='text' value='"+model+"' disabled>");
             $('#showModel').hide();
             $('#orderDiv').fadeIn('slow');
+        }
+
+        function addPrandOrder(id) {
+            var serial = $('#serial').val();
+            var type = $('#type').val();
+            var brand = $('#brand').val();
+            var model = $('#model').val();
+            var now = $('#now').val();
+            var password = $('#password').val();
+            var problem = $('#problem').val();
+            var description = $('#description').val();
+            var client = id;
+            var _token = $('input[name=_token]').val();
+
+            if(serial != '' && type != '' && brand != '' && model != '' && now != '' && problem != '' && client != '') {
+                $.post('../product/', {_token: _token, serial: serial, type: type, brand: brand, model: model, now: now, password: password, problem: problem, description: description, client: client}, function (data) {
+                    $('#formDiv').fadeOut('slow');
+                    $('#addProductButton').fadeOut('slow');
+                    $('#productModalDiv').addClass('text-center');
+                    $('#productModalDiv').html(
+                        "<h3>Order: "+data+"</h3>"
+                    );
+                });
+            }
         }
     </script>
 @endsection

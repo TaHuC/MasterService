@@ -8,7 +8,7 @@ $(document).ready(function () {
     $('#orderDiv').hide();
 
     $('#setSerial').on('click', function () {
-        var date = new Date();
+     var date = new Date();
      var random = date.getDate().toString() + date.getMonth().toString() + date.getFullYear().toString() + Math.random().toString(36).replace(/[^a-z]+/g, '');
 
      $('#serial').val(random);
@@ -69,5 +69,4 @@ $(document).ready(function () {
             }
         });
     });
-
 });

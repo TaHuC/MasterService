@@ -24,6 +24,7 @@ class CreateOrdersTable extends Migration
             $table->string('price')->nullable();
             $table->string('now');
             $table->string('problem');
+            $table->string('password')->nullable();
             $table->text('description')->nullable();
             $table->boolean('active')->default(true);
             $table->timestamps();
