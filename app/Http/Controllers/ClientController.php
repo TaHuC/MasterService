@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Brand;
 use App\Client;
+use App\ModelBrand;
+use App\Order;
+use App\Product;
+use App\Status;
 use App\Type;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+
 use function Sodium\compare;
 
 class ClientController extends Controller
@@ -53,7 +60,7 @@ class ClientController extends Controller
         $client->phone = $request->phone;
         $client->save();
 
-        return view('client.show', compact('client'));
+        return redirect()->route('client.show', ['id' => $client->id]);
     }
 
     /**
@@ -62,13 +69,42 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function show($id)
     {
         //
         $client = Client::find($id);
         $types = Type::all();
 
-        return view('client.show', compact('client', 'types'));
+        $products = Product::where('clientId', $client->id)->get();
+        $finalProducts = null;
+
+        for ($i = 0; $i < count($products); $i++)
+        {
+            $type = Type::where('id', $products[$i]->typeId)->first();
+            $brand = Brand::where('id', $products[$i]->brandId)->first();
+            $model = ModelBrand::where('id', $products[$i]->modelId)->first();
+            $user = User::where('id', $products[$i]->userId)->first();
+            $order = Order::where('productId', $products[$i]->id)->first();
+            if($order != null)
+            {
+                $status = Status::where('id', $order->statusId)->first();
+            }
+
+            $finalProducts[$i] = [
+                'id' => $products[$i]->id,
+                'type' => $type->title,
+                'brand' => $brand->title,
+                'model' => $model->title,
+                'user' => $user->name,
+                'serial' => $products[$i]->serial,
+                'status' => $status->status,
+                'orderId' => $order->id,
+                'created' => $products[$i]->created_at
+            ];
+        }
+
+        return view('client.show', compact('client', 'types', 'finalProducts'));
     }
 
     /**

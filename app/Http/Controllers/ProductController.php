@@ -52,6 +52,7 @@ class ProductController extends Controller
             'client' => 'required|integer',
             'now' => 'required|min:2',
             'problem' => 'required|min:2',
+            'price' => 'integer',
         ]);
 
 
@@ -67,10 +68,12 @@ class ProductController extends Controller
         $order = new Order();
         $order->productId = $product->id;
         $order->statusId = 1;
+        $order->userId = Auth::user()->id;
         $order->now = $request->now;
         $order->problem = $request->problem;
         $order->password = $request->password;
         $order->description = $request->description;
+        $order->price = $request->price;
         $order->save();
 
         return $order->id;

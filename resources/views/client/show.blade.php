@@ -28,8 +28,32 @@
                 </div>
             </div>
             </div>
+                <div class="row">
+                    @if($finalProducts != null)
+                        @foreach($finalProducts as $product)
+                            <div class="col-md-4">
+                                <div class="col-md-12">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">{{ $product['brand'] }} {{ $product['model'] }}</h3>
+                                            <div class="col-md-6 col-xs-6">Order: {{ $product['orderId'] }}</div>
+                                            <div class="col-md-6 col-xs-6 text-right"><p class="">{{ $product['serial'] }}</p></div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="panel-body text-left">
+                                            <h3>
+                                                {{ $product['status'] }}
+                                            <a href="{{ route('order.show', $product['orderId']) }}" class="btn btn-success pull-right">Open</a>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
         </div>
-    </div>
 
     <div class="modal fade" tabindex="-1" id="addDevModal" role="dialog">
         <div class="modal-dialog" role="document">
@@ -154,6 +178,17 @@
                                     @endif
                                 </div>
                             </div>
+                            <div class="form-group{{ $errors->has('price') ? ' has-error' : '' }}">
+                                <label for="price" class="col-md-4 control-label">Price</label>
+                                <div class="col-md-6">
+                                    <input type="text" autocomplete="off" class="form-control" name="price" id="price" value="{{ old('price') }}">
+                                    @if ($errors->has('price'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('price') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
                         </div>
                     </form>
                     </div>
@@ -218,11 +253,25 @@
             var password = $('#password').val();
             var problem = $('#problem').val();
             var description = $('#description').val();
+            var price = $('#price').val();
             var client = id;
             var _token = $('input[name=_token]').val();
 
             if(serial != '' && type != '' && brand != '' && model != '' && now != '' && problem != '' && client != '') {
-                $.post('../product/', {_token: _token, serial: serial, type: type, brand: brand, model: model, now: now, password: password, problem: problem, description: description, client: client}, function (data) {
+                $.post('../product/', {
+                    _token: _token,
+                    serial: serial,
+                    type: type,
+                    brand: brand,
+                    model: model,
+                    now: now,
+                    password: password,
+                    problem: problem,
+                    description: description,
+                    price: price,
+                    client: client
+                },
+                    function (data) {
                     $('#formDiv').fadeOut('slow');
                     $('#addProductButton').fadeOut('slow');
                     $('#productModalDiv').addClass('text-center');
