@@ -18,7 +18,7 @@
                                     <h2>{{ $client->name }} <a href="{{ route('client.edit', ['id' => $client->id]) }}" class="btn btn-xs btn-warning">Edit</a></h2>
                                     <p>
                                         <p><i class="glyphicon glyphicon-envelope"></i> {{ $client->email }}</p>
-                                        <p></p><i class="glyphicon glyphicon-phone"></i> {{ $client->phone }}</p>
+                                        <p><i class="glyphicon glyphicon-phone"></i> {{ $client->phone }}</p>
                                         <button class="btn btn-success" data-toggle="modal" data-target="#addDevModal">Add Device</button>
                                     </p>
                                 </div>

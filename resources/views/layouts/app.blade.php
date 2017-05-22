@@ -10,8 +10,12 @@
 
     <title>{{ config('app.name', 'Master Service') }}</title>
 
+    <!-- Fonts -->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/materialize.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/master.css') }}" rel="stylesheet">
     @yield('cssImport')
 
     <!-- Scripts -->
@@ -23,39 +27,66 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
-
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+        <nav class="">
+            <div class="nav-wrapper navbar-fixed navbar-fixed-top blue">
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Master Service') }}
+                         {{ config('app.name', 'Master Service') }}
                     </a>
-                </div>
+                    <a href="#" data-activates="modeli_navigation" class="button-collapse">
+                        <i class="material-icons">menu</i>
+                    </a>
 
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        @if (!Auth::guest())
-                            <form class="navbar-form navbar-left" method="get" action="{{ route('search.index') }}">
-                                <div class="form-group">
-                                    <input type="text" id="search" name="search" autocomplete="off" class="form-control" placeholder="Search">
-                                </div>
-                                <button type="submit" class="btn btn-default">Search</button>
-                            </form>
+                    <!-- Right Side Of Navbar -->
+                    <ul class="right hide-on-med-and-down">
+                        <!-- Authentication Links -->
+                        @if (Auth::guest())
+                            <li><a href="{{ route('login') }}">Login</a></li>
+                            <li><a href="{{ route('register') }}">Register</a></li>
+                        @else
+                            <li>
+                                <form method="get" action="{{ route('search.index') }}">
+                                    <div class="input-field">
+                                        <input id="search" type="search" required autocomplete="off">
+                                        <label class="label-icon" for="search">
+                                            <i class="material-icons">search</i>
+                                        </label>
+                                        <i class="material-icons">close</i>
+                                    </div>
+                                </form>
+                            </li>
+                            <li class="user-menu-li">
+                                <a href="#" class="dropdown-button" data-activates="user-dropdown-menu">
+                                    {{ Auth::user()->name }} <i class="material-icons right">arrow_drop_down</i>
+                                </a>
+                                <ul class="dropdown-content" id="user-dropdown-menu">
+                                    <li>
+                                        <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                            Logout
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
                         @endif
                     </ul>
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
+                        @if(Auth::user())
+                            <ul>
+                                <li>
+                                    <a href="{{ route('client.create') }}" class="btn-floating btn-large halfway-fab waves-effect waves-light teal">
+                                        <i class="material-icons">add</i>
+                                    </a>
+                                </li>
+                            </ul>
+                        @endif
+
+                    <ul class="nav side-nav" id="modeli_navigation">
                         <!-- Authentication Links -->
                         @if (Auth::guest())
                             <li><a href="{{ route('login') }}">Login</a></li>
@@ -72,7 +103,7 @@
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
                                         <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
+                                           onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                             Logout
                                         </a>
@@ -85,7 +116,6 @@
                             </li>
                         @endif
                     </ul>
-                </div>
             </div>
         </nav>
 
@@ -93,7 +123,8 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="{{ asset('js/materialize.min.js') }}"></script>
     @yield('jsImport')
 </body>
 </html>
