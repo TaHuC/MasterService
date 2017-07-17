@@ -2,68 +2,53 @@
 
 @section('content')
     <div class="container">
+        <br>
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Edit Client</div>
-                    <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="post" action="{{ route('client.update', ['id' => $client->id]) }}">
-                            {{ csrf_field() }}
-                            <input name="_method" type="hidden" value="PUT">
+            <div class="col m6 offset-m3 z-depth-4 grey lighten-3" id="add-client-col">
+                <div class="row">
+                    <h4 class="title">Edit Client</h4>
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('client.store') }}">
+                        {{ csrf_field() }}
 
-                            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                <label for="name" class="col-md-4 control-label">Name</label>
+                        <div class="input-field col s12 {{ $errors->has('name') ? ' has-error' : '' }}">
 
-                                <div class="col-md-6">
-                                    <input id="name" type="text" autocomplete="off" class="form-control" name="name" value="{{ $client->name }}" required autofocus>
-
-                                    @if ($errors->has('name'))
-                                        <span class="help-block">
+                            <input id="name" type="text" autocomplete="off" class="validate" name="name" value="{{ $client->name }}" required autofocus>
+                            <label for="name" class="active">Name</label>
+                            @if ($errors->has('name'))
+                                <span class="help-block">
                                         <strong>{{ $errors->first('name') }}</strong>
                                     </span>
-                                    @endif
-                                </div>
-                            </div>
+                            @endif
+                        </div>
 
-                            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                                <div class="col-md-6">
-                                    <input id="email" type="email" autocomplete="off" class="form-control" name="email" value="{{ $client->email }}">
-
-                                    @if ($errors->has('email'))
-                                        <span class="help-block">
+                        <div class="input-field col s12 {{ $errors->has('email') ? ' has-error' : '' }}">
+                            <input id="email" type="email" autocomplete="off" class="validate" name="email" value="{{ $client->email }}">
+                            <label for="email" class="active">E-Mail Address</label>
+                            @if ($errors->has('email'))
+                                <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
-                                    @endif
-                                </div>
-                            </div>
+                            @endif
+                        </div>
 
-                            <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
-                                <label for="phone" class="col-md-4 control-label">Phone Number</label>
-
-                                <div class="col-md-6">
-                                    <input id="phone" type="text" autocomplete="off" class="form-control" name="phone" value="{{ $client->phone }}" required>
-
-                                    @if ($errors->has('phone'))
-                                        <span class="help-block">
+                        <div class="input-field col s12 {{ $errors->has('phone') ? ' has-error' : '' }}">
+                            <input id="phone" type="text" autocomplete="off" class="validate" name="phone" value="{{ $client->phone }}" required>
+                            <label for="phone" class="active">Phone Number</label>
+                            @if ($errors->has('phone'))
+                                <span class="help-block">
                                         <strong>{{ $errors->first('phone') }}</strong>
                                     </span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <input name="clientId" type="hidden" value="{{ old('id') }}">
-                                <div class="col-md-6 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        Edit
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                            @endif
+                        </div>
+                        <div class="col s12 right-align">
+                            <button type="submit" class="btn-large orange accent-4 btn waves-effect waves-light">
+                                <i class="material-icons">edit</i>
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 @endsection

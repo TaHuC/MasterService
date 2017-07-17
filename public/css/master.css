@@ -9,3 +9,11 @@ input[type="search"] {
 .user-menu-li {
     margin-right: 100px;
 }
+
+#order-client-info {
+    margin-right: 5px;
+}
+
+#add-client-col {
+    padding: 30px;
+}

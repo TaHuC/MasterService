@@ -79,7 +79,7 @@
                         @if(Auth::user())
                             <ul>
                                 <li>
-                                    <a href="{{ route('client.create') }}" class="btn-floating btn-large halfway-fab waves-effect waves-light teal">
+                                    <a href="{{ route('client.create') }}" class="btn-floating btn-large halfway-fab amber darken-4 waves-effect waves-light">
                                         <i class="material-icons">add</i>
                                     </a>
                                 </li>
