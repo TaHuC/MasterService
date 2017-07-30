@@ -17,3 +17,25 @@ input[type="search"] {
 #add-client-col {
     padding: 30px;
 }
+
+.showBrand {
+    position: absolute;
+    min-width: 100px;
+    margin-top: -15px;
+    border-top:0px;
+    overflow: hidden;
+    background-color: white;
+    z-index: 550;
+}
+
+.showBrand{
+    font-family:tahoma;
+    padding:5px;
+    font-size:15px;
+    z-index: 550;
+}
+
+.showBrand:hover {
+    color:#3d6983;
+    cursor:pointer;
+}

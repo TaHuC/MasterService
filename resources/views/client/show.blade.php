@@ -27,35 +27,10 @@
                     </div>
                 </div>
             </div>
-            </div>
-                <div class="row">
-                    @if($finalProducts != null)
-                        @foreach($finalProducts as $product)
-                            <div class="col-md-4">
-                                <div class="col-md-12">
-                                    <div class="panel panel-primary">
-                                        <div class="panel-heading">
-                                            <h3 class="panel-title">{{ $product['brand'] }} {{ $product['model'] }}</h3>
-                                            <div class="col-md-6 col-xs-6">Order: {{ $product['orderId'] }}</div>
-                                            <div class="col-md-6 col-xs-6 text-right"><p class="">{{ $product['serial'] }}</p></div>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                        <div class="panel-body text-left">
-                                            <h3>
-                                                {{ $product['status'] }}
-                                            <a href="{{ route('order.show', $product['orderId']) }}" class="btn btn-success pull-right">Open</a>
-                                            </h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    @endif
-                </div>
-            </div>
         </div>
+    </div>
 
-    <div class="modal" id="addDevModal">
+    <div class="modal modal-fixed-footer" id="addDevModal">
         <div class="modal-content">
             <div class="row">
                 <form class="col s12">
@@ -69,7 +44,7 @@
                             @endforeach
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" id="serialDiv">
                         <div class="input-field col s12">
                             <i class="material-icons prefix" id="genetareSerial">textsms</i>
                             <input id="serial" type="text" class="autocomplate">
@@ -78,13 +53,15 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="input-field col s6">
+                        <div class="input-field col s6" id="brandDiv">
                             <input id="brand" type="text" class="validate">
-                            <label for="serial">Input Brand</label>
+                            <label for="brand">Input Brand</label>
+                            <div class="showDiv" id="showBrand" style="display: none"></div>
                         </div>
-                        <div class="input-field col s6">
+                        <div class="input-field col s6" id="modelDiv"   >
                             <input id="model" type="text" class="validate">
                             <label for="model">Input Model</label>
+                            <div class="showDiv" id="showModel" style="display: none"></div>
                         </div>
                     </div>
                     <div class="row">
@@ -97,11 +74,67 @@
             </div>
         </div>
         <div class="modal-footer">
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+            <input type="hidden" name="clientId" id="clientId" value="{{ $client->id }}">
+            <button id="saveProduct" disabled="disabled" class="modal-action modal-close waves-effect waves-green btn-flat">Save</button>
         </div>
     </div>
 @endsection
 
 @section('jsImport')
+    <script>
+        let brandId = 0;
+
+        function getBrand(text, id) {
+            $('#brand').val(text);
+            $('#brand').attr('disabled', 'disabled');
+            $('#showBrand').fadeOut('slow');
+            $('#modelDiv').fadeIn('slow');
+            $('#model').focus();
+
+            brandId = id;
+
+            return brandId;
+        }
+
+        $('#model').keyup(() => {
+            let getModel = $('#model').val();
+            let showModelDiv = $('#showModel');
+
+            if(getModel.length >= 1){
+                $.get('/model/select/'+getModel + '/' + brandId, function (data) {
+                    if(!showModelDiv.is(':visible')) {
+                        showModelDiv.fadeIn('slow');
+                    }
+                    if(data.length !== 0) {
+                        for (let resultB of data) {
+                        showModelDiv.html(`<p onclick="getModel('${resultB.title}')">${resultB.title}</p>`);
+                        }
+                    } else {
+                        showModelDiv.html('');
+                        showModelDiv.fadeOut('slow');
+                        let setTime = setTimeout(function () {
+                            $('#model').attr('disabled', 'disabled');
+                            $('#saveProduct').removeAttr('disabled');
+                            $('#comment').focus();
+                        }, 2000);
+                        $('#model').keyup(() => {
+                            clearTimeout(setTime);
+                        });
+                    }
+                });
+            } else {
+                showModelDiv.html('');
+                showModelDiv.fadeOut('slow');
+            }
+        });
+
+        function getModel(text) {
+            $('#model').val(text);
+            $('#model').attr('disabled', 'disabled');
+            $('#showModel').fadeOut('slow');
+            $('#comment').focus();
+            $('#saveProduct').removeAttr('disabled');
+        }
+    </script>
     <script src="{{ asset('js/showClient.js') }}"></script>
 @endsection

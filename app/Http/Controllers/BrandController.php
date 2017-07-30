@@ -53,16 +53,16 @@ class BrandController extends Controller
     {
         //Valideite data
         $this->validate($request, [
-            'type' => 'required|numeric',
-            'brand' => 'required|unique:brands,typeId,'.$request->type,
+            'typeId' => 'required|numeric',
+            'brand' => 'required|unique:brands,typeId,'.$request->typeId,
         ]);
 
         $brand = new Brand();
-        $brand->typeId = $request->type;
+        $brand->typeId = $request->typeId;
         $brand->title = $request->brand;
         $brand->save();
 
-        return response()->json($brand);
+        return $brand->id;
     }
 
     /**

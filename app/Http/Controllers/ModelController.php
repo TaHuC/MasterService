@@ -63,7 +63,7 @@ class ModelController extends Controller
         $model->title = $request->model;
         $model->save();
 
-        return response()->json($model);
+        return $model->id;
     }
 
     /**

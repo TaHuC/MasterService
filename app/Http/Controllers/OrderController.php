@@ -10,6 +10,7 @@ use App\Product;
 use App\Type;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -43,10 +44,23 @@ class OrderController extends Controller
     {
         //
         $this->validate($request, [
-            'product' => 'required|integer',
-            'now' => 'required|min:5',
-            'problem' => 'required|min:5',
+            'productId' => 'required|integer',
+            'nowStatus' => 'required|min:2',
+            'problem' => 'required|min:4',
         ]);
+
+        $order = new Order();
+        $order->productId = $request->productId;
+        $order->statusId = 1;
+        $order->userId = Auth::user()->id;
+        $order->price = $request->price;
+        $order->now = $request->nowStatus;
+        $order->problem = $request->problem;
+        $order->password = $request->password;
+        $order->description = $request->description;
+        $order->save();
+
+        return $order->id;
 
     }
 

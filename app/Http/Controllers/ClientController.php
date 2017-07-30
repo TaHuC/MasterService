@@ -97,10 +97,7 @@ class ClientController extends Controller
                 'brand' => $brand->title,
                 'model' => $model->title,
                 'user' => $user->name,
-                'serial' => $products[$i]->serial,
-                'status' => $status->status,
-                'orderId' => $order->id,
-                'created' => $products[$i]->created_at
+                'serial' => $products[$i]->serial
             ];
         }
 

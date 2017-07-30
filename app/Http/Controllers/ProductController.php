@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Brand;
+use App\Client;
+use App\ModelBrand;
 use App\Product;
 use App\Order;
+use App\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -48,37 +52,23 @@ class ProductController extends Controller
     {
         $this->validate($request, [
             'serial' => 'required|min:5|max:255|unique:products',
-            'type' => 'required|integer',
+            'typeId' => 'required|integer',
             'brand' => 'required|integer',
             'model' => 'required|integer',
-            'client' => 'required|integer',
-            'now' => 'required|min:2',
-            'problem' => 'required|min:2',
-            'price' => 'integer',
+            'clientId' => 'required|integer'
         ]);
 
-
         $product = new Product();
-        $product->clientId = $request->client;
-        $product->typeId = $request->type;
+        $product->clientId = $request->clientId;
+        $product->typeId = $request->typeId;
         $product->brandId = $request->brand;
         $product->modelId = $request->model;
         $product->userId = Auth::user()->id;
         $product->serial = $request->serial;
+        $product->comment = $request->comment;
         $product->save();
 
-        $order = new Order();
-        $order->productId = $product->id;
-        $order->statusId = 1;
-        $order->userId = Auth::user()->id;
-        $order->now = $request->now;
-        $order->problem = $request->problem;
-        $order->password = $request->password;
-        $order->description = $request->description;
-        $order->price = $request->price;
-        $order->save();
-
-        return $order->id;
+        return $product->id;
     }
 
     /**
@@ -90,6 +80,14 @@ class ProductController extends Controller
     public function show($id)
     {
         //
+        $product = Product::find($id);
+        $brand = Brand::find($product->brandId);
+        $model = ModelBrand::find($product->modelId);
+        $client = Client::find($product->clientId);
+        $orders = Order::where('productId', $product->id)->orderBy('id', 'desc')->get();
+        $statuses = Status::all();
+
+        return view('product.show', compact('product', 'brand', 'model', 'client', 'orders', 'statuses'));
     }
 
     /**
