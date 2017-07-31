@@ -86,6 +86,7 @@ class ClientController extends Controller
             $model = ModelBrand::where('id', $products[$i]->modelId)->first();
             $user = User::where('id', $products[$i]->userId)->first();
             $order = Order::where('productId', $products[$i]->id)->first();
+
             if($order != null)
             {
                 $status = Status::where('id', $order->statusId)->first();
@@ -97,6 +98,8 @@ class ClientController extends Controller
                 'brand' => $brand->title,
                 'model' => $model->title,
                 'user' => $user->name,
+                'status' => $status->status,
+                'created_at' => $products[$i]->created_at,
                 'serial' => $products[$i]->serial
             ];
         }

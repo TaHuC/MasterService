@@ -4,23 +4,48 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Client Profile</div>
-                    <div class="panel-body text-left">
+                <div class="card hoverable">
+                    <div class="card-content blue accent-1 white-text text-left">
                         <div class="row">
-                            <div class="col-md-2 col-xs-4 text-center">
+                            <div class="col m4 s4 text-center">
                                 <a class="" href="#">
-                                    <img class="media-object dp img-circle" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg" style="width: 180px;height:180px;">
+                                    <img class="media-object z- dp img-circle" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg" style="width: 180px;height:180px;">
                                 </a>
                             </div>
-                            <div class="col-md-10 col-xs-8">
-                                <h2>{{ $client->name }} <a href="{{ route('client.edit', ['id' => $client->id]) }}" class="btn btn-xs btn-warning">Edit</a></h2>
+                            <div class="col-m8 s8">
+                                <h2>{{ $client->name }} <a href="{{ route('client.edit', ['id' => $client->id]) }}" class="btn halfway-fab waves-effect waves-light red tooltipped" data-position="top" data-delay="100" data-tooltip="Edit Profile"><i class="material-icons">edit</i></a></h2>
                                 <p>
-                                <p><i class="glyphicon glyphicon-envelope"></i> {{ $client->email }}</p>
-                                <p><i class="glyphicon glyphicon-phone"></i> {{ $client->phone }}</p>
-                                <a href="#addDevModal" class="waves-effect waves-light btn">Add Device</a>
+                                <h4><i class="glyphicon glyphicon-envelope"></i> {{ $client->email }}</h4>
+                                <h4><i class="glyphicon glyphicon-phone"></i> {{ $client->phone }}</h4>
                                 </p>
                             </div>
+                        </div>
+                    </div>
+                    <div class="card-action grey lighten-3">
+                        <div clas="row">
+                            <table class="highlight">
+                                <thead>
+                                    <tr>
+                                        <th>Devices</th>
+                                        <th>Date add</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                        <th><a href="#addDevModal" class="btn halfway-fab waves-effect waves-light red tooltipped" data-position="top" data-delay="100" data-tooltip="Add new Device"><i class="material-icons">add</i></a></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if(count($finalProducts) > 0)
+                                    @foreach ($finalProducts as $product)
+                                        <tr>
+                                            <td>{{ $product['brand'] }} {{ $product['model'] }}</td>
+                                            <td>{{ $product['created_at'] }}</td>
+                                            <td>{{ $product['status'] }}</td>
+                                            <td><a class="btn-flat wave-effect tooltipped" data-position="top" data-delay="100" data-tooltip="Open Device"><i class="large material-icons">link</i></a></td>
+                                        </tr>
+                                    @endforeach
+                                    @endif
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

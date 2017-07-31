@@ -26,7 +26,7 @@ class CreateProductsTable extends Migration
             $table->integer('userId')->unsigned();
             $table->foreign('userId')->references('id')->on('users');
             $table->string('serial');
-            $table->boolean('random')->default(false);
+            $table->text('comment')->nullable();
             $table->timestamps();
         });
     }
