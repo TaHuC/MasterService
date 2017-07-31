@@ -51,19 +51,24 @@
 
             <div class="col m8 s8" id="orderInfo">
                 <div class="card blue">
-                    <div class="card-content center-align">
+                    <div class="card-content">
                         <div class="row white-text">
-                            <div class="col m3 s3">
-                                <span class="card-title">Problem</span>
+                            <div class="col m2 s2">
+                                <p>Проблем</p>
                             </div>
                             <div class="col m3 s3">
-                                <span class="card-title">Now</span>
+                                <p>Now</p>
                             </div>
                             <div class="col m3 s3">
-                                <span class="card-title">Description</span>
+                                <p>Description</p>
                             </div>
-                            <div class="col m3 s3">
-                                <span class="card-title">Price</span>
+                            <div class="col m2 s2">
+                                <p>Парола</p>
+                            </div>
+                            <div class="col m2 s2">
+                                <p>Цена: 20lv.</p>
+                                <p>Капаро: 10lv.</p>
+                                <p>Остават: 10lv.</p>
                             </div>
                         </div>
                     </div>

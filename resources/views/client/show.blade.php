@@ -4,24 +4,22 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-12">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">Client Profile</div>
-                        <div class="panel-body text-left">
-                            <div class="row">
-                                <div class="col-md-2 col-xs-4 text-center">
-                                    <a class="" href="#">
-                                        <img class="media-object dp img-circle" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg" style="width: 180px;height:180px;">
-                                    </a>
-                                </div>
-                                <div class="col-md-10 col-xs-8">
-                                    <h2>{{ $client->name }} <a href="{{ route('client.edit', ['id' => $client->id]) }}" class="btn btn-xs btn-warning">Edit</a></h2>
-                                    <p>
-                                        <p><i class="glyphicon glyphicon-envelope"></i> {{ $client->email }}</p>
-                                        <p><i class="glyphicon glyphicon-phone"></i> {{ $client->phone }}</p>
-                                        <a href="#addDevModal" class="waves-effect waves-light btn">Add Device</a>
-                                    </p>
-                                </div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Client Profile</div>
+                    <div class="panel-body text-left">
+                        <div class="row">
+                            <div class="col-md-2 col-xs-4 text-center">
+                                <a class="" href="#">
+                                    <img class="media-object dp img-circle" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg" style="width: 180px;height:180px;">
+                                </a>
+                            </div>
+                            <div class="col-md-10 col-xs-8">
+                                <h2>{{ $client->name }} <a href="{{ route('client.edit', ['id' => $client->id]) }}" class="btn btn-xs btn-warning">Edit</a></h2>
+                                <p>
+                                <p><i class="glyphicon glyphicon-envelope"></i> {{ $client->email }}</p>
+                                <p><i class="glyphicon glyphicon-phone"></i> {{ $client->phone }}</p>
+                                <a href="#addDevModal" class="waves-effect waves-light btn">Add Device</a>
+                                </p>
                             </div>
                         </div>
                     </div>
