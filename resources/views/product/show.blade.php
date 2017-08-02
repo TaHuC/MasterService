@@ -50,30 +50,82 @@
             </div>
 
             <div class="col m8 s8" id="orderInfo">
-                <div class="card blue">
-                    <div class="card-content">
-                        <div class="row white-text">
-                            <div class="col m2 s2">
-                                <p>Проблем</p>
-                            </div>
-                            <div class="col m3 s3">
-                                <p>Now</p>
-                            </div>
-                            <div class="col m3 s3">
-                                <p>Description</p>
-                            </div>
-                            <div class="col m2 s2">
-                                <p>Парола</p>
-                            </div>
-                            <div class="col m2 s2">
-                                <p>Цена: 20lv.</p>
-                                <p>Капаро: 10lv.</p>
-                                <p>Остават: 10lv.</p>
-                            </div>
+                <div class="col m4 s4">
+                    <div class="card blue accent-1 red-text z-depth-2">
+                        <div class="card-content">
+                            <p>Problem:</p>
+                            <p>{{ $orders[0]->problem }}</p>
                         </div>
                     </div>
-                    <div class="card-action grey lighten-3">
-
+                </div>
+                <div class="col m4 s4">
+                    <div class="card blue accent-1 white-text z-depth-2">
+                        <div class="card-content">
+                            <p>Now:</p>
+                            <p>{{ $orders[0]->now }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col m4 s4">
+                    <div class="card blue accent-1 white-text z-depth-2">
+                        <div class="card-content">
+                            <p>Password:</p>
+                            <p>{{ $orders[0]->password }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col m7 s7">
+                    <div class="card blue accent-1 white-text z-depth-2">
+                        <div class="card-content">
+                            <p>Description:</p>
+                            <p>{{ $orders[0]->description }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col m5 s5">
+                    <div class="card blue accent-1 white-text z-depth-2">
+                        <div class="card-content">
+                            <table class="responsive-table">
+                                <thead>
+                                <tr>
+                                    <th>Price</th>
+                                    <th>Deposit</th>
+                                    <th>Residue</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    @if($order->price != null)
+                                        <td>{{ $order->price }}лв.</td>
+                                        @else
+                                        <td>0лв.</td>
+                                    @endif
+                                    <td>{{ $final = $order->price - 10 }}лв.</td>
+                                    <td>{{ $final }}лв.</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col m12 s12 z-depth-2">
+                    <h4>Repair</h4>
+                    <div class="row">
+                        <form class="col m12 s12" action="">
+                            <div class="row">
+                                <div class="input-field col m12 s12">
+                                    <input id="repair" name="repair" value="" type="text">
+                                    <label for="repair">Repair</label>
+                                </div>
+                                <div class="input-field col m12 s12">
+                                    <textarea id="description" class="materialize-textarea"></textarea>
+                                    <label for="description">Description</label>
+                                </div>
+                                <div class="input-field col m12 s12 right-align">
+                                    <button class="btn waves-effect waves-light blue"><i class="material-icons">save</i></button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

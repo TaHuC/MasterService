@@ -21,15 +21,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-action grey lighten-3">
+                    <div class="card-action blue-grey lighten-2">
                         <div clas="row">
                             <table class="highlight">
                                 <thead>
                                     <tr>
                                         <th>Devices</th>
                                         <th>Date add</th>
+                                        <th>Serial</th>
                                         <th>Status</th>
-                                        <th>Actions</th>
                                         <th><a href="#addDevModal" class="btn halfway-fab waves-effect waves-light red tooltipped" data-position="top" data-delay="100" data-tooltip="Add new Device"><i class="material-icons">add</i></a></th>
                                     </tr>
                                 </thead>
@@ -38,9 +38,10 @@
                                     @foreach ($finalProducts as $product)
                                         <tr>
                                             <td>{{ $product['brand'] }} {{ $product['model'] }}</td>
+                                            <td>{{ $product['serial'] }}</td>
                                             <td>{{ $product['created_at'] }}</td>
                                             <td>{{ $product['status'] }}</td>
-                                            <td><a class="btn-flat wave-effect tooltipped" data-position="top" data-delay="100" data-tooltip="Open Device"><i class="large material-icons">link</i></a></td>
+                                            <td><a href="{{ asset('/product/'.$product['id']) }}" class="btn wave-effect tooltipped lime accent-3 amber-text" data-position="top" data-delay="100" data-tooltip="Open Device"><i class="large material-icons">link</i></a></td>
                                         </tr>
                                     @endforeach
                                     @endif

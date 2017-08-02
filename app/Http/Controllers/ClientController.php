@@ -85,11 +85,16 @@ class ClientController extends Controller
             $brand = Brand::where('id', $products[$i]->brandId)->first();
             $model = ModelBrand::where('id', $products[$i]->modelId)->first();
             $user = User::where('id', $products[$i]->userId)->first();
-            $order = Order::where('productId', $products[$i]->id)->first();
+            $order = Order::where('productId', $products[$i]->id)->orderBy('id', 'DESC')->first();
 
             if($order != null)
             {
                 $status = Status::where('id', $order->statusId)->first();
+                $status = $status->status;
+            }
+            else
+            {
+                $status = 'No order';
             }
 
             $finalProducts[$i] = [
@@ -98,7 +103,7 @@ class ClientController extends Controller
                 'brand' => $brand->title,
                 'model' => $model->title,
                 'user' => $user->name,
-                'status' => $status->status,
+                'status' => $status,
                 'created_at' => $products[$i]->created_at,
                 'serial' => $products[$i]->serial
             ];
@@ -132,19 +137,21 @@ class ClientController extends Controller
     {
         //
         $client = Client::find($id);
+
         $this->validate($request, [
             'name' => 'required|max:255',
             'email' => 'min:3|max:255',
-                Rule::unique('client')->ignore($client->id),
+                Rule::unique('client')->ignore($id),
             'phone' => 'required|numeric',
-                Rule::unique('client')->ignore($client->id),
+                Rule::unique('client')->ignore($id),
         ]);
+
         $client->name = $request->name;
         $client->email = $request->email;
         $client->phone = $request->phone;
         $client->save();
 
-        return view('client.show', compact('client'));
+        return redirect()->route('client.show', ['id' => $client->id]);
     }
 
     /**

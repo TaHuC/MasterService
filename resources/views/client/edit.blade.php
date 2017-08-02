@@ -7,8 +7,9 @@
             <div class="col m6 offset-m3 z-depth-4 grey lighten-3" id="add-client-col">
                 <div class="row">
                     <h4 class="title">Edit Client</h4>
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('client.store') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('client.update', $client->id) }}">
                         {{ csrf_field() }}
+                        <input name="_method" type="hidden" value="PUT">
 
                         <div class="input-field col s12 {{ $errors->has('name') ? ' has-error' : '' }}">
 
