@@ -58,12 +58,12 @@ class ModelController extends Controller
             'model' => 'required|unique:models,brandId,'.$request->brand,
         ]);
 
-        $model = new ModelBrand();
-        $model->brandId = $request->brand;
-        $model->title = $request->model;
-        $model->save();
+        $modelBrand = new ModelBrand();
+        $modelBrand->brandId = $request->brand;
+        $modelBrand->title = $request->model;
+        $modelBrand->save();
 
-        return $model->id;
+        return $modelBrand->id;
     }
 
     /**

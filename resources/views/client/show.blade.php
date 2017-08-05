@@ -71,19 +71,19 @@
                     <div class="row" id="serialDiv">
                         <div class="input-field col s12">
                             <i class="material-icons prefix" id="genetareSerial">textsms</i>
-                            <input id="serial" type="text" class="autocomplate">
+                            <input id="serial" type="text" autocomplete="off" class="autocomplate">
                             <label for="serial" id="showSerial">Serial Number</label>
                             <i class="test"></i>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s6" id="brandDiv">
-                            <input id="brand" type="text" class="validate">
+                            <input id="brand" type="text" autocomplete="off" class="validate">
                             <label for="brand">Input Brand</label>
                             <div class="showDiv" id="showBrand" style="display: none"></div>
                         </div>
                         <div class="input-field col s6" id="modelDiv"   >
-                            <input id="model" type="text" class="validate">
+                            <input id="model" type="text" autocomplete="off" class="validate">
                             <label for="model">Input Model</label>
                             <div class="showDiv" id="showModel" style="display: none"></div>
                         </div>
@@ -123,9 +123,10 @@
         $('#model').keyup(() => {
             let getModel = $('#model').val();
             let showModelDiv = $('#showModel');
+            let _token = $('meta[name="csrf-token"]').attr('content');
 
             if(getModel.length >= 1){
-                $.get('/model/select/'+getModel + '/' + brandId, function (data) {
+                $.get('/model/select/' + getModel + '/' + brandId, function (data) {
                     if(!showModelDiv.is(':visible')) {
                         showModelDiv.fadeIn('slow');
                     }
@@ -135,15 +136,7 @@
                         }
                     } else {
                         showModelDiv.html('');
-                        showModelDiv.fadeOut('slow');
-                        let setTime = setTimeout(function () {
-                            $('#model').attr('disabled', 'disabled');
-                            $('#saveProduct').removeAttr('disabled');
-                            $('#comment').focus();
-                        }, 2000);
-                        $('#model').keyup(() => {
-                            clearTimeout(setTime);
-                        });
+                        showModelDiv.html(`<p>${getModel} <span onclick="addModel('${getModel}', ${brandId}, '${_token}')" class="btn-flat green-text waves-effect waves-light right-align"><i class="material-icons">add</i></span></p>`);
                     }
                 });
             } else {
@@ -158,6 +151,24 @@
             $('#showModel').fadeOut('slow');
             $('#comment').focus();
             $('#saveProduct').removeAttr('disabled');
+        }
+
+        function addBrand(brand, typeId, _token) {
+            $.post('/brand/', {brand: $('#brand').val(), typeId, _token}, function (data) {
+                $('#brand').attr('disabled', 'disabled');
+                $('#showBrand').fadeOut('slow');
+                $('#modelDiv').fadeIn('slow');
+                $('#model').focus();
+            });
+        }
+
+        function addModel(model, brand, _token) {
+            $.post('/model/', {model: $('#model').val(), brand, _token}, function (data) {
+                $('#model').attr('disabled', 'disabled');
+                $('#showModel').fadeOut('slow');
+                $('#comment').focus();
+                $('#saveProduct').removeAttr('disabled');
+            });
         }
     </script>
     <script src="{{ asset('js/showClient.js') }}"></script>

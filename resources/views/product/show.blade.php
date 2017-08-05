@@ -29,6 +29,7 @@
                                 <th>Status</th>
                             </tr>
                             </thead>
+                            @if(count($orders) > 0)
                             <tbody>
                             @foreach($orders as $order)
                                 <tr>
@@ -44,11 +45,13 @@
                                 </tr>
                             @endforeach
                             </tbody>
+                            @endif
                         </table>
                     </div>
                 </div>
             </div>
 
+            @if(count($orders) > 0)
             <div class="col m8 s8" id="orderInfo">
                 <div class="col m4 s4">
                     <div class="card blue accent-1 red-text z-depth-2">
@@ -129,6 +132,7 @@
                     </div>
                 </div>
             </div>
+            @endif
 
             <div class="col m8 s8 z-depth-3" id="formOrder">
                     <div class="col m12 s12">

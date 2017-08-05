@@ -2,6 +2,7 @@ $(document).ready(function(){
     let typeId = 0
     let _token = $('meta[name="csrf-token"]').attr('content');
 
+
     $('#serialDiv').css('display', 'none');
     $('#brandDiv').css('display', 'none');
     $('#modelDiv').css('display', 'none');
@@ -25,7 +26,7 @@ $(document).ready(function(){
             let showBrandDiv = $('#showBrand');
 
             if(getBrand.length >= 1){
-                $.get('/brand/select/'+getBrand + '/' + typeId, function (data) {
+                $.get('/brand/select/' + getBrand + '/' + typeId, function (data) {
                     if(!showBrandDiv.is(':visible')) {
                         showBrandDiv.fadeIn('slow');
                     }
@@ -35,14 +36,7 @@ $(document).ready(function(){
                         }
                     } else {
                         showBrandDiv.html('');
-                        showBrandDiv.fadeOut('slow');
-                        let setTime = setTimeout(function () {
-                            $('#modelDiv').fadeIn('slow').focus();
-                            $('#brand').attr('disabled', 'disabled');
-                        }, 2000);
-                        $('#brand').keyup(() => {
-                            clearTimeout(setTime);
-                        })
+                        showBrandDiv.html(`<p>${getBrand} <span onclick="addBrand('${getBrand}', ${typeId}, '${_token}')" class="btn-flat green-text waves-effect waves-light right-align"><i class="material-icons">add</i></span></p>`);
                     }
                 });
             } else {
@@ -77,7 +71,7 @@ $(document).ready(function(){
         let getDate = new Date();
         let randomString = Math.random().toString(36).slice(2);
 
-        $('#serial').val(''+getDate.getDate()+getDate.getMonth()+getDate.getFullYear()+randomString);
+        $('#serial').val(''+ getDate.getDate() + getDate.getMonth() + getDate.getFullYear() + randomString);
         $('#serial').css('color', 'green').attr('disabled', 'disabled');
         $('#brand').focus();
     });
@@ -92,27 +86,19 @@ $(document).ready(function(){
        $.get('/brand/select/'+$('#brand').val()+'/'+typeId, function (data) {
            if(data.length !== 0) {
                brand = data[0].id;
-           } else {
-               $.post('/brand/', {brand: $('#brand').val(), typeId, _token}, function (data) {
-                   brand = data;
-               })
            }
 
            $.get('/model/select/' + $('#model').val() + '/' + brand, function (data) {
                if(data.length !== 0) {
                    model = data[0].id;
-               } else {
-                   $.post('/model/', {model: $('#model').val(), brand, _token}, function (data) {
-                       model = data;
-                   })
                }
+
                if(serial.length !== 0 && brand.length !== 0 && model.length !== 0) {
                    $.post('/product/', {typeId, serial, brand, model, clientId, comment, _token}, function (data) {
                        window.location.pathname = '/product/'+data;
                    });
                }
            });
-
 
        });
 
