@@ -57,13 +57,13 @@
     <div class="modal modal-fixed-footer" id="addDevModal">
         <div class="modal-content">
             <div class="row">
-                <form class="col s12">
-                    <div class="row" >
-                        <div class="checkbox-inline col s12" id="typeCheckBox">
+                <form class="col m12 s12">
+                    <div class="row">
+                        <div class="col s12 center-block" id="typeCheckBox">
                             @foreach($types as $type)
-                                <div class="col s2 z-depth-2">
-                                    <input type="radio" name="type" id="{{ $type['id'] }}" value="{{ $type['id'] }}" />
-                                    <label for="{{ $type['id'] }}">{{ $type['title'] }}</label>
+                                <div class="col s4 hoverable waves-block waves-green waves-effect z-depth-2 center typeButton">
+                                    <input type="hidden" name="type" id="{{ $type['id'] }}" value="{{ $type['id'] }}" />
+                                    <h4 class="">{{ $type['title'] }}</h4>
                                 </div>
                             @endforeach
                         </div>
@@ -76,7 +76,7 @@
                             <i class="test"></i>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" id="brandModelRow">
                         <div class="input-field col s6" id="brandDiv">
                             <input id="brand" type="text" autocomplete="off" class="validate">
                             <label for="brand">Input Brand</label>
@@ -88,7 +88,7 @@
                             <div class="showDiv" id="showModel" style="display: none"></div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" id="commentRow">
                         <div class="input-field col s12">
                             <textarea id="comment" class="materialize-textarea"></textarea>
                             <label for="comment">Write comment</label>
@@ -105,71 +105,5 @@
 @endsection
 
 @section('jsImport')
-    <script>
-        let brandId = 0;
-
-        function getBrand(text, id) {
-            $('#brand').val(text);
-            $('#brand').attr('disabled', 'disabled');
-            $('#showBrand').fadeOut('slow');
-            $('#modelDiv').fadeIn('slow');
-            $('#model').focus();
-
-            brandId = id;
-
-            return brandId;
-        }
-
-        $('#model').keyup(() => {
-            let getModel = $('#model').val();
-            let showModelDiv = $('#showModel');
-            let _token = $('meta[name="csrf-token"]').attr('content');
-
-            if(getModel.length >= 1){
-                $.get('/model/select/' + getModel + '/' + brandId, function (data) {
-                    if(!showModelDiv.is(':visible')) {
-                        showModelDiv.fadeIn('slow');
-                    }
-                    if(data.length !== 0) {
-                        for (let resultB of data) {
-                        showModelDiv.html(`<p onclick="getModel('${resultB.title}')">${resultB.title}</p>`);
-                        }
-                    } else {
-                        showModelDiv.html('');
-                        showModelDiv.html(`<p>${getModel} <span onclick="addModel('${getModel}', ${brandId}, '${_token}')" class="btn-flat green-text waves-effect waves-light right-align"><i class="material-icons">add</i></span></p>`);
-                    }
-                });
-            } else {
-                showModelDiv.html('');
-                showModelDiv.fadeOut('slow');
-            }
-        });
-
-        function getModel(text) {
-            $('#model').val(text);
-            $('#model').attr('disabled', 'disabled');
-            $('#showModel').fadeOut('slow');
-            $('#comment').focus();
-            $('#saveProduct').removeAttr('disabled');
-        }
-
-        function addBrand(brand, typeId, _token) {
-            $.post('/brand/', {brand: $('#brand').val(), typeId, _token}, function (data) {
-                $('#brand').attr('disabled', 'disabled');
-                $('#showBrand').fadeOut('slow');
-                $('#modelDiv').fadeIn('slow');
-                $('#model').focus();
-            });
-        }
-
-        function addModel(model, brand, _token) {
-            $.post('/model/', {model: $('#model').val(), brand, _token}, function (data) {
-                $('#model').attr('disabled', 'disabled');
-                $('#showModel').fadeOut('slow');
-                $('#comment').focus();
-                $('#saveProduct').removeAttr('disabled');
-            });
-        }
-    </script>
     <script src="{{ asset('js/showClient.js') }}"></script>
 @endsection

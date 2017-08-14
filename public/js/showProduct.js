@@ -1,5 +1,6 @@
 $(document).ready(function () {
     $('.modal').modal();
+
     let productId = $('#productId').val();
     let _token = $('meta[name="csrf-token"]').attr('content');
     let orderTableTd = $('#orderTable td');
