@@ -51,7 +51,6 @@ class ModelController extends Controller
      */
     public function store(Request $request)
     {
-        //
         //Valideite data
         $this->validate($request, [
             'brand' => 'required|numeric',

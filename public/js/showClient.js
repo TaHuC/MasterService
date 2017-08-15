@@ -18,7 +18,7 @@ $(() => {
     typeDiv.find('div').on('click', setType);
 
     function setType() {
-        product.typeId = $(this).find('input').val();
+        product.typeId = Number($(this).find('input').val());
         let textType = $(this).text();
 
         typeDiv.fadeOut(() => {
@@ -63,21 +63,132 @@ $(() => {
 
         showBrand.fadeIn();
         showBrand.empty();
-        showBrand.append(`<i>Loading...</i>`);
-        showBrand.empty();
+
         remote.getParams('/brand/select/', 'get', `${brand}/${product.typeId}`)
             .then(data => {
                 if (data.length === 0) {
-                    showBrand.append(`<p>${brand} <button class="btn-flat green-text waves-effect waves-light right-align"><i class="material-icons">add</i></button></p>`);
+                    $(`<p data-brand="${brand}" data-status="new">${brand} <button class="btn-flat green-text waves-effect waves-light right-align"><i class="material-icons">add</i></button></p>`)
+                        .on('click', brandFun).appendTo(showBrand);
                 } else {
                     for(let getBrand of data) {
-                        showBrand.append(`<p>${getBrand.title} <button class="btn-flat green-text waves-effect waves-light right-align"><i class="material-icons">open_in_new</i></button></p>`)
+                        $(`<p data-brand="${getBrand.title}" data-status="old">${getBrand.title} <button class="btn-flat green-text waves-effect waves-light right-align"><i class="material-icons">open_in_new</i></button></p>`)
+                            .on('click', brandFun).appendTo(showBrand);
                     }
                 }
             });
+
+        function brandFun(e) {
+            e.preventDefault();
+            let brandData = $(this).attr('data-brand');
+            let brandStatus = $(this).attr('data-status');
+
+            if(brandStatus === 'old'){
+                remote.getParams('/brand/select/', 'get', `${brandData}/${product.typeId}`)
+                    .then(data => {
+                        product.brandId = data[0].id;
+                        $('#showBrand').empty().hide();
+                        $('#brand').val(data[0].title).attr('disabled', 'true');
+                        modelDiv.fadeIn(() => {
+                            $('#model').focus();
+                        });
+                    });
+
+            } else {
+                let dataSend = {
+                    brand: brandData,
+                    typeId: product.typeId,
+                    _token: product._token
+                };
+                remote.getParams('/brand/', 'post', dataSend)
+                    .then( function(data){
+                        product.brandId = data;
+                        Materialize.toast(`Brand: ${dataSend.brand}, added`, 2500);
+                        $('#showBrand').empty().hide();
+                        $('#brand').attr('disabled', 'true');
+                        modelDiv.fadeIn(() => {
+                            $('#model').focus();
+                        });
+
+                    });
+            }
+        }
     });
 
-    function brandFun() {
-        
-    }
+
+
+    modelDiv.find('input').keyup(() => {
+        let model = modelDiv.find('input').val();
+        let showModel = $('#showModel');
+        showModel.empty();
+
+        if(model.length === 0) {
+            return;
+        }
+
+        showModel.fadeIn();
+
+        remote.getParams('/model/select/', 'get', `${model}/${product.brandId}`)
+            .then(data => {
+                if (data.length === 0) {
+                    $(`<p data-model="${model}" data-status="new">${model} <button class="btn-flat green-text waves-effect waves-light right-align"><i class="material-icons">add</i></button></p>`)
+                        .on('click', modelFun).appendTo(showModel);
+                } else {
+                    for(let getModel of data) {
+                        $(`<p data-model="${getModel.title}" data-status="old">${getModel.title} <button class="btn-flat green-text waves-effect waves-light right-align"><i class="material-icons">open_in_new</i></button></p>`)
+                            .on('click', modelFun).appendTo(showModel);
+                    }
+                }
+            });
+
+        function modelFun(e) {
+            e.preventDefault();
+
+            let modelData = $(this).attr('data-model');
+            let modelStatus = $(this).attr('data-status');
+
+            if(modelStatus === 'old') {
+                remote.getParams('/model/select/', 'get', `${modelData}/${product.brandId}`)
+                    .then(data => {
+                        product.modelId = data[0].id;
+                        showModel.empty().hide();
+                        $('#model').val(data[0].title).attr('disabled', 'true');
+                        commentRow.fadeIn(() => {
+                            $('#comment').focus();
+                        });
+                        $('#saveProduct').removeAttr('disabled');
+                    });
+            } else {
+                let dataSend = {
+                    model: modelData,
+                    brand: product.brandId,
+                    _token: product._token
+                };
+
+                remote.getParams('/model/', 'post', dataSend)
+                    .then( function(data){
+                        product.modelId = data;
+                        Materialize.toast(`Model: ${dataSend.model}, added`, 2500);
+                        showModel.empty().hide();
+                        $('#model').attr('disabled', 'true');
+                        commentRow.fadeIn(() => {
+                            $('#comment').focus();
+                        });
+                        $('#saveProduct').removeAttr('disabled');
+                    });
+            }
+        }
+    });
+
+    $('#saveProduct').on('click', function (e) {
+        e.preventDefault();
+
+        product.serial = $('#serial').val();
+        product.comment = $('#comment').val() || 'No comment';
+        product.clientId = Number($('#clientId').val());
+
+        remote.getParams('/product/', 'post', product)
+            .then(data => {
+                window.location.pathname = '/product/'+data;
+            });
+    })
 });

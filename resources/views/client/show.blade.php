@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <div class="card-action blue-grey lighten-2">
-                        <div clas="row">
+                        <div class="row" id="show">
                             <table class="highlight">
                                 <thead>
                                     <tr>

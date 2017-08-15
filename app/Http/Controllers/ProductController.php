@@ -51,18 +51,18 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'serial' => 'required|min:5|max:255|unique:products',
+            'serial' => 'required|min:3|max:255|unique:products',
             'typeId' => 'required|integer',
-            'brand' => 'required|integer',
-            'model' => 'required|integer',
+            'brandId' => 'required|integer',
+            'modelId' => 'required|integer',
             'clientId' => 'required|integer'
         ]);
 
         $product = new Product();
         $product->clientId = $request->clientId;
         $product->typeId = $request->typeId;
-        $product->brandId = $request->brand;
-        $product->modelId = $request->model;
+        $product->brandId = $request->brandId;
+        $product->modelId = $request->modelId;
         $product->userId = Auth::user()->id;
         $product->serial = $request->serial;
         $product->comment = $request->comment;

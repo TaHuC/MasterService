@@ -1,20 +1,25 @@
 let remote = (() => {
-    function getParams(url, method, value) {
-        if(method === 'get') return get(url, value);
+    function getParams(url, method, values) {
+        if(method === 'get') return get(url, values);
+        else if (method === 'post') return post(url, values);
     }
     
-    function makeRequest(method, url, value) {
+    function makeRequest(method, url, values = '') {
         return req = {
-            url: url + value,
+            url: url + values,
             method
         }
     }
     
-    function get(url, value) {
-        return $.ajax(makeRequest('GET', url, value))
+    function get(url, values) {
+        return $.ajax(makeRequest('GET', url, values))
             .error(() => {
                 Materialize.toast('The "Problem" field is required', 2500);
             });
+    }
+    
+    function post(url, values) {
+        return $.post(url, values);
     }
 
     return {
