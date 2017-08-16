@@ -45,8 +45,8 @@ class OrderController extends Controller
         //
         $this->validate($request, [
             'productId' => 'required|integer',
-            'nowStatus' => 'required|min:2',
-            'problem' => 'required|min:4',
+            'now' => 'required|min:2',
+            'problem' => 'required|min:3',
         ]);
 
         $order = new Order();
@@ -54,7 +54,8 @@ class OrderController extends Controller
         $order->statusId = 1;
         $order->userId = Auth::user()->id;
         $order->price = $request->price;
-        $order->now = $request->nowStatus;
+        $order->deposit = $request->deposit;
+        $order->now = $request->now;
         $order->problem = $request->problem;
         $order->password = $request->password;
         $order->description = $request->description;
