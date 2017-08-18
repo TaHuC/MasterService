@@ -7,9 +7,42 @@
                 <div class="row">
                     <div class="card hoverable">
                         <div class="card-content blue accent-1 white-text">
-                            <span class="card-title">{{ $brand->title }} {{ $model->title }}</span>
-                            <p class="">Serial NO: {{ $product->serial }}</p>
-                            <a href="#" id="newOrderShow" class="btn-floating halfway-fab waves-effect waves-light red tooltipped" data-position="top" data-delay="100" data-tooltip="New Problem"><i class="material-icons">add</i></a>
+                            <div class="row">
+                                <div class="col m4 s4">
+                                    <span class="card-title">{{ $brand->title }} {{ $model->title }}</span>
+                                    <p class="">Serial NO: {{ $product->serial }}</p>
+                                    <a href="#" id="newOrderShow" class="btn-floating halfway-fab waves-effect waves-light red tooltipped" data-position="top" data-delay="100" data-tooltip="New Problem"><i class="material-icons">add</i></a>
+                                </div>
+                                @if(count($orders) > 0)
+                                    <div class="col m8 s8 green z-depth-1" id="orderDetails">
+                                        <h5># {{ $orders[0]->id }}</h5>
+                                        <table>
+                                            <thead>
+                                            <td>Now</td>
+                                            <td>Password</td>
+                                            <td>Problem</td>
+                                            <td>Description</td>
+                                            <td>Price</td>
+                                            <td>Actions</td>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>{{$orders[0]->now}}</td>
+                                                <td>{{$orders[0]->password}}</td>
+                                                <td>{{$orders[0]->problem}}</td>
+                                                <td>{{$orders[0]->description}}</td>
+                                                <td class="left">
+                                                    <p>Price:<span class="right">{{$orders[0]->price}}</span></p>
+                                                    <p>Deposit:<span class="right">{{$orders[0]->deposit}}</span></p>
+                                                    <p>Remaing:<span class="right">{{$orders[0]->price - $orders[0]->deposit}}</span></p>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                @endif
+                            </div>
                         </div>
                         <div class="card-action blue accent-2">
                             <span class="white-text">{{ $client->name }} {{ $client->phone }}</span>
@@ -18,66 +51,7 @@
                 </div>
 
                 @if(count($orders) > 0)
-                    <div class="col m12 s12 card hoverable" id="orderInfo">
-                        <div class="col m4 s4">
-                            <div class="card blue accent-1 red-text z-depth-2">
-                                <div class="card-content">
-                                    <p>Problem:</p>
-                                    <p>{{ $orders[0]->problem }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col m4 s4">
-                            <div class="card blue accent-1 white-text z-depth-2">
-                                <div class="card-content">
-                                    <p>Now:</p>
-                                    <p>{{ $orders[0]->now }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col m4 s4">
-                            <div class="card blue accent-1 white-text z-depth-2">
-                                <div class="card-content">
-                                    <p>Password:</p>
-                                    <p>{{ $orders[0]->password }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col m7 s7">
-                            <div class="card blue accent-1 white-text z-depth-2">
-                                <div class="card-content">
-                                    <p>Description:</p>
-                                    <p>{{ $orders[0]->description }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col m5 s5">
-                            <div class="card blue accent-1 white-text z-depth-2">
-                                <div class="card-content">
-                                    <table class="responsive-table">
-                                        <thead>
-                                        <tr>
-                                            <th>Price</th>
-                                            <th>Deposit</th>
-                                            <th>Residue</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            @if($orders[0]->price != null)
-                                                <td>{{ $orders[0]->price }}лв.</td>
-                                            @else
-                                                <td>0лв.</td>
-                                            @endif
-                                            <td>{{$orders[0]->price}}лв.</td>
-                                            <td>{{ $orders[0]->price - $orders[0]->deposit }}лв.</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                 @endif
             </div>
         </div>
@@ -121,7 +95,7 @@
             <div class="col m7 s7 z-depth-3 right" id="repairForm">
                 <h4>Repair</h4>
                 <div class="row">
-                    <form class="col m12 s12" action="">
+                    <form class="col m12 s12" id="repairForm">
                         <div class="row">
                             <div class="input-field col m12 s12">
                                 <input id="repair" name="repair" value="" type="text">
@@ -131,8 +105,12 @@
                                 <textarea id="description" class="materialize-textarea"></textarea>
                                 <label for="description">Description</label>
                             </div>
+                            <div class="input-field col m12 s12">
+                                <input id="price" name="price" value="{{$orders[0]->price}}" type="text">
+                                <label for="price">Repair</label>
+                            </div>
                             <div class="input-field col m12 s12 right-align">
-                                <button class="btn waves-effect waves-light blue"><i class="material-icons">save</i></button>
+                                <button id="saveRepair" class="btn waves-effect waves-light blue"><i class="material-icons">save</i></button>
                             </div>
                         </div>
                     </form>

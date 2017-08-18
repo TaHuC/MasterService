@@ -9,19 +9,41 @@ $(document).ready(function () {
     const orderTableTd = $('#orderTable td');
     const ordetTableTr = $('#orderTable tr');
 
-    $('#price').keyup(() => {
-        let price = $('#price');
+    $('#price').keyup(priceCheck);
+    $('#deposit').keyup(priceCheck);
+
+
+    function priceCheck() {
+        let price = $(this);
         if(isNaN(price.val())) {
             price.val('');
         }
-    });
-    $('#deposit').keyup(() => {
-        let deposit = $('#deposit');
-        if(isNaN(deposit.val())) {
-            deposit.val('');
-        }
-    });
+    }
 
+    $('#saveRepair').on('click', saveRepair);
+    
+    function saveRepair(e) {
+        e.preventDefault();
+        let values = {
+            _token: $('meta[name="csrf-token"]').attr('content'),
+            orderId: Number($('#orderDetails').find('h5').text().slice(2)),
+            repair: $('#repairForm').find('input[name=repair]').val(),
+            description: $('#repairForm').find('textarea').val(),
+            price: Number($('#repairForm').find('input[name=price]').val()) || 0
+        };
+
+        if(values.repair === "") {
+            Materialize.toast('Input (Repair), is not must by empty!', 2500);
+            $('#repairForm').find('input[name=repair]').focus();
+            return;
+        }
+        remote.getParams('/repair/', 'post', values)
+            .then(() => {
+                Materialize.toast('Add repair success.', 2500, '', function() {
+                    window.location.reload();
+                });
+            });
+    }
 
     if(orderTableTd[2] != undefined) {
         if(orderTableTd[2].dataset['status'] < 3) {
@@ -35,16 +57,21 @@ $(document).ready(function () {
     }
 
 
-    $(ordetTableTr).on('click', function () {
-        alert('test');
-    });
+    $(ordetTableTr).on('click', getOldOrder);
+    
+    function getOldOrder() {
+        let orders = $(this);
+        console.log(orders);
+    }
 
     $('#newOrderShow').on('click', function () {
         $('#formOrder').hide();
         $('#formOrder').fadeIn('slow');
     });
 
-    $('#saveNewProblem').on('click', function () {
+    $('#saveNewProblem').on('click', saveOrder);
+
+    function saveOrder() {
         if($('#problem').val().length <= 3){
             Materialize.toast('The "Problem" field is required min 3 simbol', 2500,'',function(){
                 $('#problem').focus();
@@ -69,5 +96,5 @@ $(document).ready(function () {
             .then(() => {
                 window.location.reload();
             });
-    });
+    }
 });

@@ -28,3 +28,4 @@ Route::resource('/search', 'SearchController');
 Route::resource('/product', 'ProductController');
 Route::get('/product/serial/{serial}', 'ProductController@getSerial');
 Route::resource('/order', 'OrderController');
+Route::resource('/repair', 'RepairController');

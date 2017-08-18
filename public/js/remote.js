@@ -22,6 +22,14 @@ let remote = (() => {
         return $.post(url, values);
     }
 
+    function put(url, values) {
+        return $.ajax('PUT', url, values)
+            .error((err) => {
+                Materialize.toast(err, 2500);
+            });
+    }
+
+
     return {
         getParams
     }
