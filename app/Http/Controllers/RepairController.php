@@ -65,6 +65,9 @@ class RepairController extends Controller
     public function show($id)
     {
         //
+        $repairs = Repair::where('orderId', '=', $id)->get();
+
+        return $repairs;
     }
 
     /**

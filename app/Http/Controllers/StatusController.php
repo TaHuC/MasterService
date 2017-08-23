@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Status;
 use Illuminate\Http\Request;
 
 class StatusController extends Controller
@@ -46,6 +47,9 @@ class StatusController extends Controller
     public function show($id)
     {
         //
+        $status = Status::find($id);
+
+        return $status;
     }
 
     /**

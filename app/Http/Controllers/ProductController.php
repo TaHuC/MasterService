@@ -81,13 +81,8 @@ class ProductController extends Controller
     {
         //
         $product = Product::find($id);
-        $brand = Brand::find($product->brandId);
-        $model = ModelBrand::find($product->modelId);
-        $client = Client::find($product->clientId);
-        $orders = Order::where('productId', $product->id)->orderBy('id', 'desc')->get();
-        $statuses = Status::all();
 
-        return view('product.show', compact('product', 'brand', 'model', 'client', 'orders', 'statuses'));
+        return view('product.show', compact('product'));
     }
 
     /**

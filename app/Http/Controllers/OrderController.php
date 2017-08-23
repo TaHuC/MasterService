@@ -73,37 +73,10 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //
-        $order = Order::find($id);
-
-        $product = Product::where('id', $order->productId)->first();
-        $client = Client::where('id', $product->clientId)->first();
-        $type = Type::where('id', $product->typeId)->first();
-        $brand = Brand::where('id', $product->brandId)->first();
-        $model = ModelBrand::where('id', $product->modelId)->first();
-        $userName = User::where('id', $order->userId)->first();
-
-        $order = [
-            'id' => $order->id,
-            'type' => $type->title,
-            'brand' => $brand->title,
-            'model' => $model->title,
-            'clientId' => $client->id,
-            'client' => $client->name,
-            'clientPhone' => $client->phone,
-            'clientEmail' => $client->email,
-            'serial' => $product->serial,
-            'userName' => $userName->name,
-            'password' => $order->password,
-            'now' => $order->now,
-            'problem' => $order->problem,
-            'created_at' => $order->created_at,
-            'description' => $order->description,
-            'active' => $order->active
-        ];
-
-        return view('order.show', compact('order'));
-
+        $order = Order::where('productId', '=', $id)
+            ->orderBy('id', 'desc')
+            ->get();
+        return $order;
     }
 
     /**
@@ -127,6 +100,7 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         //
+        
     }
 
     /**

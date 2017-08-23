@@ -29,7 +29,6 @@ let remote = (() => {
             });
     }
 
-
     return {
         getParams
     }

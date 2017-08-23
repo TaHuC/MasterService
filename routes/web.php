@@ -29,3 +29,5 @@ Route::resource('/product', 'ProductController');
 Route::get('/product/serial/{serial}', 'ProductController@getSerial');
 Route::resource('/order', 'OrderController');
 Route::resource('/repair', 'RepairController');
+Route::resource('/status', 'StatusController');
+Route::resource('/users', 'UsersController');

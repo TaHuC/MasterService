@@ -1,100 +1,125 @@
 $(document).ready(function () {
-    $('.modal').modal();
+    $('#addOrder').hide();
+    $('#addRepair').hide();
 
-    const orderDetail = {
-        productId: $('#productId').val(),
-        _token: $('meta[name="csrf-token"]').attr('content'),
+    const product = JSON.parse($('#product').attr('data-content'));
+    const cardProduct = $('#productInfo');
+    const repair = {};
 
-    };
-    const orderTableTd = $('#orderTable td');
-    const ordetTableTr = $('#orderTable tr');
+    (() => {
+        remote.getParams('/type/', 'get', product.typeId)
+            .then((data) => {
+                product.type = data.title;
+                remote.getParams('/brand/', 'get', product.brandId)
+                    .then((data) => {
+                        product.brand = data.title;
+                        remote.getParams('/model/', 'get', product.modelId)
+                            .then((data) => {
+                                product.model = data.title;
+                                domProduct();
+                            });
+                    });
+            });
 
-    $('#price').keyup(priceCheck);
-    $('#deposit').keyup(priceCheck);
 
+    })();
 
-    function priceCheck() {
-        let price = $(this);
-        if(isNaN(price.val())) {
-            price.val('');
-        }
+    function domProduct() {
+        cardProduct.find('span').text(`${product.brand} ${product.model}`);
+        cardProduct.append(`<p>&numero; ${product.serial}</p>`);
+        cardProduct.append(`<p>&#9777; ${product.comment}</p>`);
+
+        remote.getParams('/order/', 'get', product.id)
+            .then((data) => {
+                if(data.length > 0){
+                    ordersFunc(data);
+                } else {
+                    addOrder;
+                }
+            });
     }
-
-    $('#saveRepair').on('click', saveRepair);
     
-    function saveRepair(e) {
-        e.preventDefault();
-        let values = {
-            _token: $('meta[name="csrf-token"]').attr('content'),
-            orderId: Number($('#orderDetails').find('h5').text().slice(2)),
-            repair: $('#repairForm').find('input[name=repair]').val(),
-            description: $('#repairForm').find('textarea').val(),
-            price: Number($('#repairForm').find('input[name=price]').val()) || 0
-        };
-
-        if(values.repair === "") {
-            Materialize.toast('Input (Repair), is not must by empty!', 2500);
-            $('#repairForm').find('input[name=repair]').focus();
-            return;
-        }
-        remote.getParams('/repair/', 'post', values)
-            .then(() => {
-                Materialize.toast('Add repair success.', 2500, '', function() {
-                    window.location.reload();
-                });
-            });
+    function addOrder() {
+        $('#addRepair').hide();
+        $('#addOrder').fadeIn();
     }
-
-    if(orderTableTd[2] != undefined) {
-        if(orderTableTd[2].dataset['status'] < 3) {
-            $('#newOrderShow').attr('disabled', 'disabled');
-            $('#formOrder').hide();
-        } else {
-            $('#orderInfo').hide();
-        }
-    } else {
-        $('#orderInfo').hide();
-    }
-
-
-    $(ordetTableTr).on('click', getOldOrder);
     
-    function getOldOrder() {
-        let orders = $(this);
-        console.log(orders);
-    }
+    function ordersFunc(data) {
+        repair.id = data[0].id;
 
-    $('#newOrderShow').on('click', function () {
-        $('#formOrder').hide();
-        $('#formOrder').fadeIn('slow');
-    });
+        $('#addOrder').hide();
 
-    $('#saveNewProblem').on('click', saveOrder);
+        let orders = $('#orders');
+        orders.append($('<div class="card-tabs"></div>'));
+        orders.append($('<div class="card-content blue-grey lighten-1"></div>'));
+        orders.find('.card-tabs').append($('<ul class="tabs tabs-fixed-width"></ul>'));
+        let tabs = orders.find('.tabs');
+        let tabsInfo = orders.find('.card-content');
+        remote.getParams('/status/', 'get', data[0].statusId)
+            .then((dataStatus) => {
+                let iconsSet = '';
 
-    function saveOrder() {
-        if($('#problem').val().length <= 3){
-            Materialize.toast('The "Problem" field is required min 3 simbol', 2500,'',function(){
-                $('#problem').focus();
+                if (dataStatus.id === 1){
+                    iconsSet = "store";
+                    $('#addRepair').fadeIn();
+                } else if (dataStatus.id === 2){
+                    iconsSet = "build";
+                    $('#addRepair').fadeIn();
+                } else if (dataStatus.id === 3){
+                    iconsSet = "thumb_up";
+                } else if (dataStatus.id === 4){
+                    iconsSet = "transfer_within_a_station";
+                    $('#addRepair').hide();
+                    $('#addOrder').fadeIn();
+                }
+
+                remote.getParams('/users/', 'get', data[0].userId)
+                    .then((dataUser) => {
+                        $('#productInfo').append($(`<div class="row center">`)
+                            .append($(`<p>`)
+                            .append($(`<i class="large material-icons">`).text(iconsSet))
+                            .append($('<p>').text(dataStatus.status))
+                            .append($('<p>').text(dataUser.name))
+                                .append($(`<div class="divider">`))
+                                .append($(`<div class="section">`))));
+
+                        let btnHandover = $(`<button class="btn waves-effect green">`).append($('<i class="material-icons">').text(`thumb_up`));
+                        let btnFinished = $(`<button class="btn waves-effect orange">`).append($('<i class="material-icons">').text('transfer_within_a_station'));
+
+                        if(dataStatus.id === 1 || dataStatus.id === 2) {
+                            $('.section').append(btnHandover).append(btnFinished);
+                        } else if(dataStatus.id === 3) {
+                            $('.section').append(btnFinished);
+                        } else if(dataStatus.id === 4) {
+
+                        }
+                    });
             });
-            return;
+
+        for (let i = 0; i < data.length; i++) {
+
+            if(i === 0) {
+                tabs.append(`<li class="tab"><a class="active waves-effect" href="#${data[i].id}"><h5>#${data[i].id}</h5></a></li>`);
+            } else {
+                tabs.append(`<li class="tab"><a class="waves-effect" href="#${data[i].id}"><h5>#${data[i].id}</h5></a></li>`);
+            }
+
+            let orderDetails = $(`<div id="${data[i].id}">`)
+                .append($(`<div class="row white-text">`)
+                    .append($(`<div class="col m2 s2">`).append($('<p>').text(data[i].problem)))
+                    .append($(`<div class="col m2 s2">`).append($('<p>').text(data[i].now)))
+                    .append($(`<div class="col m2 s2">`).append($('<p>').text(data[i].password)))
+                    .append($(`<div class="col m4 s4">`).append($('<p>').text(data[i].description)))
+                    .append($(`<div class="col m2 s2 right-align">`)
+                        .append($('<p>').text(data[i].price))
+                        .append($(`<p>`).text(data[i].deposit))
+                        .append($(`<p>`).text(data[i].price - data[i].deposit)))
+                );
+
+            tabsInfo.append(orderDetails);
+
+
         }
-        if($('#now').val().length <= 2){
-            Materialize.toast('The "Now" field is required min 3 simbol', 2500,'',function(){
-                $('#now').focus();
-            });
-            return;
-        }
-
-        orderDetail.problem = $('#problem').val();
-        orderDetail.now = $('#now').val();
-        orderDetail.password = $('#password').val();
-        orderDetail.description = $('#description').val();
-        orderDetail.price = $('#price').val();
-        orderDetail.deposit = $('#deposit').val();
-
-        remote.getParams('/order/', 'post', orderDetail)
-            .then(() => {
-                window.location.reload();
-            });
+        $('ul.tabs').tabs();
     }
 });

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\ModelBrand;
+use App\User;
 use Illuminate\Http\Request;
 
-class ModelController extends Controller
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,22 +15,6 @@ class ModelController extends Controller
     public function index()
     {
         //
-    }
-
-    public function findModel($model, $brand)
-    {
-
-        if(is_numeric($brand))
-        {
-            $models = ModelBrand::where([
-                ['brandId', '=', $brand],
-                ['title', 'like', '%'.$model.'%']
-            ])->get();
-
-            return response()->json($models);
-        }
-
-        return false;
     }
 
     /**
@@ -51,18 +35,7 @@ class ModelController extends Controller
      */
     public function store(Request $request)
     {
-        //Valideite data
-        $this->validate($request, [
-            'brand' => 'required|numeric',
-            'model' => 'required|unique:models,brandId,'.$request->brand,
-        ]);
-
-        $modelBrand = new ModelBrand();
-        $modelBrand->brandId = $request->brand;
-        $modelBrand->title = $request->model;
-        $modelBrand->save();
-
-        return $modelBrand->id;
+        //
     }
 
     /**
@@ -74,8 +47,8 @@ class ModelController extends Controller
     public function show($id)
     {
         //
-        $model = ModelBrand::find($id);
-        return $model;
+        $user = User::find($id);
+        return $user;
     }
 
     /**

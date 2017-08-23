@@ -126,6 +126,7 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="{{ asset('js/materialize.min.js') }}"></script>
     <script src="{{ asset('js/remote.js') }}"></script>
+    <script src="{{ asset('js/notifycations.js') }}"></script>
     @yield('jsImport')
 </body>
 </html>
