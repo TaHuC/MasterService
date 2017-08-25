@@ -43,13 +43,15 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         //
+        $order = new Order();
         $this->validate($request, [
             'productId' => 'required|integer',
             'now' => 'required|min:2',
             'problem' => 'required|min:3',
+            'price' => 'integer',
+            'deposit' => 'integer'
         ]);
 
-        $order = new Order();
         $order->productId = $request->productId;
         $order->statusId = 1;
         $order->userId = Auth::user()->id;
@@ -100,6 +102,19 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $this->validate($request, [
+            'statusId' => 'required|integer'
+        ]);
+
+        $active = 1;
+        if($request->statusId === 4){
+            $active = 0;
+        }
+
+        $order = Order::find($id);
+        $order->statusId = $request->statusId;
+        $order->active = $active;
+        $order->save();
         
     }
 

@@ -2,6 +2,7 @@ let remote = (() => {
     function getParams(url, method, values) {
         if(method === 'get') return get(url, values);
         else if (method === 'post') return post(url, values);
+        else if (method === 'put') return put(url, values);
     }
     
     function makeRequest(method, url, values = '') {
@@ -23,8 +24,11 @@ let remote = (() => {
     }
 
     function put(url, values) {
-        return $.ajax('PUT', url, values)
-            .error((err) => {
+        return $.ajax({
+            method: 'PUT',
+            url,
+            data: values,
+        }).error((err) => {
                 Materialize.toast(err, 2500);
             });
     }

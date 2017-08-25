@@ -20,8 +20,12 @@
                                         <input type="text" id="now" name="now">
                                         <label for="now">Now...</label>
                                     </div>
+                                    <div class="input-field col m12 s12">
+                                        <input type="text" id="password" name="password">
+                                        <label for="password">Password...</label>
+                                    </div>
                                     <div class="input-field col s12">
-                                        <textarea class="materialize-textarea" name="description"></textarea>
+                                        <textarea class="materialize-textarea" id="description" name="description"></textarea>
                                         <label for="description">Description...</label>
                                     </div>
                                     <div class="input-field col m6 s6">
@@ -33,7 +37,7 @@
                                         <label for="deposit">Deposit</label>
                                     </div>
                                     <div class="input-field col m12 s12 right-align">
-                                        <button class="btn waves-effect waves-button-input"><i class="material-icons">save</i></button>
+                                        <button class="btn waves-effect waves-button-input" id="saveOrder"><i class="material-icons">save</i></button>
                                     </div>
                                 </form>
                             </div>
@@ -46,15 +50,15 @@
                                         <label for="repair">Repair...</label>
                                     </div>
                                     <div class="input-field col s12">
-                                        <textarea class="materialize-textarea" name="description"></textarea>
+                                        <textarea class="materialize-textarea" id="descriptionRepair" name="description"></textarea>
                                         <label for="description">Description...</label>
                                     </div>
                                     <div class="input-field col m12 s12">
-                                        <input type="text" id="price" name="price">
+                                        <input type="text" id="priceRepair" name="price">
                                         <label for="price">Price</label>
                                     </div>
                                     <div class="input-field col m12 s12 right-align">
-                                        <button class="btn waves-effect waves-button-input"><i class="material-icons">save</i></button>
+                                        <button id="saveRepair" class="btn waves-effect waves-button-input"><i class="material-icons">save</i></button>
                                     </div>
                                 </form>
                             </div>
