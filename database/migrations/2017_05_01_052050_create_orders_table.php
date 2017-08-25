@@ -21,12 +21,13 @@ class CreateOrdersTable extends Migration
             $table->foreign('statusId')->references('id')->on('statuses');
             $table->integer('userId')->unsigned();
             $table->foreign('userId')->references('id')->on('users');
-            $table->string('price')->nullable();
+            $table->float('price')->default(0);
+            $table->float('deposit')->default(0);
             $table->string('now');
             $table->string('problem');
             $table->string('password')->nullable();
             $table->text('description')->nullable();
-            $table->boolean('active')->default(true);
+            $table->tinyInteger('active')->default(1);
             $table->timestamps();
         });
     }

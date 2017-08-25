@@ -40,6 +40,7 @@ $(document).ready(function () {
             .then((data) => {
                 if(data.length > 0){
                     repair.orderId = data[0].id;
+                    order.active = data[0].active;
                     ordersFunc(data);
                 } else {
                     addOrder;
@@ -53,8 +54,6 @@ $(document).ready(function () {
     }
     
     function ordersFunc(data) {
-        //repair.id = data[0].id;
-
         $('#addOrder').hide();
 
         let orders = $('#orders');
@@ -115,14 +114,30 @@ $(document).ready(function () {
 
             let orderDetails = $(`<div id="${data[i].id}">`)
                 .append($(`<div class="row white-text">`)
-                    .append($(`<div class="col m2 s2">`).append($('<p>').text(data[i].problem)))
-                    .append($(`<div class="col m2 s2">`).append($('<p>').text(data[i].now)))
-                    .append($(`<div class="col m2 s2">`).append($('<p>').text(data[i].password)))
-                    .append($(`<div class="col m4 s4">`).append($('<p>').text(data[i].description)))
-                    .append($(`<div class="col m2 s2 right-align">`)
-                        .append($('<h5>').text(data[i].price))
-                        .append($(`<h5>`).text(data[i].deposit))
-                        .append($(`<h5>`).text(data[i].price - data[i].deposit)))
+                    .append($('<table>')
+                        .append($('<thead>')
+                            .append($('<tr>')
+                                .append($('<td>').text(data[i].problem))
+                                .append($('<td>').text(data[i].now))
+                                .append($('<td>').text(data[i].password))
+                                .append($('<td>').text(data[i].description))
+                                .append($('<td class="right">')
+                                    .append($('<td>').text(data[i].price))
+                                    .append($('<td>').text(data[i].deposit))
+                                    .append($('<td>').text(data[i].price - data[i].deposit))
+                                )
+                            )
+                        )
+                        .append($('<tbody class="lime-text">')
+                            .append($('<tr>')
+                                .append($('<td>').text('Problem'))
+                                .append($('<td>').text('Now'))
+                                .append($('<td>').text('Password'))
+                                .append($('<td>').text('Description'))
+                                .append($('<td class="right">').text('Total'))
+                            )
+                        )
+                    )
                 );
 
             let list = $('<ul class="collection with-header white">');
@@ -134,8 +149,21 @@ $(document).ready(function () {
                         remote.getParams('/users/', 'get', dataRepair[i].userId)
                             .then((userRepair) => {
                                 list.append($('<li class="collection-item">')
-                                    .append($('<span class="title">').text('Repair: '+dataRepair[i].repair))
-                                    .append($('<p>').text('Desc: '+dataRepair[i].description)));
+                                    .append($('<table>')
+                                        .append($('<thead>')
+                                            .append($('<td>').text(dataRepair[i].repair))
+                                            .append($('<td>').text(dataRepair[i].description))
+                                        )
+                                        .append($('<tbody class="lime-text">')
+                                            .append($('<td>').text('Repair'))
+                                            .append($('<td>').text('Description'))
+                                        )
+                                    )
+                                    .append($('<div class="divider black">'))
+                                    .append($('<div class="divider black">'))
+                                    .append($('<div class="divider black">'))
+                                    .append($('<div class="divider black">'))
+                                );
                             });
                     }
                 } else {
@@ -171,6 +199,10 @@ $(document).ready(function () {
 
     $('#saveOrder').click(function (e) {
         e.preventDefault();
+        if(order.active === 1){
+            Materialize.toast('Last Order is not finally!', 3000);
+            return;
+        }
         order.problem = $('#problem').val();
         order.now = $('#now').val();
         order.password = $('#password').val();
@@ -179,13 +211,13 @@ $(document).ready(function () {
         order.deposit = Number($('#deposit').val());
 
         if(order.problem === ''){
-            Materialize.toast('Fild PROBLEM must bu not empty!');
+            Materialize.toast('Fild PROBLEM must bu not empty!', 3000);
             $('#problem').focus();
             return;
         }
 
         if(order.now === ''){
-            Materialize.toast('Fild NOW must bu not empty!');
+            Materialize.toast('Fild NOW must bu not empty!', 3000);
             $('#now').focus();
             return;
         }
@@ -200,7 +232,7 @@ $(document).ready(function () {
         remote.getParams('/order/', 'post', order)
             .then((data) => {
                 console.log(data);
-                Materialize.toast('Order create successfull!');
+                Materialize.toast('Order create successfull!', 3000);
                 clear();
             })
 
