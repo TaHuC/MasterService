@@ -24,6 +24,7 @@ Route::get('/brand/select/{brand}/{typeId}', 'BrandController@findBrand');
 Route::resource('/model', 'ModelController');
 Route::get('/model/select/{model}/{brandId}', 'ModelController@findModel');
 Route::resource('/client', 'ClientController');
+Route::get('/client/show/{id}', 'ClientController@getClient');
 Route::resource('/search', 'SearchController');
 Route::resource('/product', 'ProductController');
 Route::get('/product/serial/{serial}', 'ProductController@getSerial');

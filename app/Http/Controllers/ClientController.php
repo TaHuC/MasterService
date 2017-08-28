@@ -113,6 +113,17 @@ class ClientController extends Controller
     }
 
     /**
+     * Show the  client info.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getClient($id) {
+        $client = Client::find($id);
+        return $client;
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id

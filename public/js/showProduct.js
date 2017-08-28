@@ -22,7 +22,12 @@ $(document).ready(function () {
                         remote.getParams('/model/', 'get', product.modelId)
                             .then((data) => {
                                 product.model = data.title;
-                                domProduct();
+                                remote.getParams('/client/show/', 'get', product.clientId)
+                                    .then((data) => {
+                                        console.log(data);
+                                        product.clientName = data.name;
+                                        domProduct();
+                                    });
                             });
                     });
             });
@@ -33,6 +38,7 @@ $(document).ready(function () {
     function domProduct() {
         cardProduct.find('span').text(`${product.brand} ${product.model}`);
         cardProduct
+            .append($('<p>').append($('<i class="material-icons">').text('assignment_ind')).append($('<span>').text(product.clientName)).append($(`<a class="btn-flat waves-teal" href="/client/${product.clientId}">`).append($('<i class="material-icons">').text('open'))))
             .append(`<p>&numero; ${product.serial}</p>`)
             .append(`<p>&#9777; ${product.comment}</p>`);
 
@@ -43,7 +49,7 @@ $(document).ready(function () {
                     order.active = data[0].active;
                     ordersFunc(data);
                 } else {
-                    addOrder;
+                    addOrder();
                 }
             });
     }
@@ -79,6 +85,9 @@ $(document).ready(function () {
                     iconsSet = "transfer_within_a_station";
                     $('#addRepair').hide();
                     $('#addOrder').fadeIn();
+                } else if(dataStatus.id === 5) {
+                    iconsSet = "phonelink_setup";
+                    $('#addRepair').fadeIn();
                 }
 
                 remote.getParams('/users/', 'get', data[0].userId)
@@ -91,26 +100,34 @@ $(document).ready(function () {
                                 .append($(`<div class="divider">`))
                                 .append($(`<div class="section">`))));
 
-                        let btnHandover = $(`<button class="btn waves-effect green" data-status="3">`).append($('<i class="material-icons">').text(`thumb_up`));
-                        let btnFinished = $(`<button class="btn waves-effect orange" data-status="4">`).append($('<i class="material-icons">').text('transfer_within_a_station'));
+                        let btnParts = $(`<button id="statusBtn" class="btn waves-effect blue" data-status="5">`).append($('<i class="material-icons">').text(`phonelink_setup`));
+                        let btnHandover = $(`<button id="statusBtn" class="btn waves-effect green" data-status="3">`).append($('<i class="material-icons">').text(`thumb_up`));
+                        let btnFinished = $(`<button id="statusBtn" class="btn waves-effect orange" data-status="4">`).append($('<i class="material-icons">').text('transfer_within_a_station'));
 
-                        if(dataStatus.id === 1 || dataStatus.id === 2) {
-                            $('.section').append(btnHandover.click(changeStatus)).append(btnFinished.click(changeStatus));
-                        } else if(dataStatus.id === 3) {
+                        if(dataStatus.id === 3) {
                             $('.section').append(btnFinished.click(changeStatus));
+
                         } else if(dataStatus.id === 4) {
 
+                        } else {
+                            $('.section')
+                                .append(btnParts.click(changeStatus))
+                                .append(btnHandover.click(changeStatus))
+                                .append(btnFinished.click(changeStatus));
                         }
                     });
             });
 
         for (let i = 0; i < data.length; i++) {
-
-            if(i === 0) {
-                tabs.append(`<li class="tab"><a class="active waves-effect" href="#${data[i].id}"><h5>#${data[i].id}</h5></a></li>`);
-            } else {
-                tabs.append(`<li class="tab"><a class="waves-effect" href="#${data[i].id}"><h5>#${data[i].id}</h5></a></li>`);
-            }
+            remote.getParams('/users/', 'get', data[i].userId)
+                .then((userOrder) => {
+                    if(i === 0) {
+                        tabs.append(`<li class="tab"><a class="active waves-effect tooltipped" data-position="top" data-delay="50" data-tooltip="${userOrder.name}" href="#${data[i].id}"><h5>#${data[i].id}</h5></a></li>`);
+                    } else {
+                        tabs.append(`<li class="tab"><a class="waves-effect tooltipped" data-position="top" data-delay="50" data-tooltip="${userOrder.name}" href="#${data[i].id}"><h5>#${data[i].id}</h5></a></li>`);
+                    }
+                    $('.tooltipped').tooltip();
+                });
 
             let orderDetails = $(`<div id="${data[i].id}">`)
                 .append($(`<div class="row white-text">`)
@@ -122,9 +139,8 @@ $(document).ready(function () {
                                 .append($('<td>').text(data[i].password))
                                 .append($('<td>').text(data[i].description))
                                 .append($('<td class="right">')
-                                    .append($('<td>').text(data[i].price))
-                                    .append($('<td>').text(data[i].deposit))
-                                    .append($('<td>').text(data[i].price - data[i].deposit))
+                                    .append($('<p>').text(data[i].price+'лв.'))
+                                    .append($('<p>').text(data[i].deposit+'лв.'))
                                 )
                             )
                         )
@@ -134,13 +150,13 @@ $(document).ready(function () {
                                 .append($('<td>').text('Now'))
                                 .append($('<td>').text('Password'))
                                 .append($('<td>').text('Description'))
-                                .append($('<td class="right">').text('Total'))
+                                .append($('<td class="right">').text('Total: '+(data[i].price - data[i].deposit)+'лв.'))
                             )
                         )
                     )
                 );
 
-            let list = $('<ul class="collection with-header white">');
+            let list = $('<ul class="collection with-header blue-grey lighten-5">');
             list.append($('<li class="collections-header center">').append($('<h4>').text('Repairs list')));
             remote.getParams('/repair/', 'get', data[i].id)
             .then((dataRepair) => {
@@ -148,15 +164,17 @@ $(document).ready(function () {
                     for(let i = 0; i < dataRepair.length; i++){
                         remote.getParams('/users/', 'get', dataRepair[i].userId)
                             .then((userRepair) => {
-                                list.append($('<li class="collection-item">')
+                                list.append($('<li class="collection-item teal lighten-2">')
                                     .append($('<table>')
-                                        .append($('<thead>')
+                                        .append($('<thead class="blue-grey-text text-lighten-5">')
                                             .append($('<td>').text(dataRepair[i].repair))
                                             .append($('<td>').text(dataRepair[i].description))
+                                            .append($('<td class="right">').text(dataRepair[i].created_at))
                                         )
                                         .append($('<tbody class="lime-text">')
                                             .append($('<td>').text('Repair'))
                                             .append($('<td>').text('Description'))
+                                            .append($('<td class="right">').text('Created by ' + userRepair.name))
                                         )
                                     )
                                     .append($('<div class="divider black">'))
