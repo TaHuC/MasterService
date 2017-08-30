@@ -16,7 +16,8 @@ class StatusTableSeed extends Seeder
                 ['status' => 'Приета'],
                 ['status' => 'В процес'],
                 ['status' => 'Приключена'],
-                ['status' => 'Взета']
+                ['status' => 'Взета'],
+                ['status' => 'Чака част']
             ]
         );
     }

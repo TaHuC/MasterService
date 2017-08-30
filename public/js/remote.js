@@ -14,8 +14,8 @@ let remote = (() => {
     
     function get(url, values) {
         return $.ajax(makeRequest('GET', url, values))
-            .error(() => {
-                Materialize.toast('The "Problem" field is required', 2500);
+            .error((err) => {
+                Materialize.toast(err, 2500);
             });
     }
     

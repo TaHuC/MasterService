@@ -22,6 +22,26 @@ class OrderController extends Controller
     public function index()
     {
         //
+
+    }
+
+    /**
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function paramsOrder(Request $request) {
+
+        if($request->status === 'last'){
+            $orders = Order::limit($request->limit)
+                ->orderBy('id', 'desc')
+                ->get();
+            return $orders;
+        } else {
+            $orders = Order::where('statusId', '=', 3)
+                ->get();
+            return $orders;
+        }
     }
 
     /**

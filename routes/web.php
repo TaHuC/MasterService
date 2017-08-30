@@ -29,6 +29,7 @@ Route::resource('/search', 'SearchController');
 Route::resource('/product', 'ProductController');
 Route::get('/product/serial/{serial}', 'ProductController@getSerial');
 Route::resource('/order', 'OrderController');
+Route::get('/order/params/{status}/{limit?}', 'OrderController@paramsOrder');
 Route::resource('/repair', 'RepairController');
 Route::resource('/status', 'StatusController');
 Route::resource('/users', 'UsersController');
