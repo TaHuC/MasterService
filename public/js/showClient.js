@@ -55,26 +55,35 @@ $(() => {
     brandDiv.find('input').keyup(() => {
         let brand = brandDiv.find('input').val();
         let showBrand = $('#showBrand');
+        let resultBrand = [];
 
         if(brand.length === 0) {
-            showBrand.empty();
             return;
         }
 
         showBrand.fadeIn();
-        showBrand.empty();
 
         remote.getParams('/brand/select/', 'get', `${brand}/${product.typeId}`)
             .then(data => {
-                if (data.length === 0) {
-                    $(`<p data-brand="${brand}" data-status="new">${brand} <button class="btn-flat green-text waves-effect waves-light right-align"><i class="material-icons">add</i></button></p>`)
-                        .on('click', brandFun).appendTo(showBrand);
-                } else {
-                    for(let getBrand of data) {
-                        $(`<p data-brand="${getBrand.title}" data-status="old">${getBrand.title} <button class="btn-flat green-text waves-effect waves-light right-align"><i class="material-icons">open_in_new</i></button></p>`)
-                            .on('click', brandFun).appendTo(showBrand);
+                let check = false;
+                $(data).each((i) => {
+                    if(data[i].title.toLowerCase() === brand.toLowerCase()) {
+                        return check = true;
                     }
+                });
+
+                if(data.length === 0 || check !== true){
+                    resultBrand.push($(`<p data-brand="${brand}" data-status="new">${brand} <button class="btn-flat green-text waves-effect waves-light right-align"><i class="material-icons">add</i></button></p>`)
+                        .on('click', brandFun));
                 }
+
+                for(let getBrand of data) {
+                    resultBrand.push($(`<p data-brand="${getBrand.title}" data-status="old">${getBrand.title} <button class="btn-flat green-text waves-effect waves-light right-align"><i class="material-icons">open_in_new</i></button></p>`)
+                        .on('click', brandFun));
+                }
+
+                showBrand.html(resultBrand);
+                resultBrand = [];
             });
 
         function brandFun(e) {
@@ -119,7 +128,7 @@ $(() => {
     modelDiv.find('input').keyup(() => {
         let model = modelDiv.find('input').val();
         let showModel = $('#showModel');
-        showModel.empty();
+        let resultModel = [];
 
         if(model.length === 0) {
             return;
@@ -129,15 +138,26 @@ $(() => {
 
         remote.getParams('/model/select/', 'get', `${model}/${product.brandId}`)
             .then(data => {
-                if (data.length === 0) {
-                    $(`<p data-model="${model}" data-status="new">${model} <button class="btn-flat green-text waves-effect waves-light right-align"><i class="material-icons">add</i></button></p>`)
-                        .on('click', modelFun).appendTo(showModel);
-                } else {
-                    for(let getModel of data) {
-                        $(`<p data-model="${getModel.title}" data-status="old">${getModel.title} <button class="btn-flat green-text waves-effect waves-light right-align"><i class="material-icons">open_in_new</i></button></p>`)
-                            .on('click', modelFun).appendTo(showModel);
+                let check = false;
+                $(data).each((i) => {
+                    if(data[i].title.toLowerCase() === model.toLowerCase()) {
+                        return check = true;
                     }
+                });
+
+                if(data.length === 0 || check !== true){
+                    resultModel.push($(`<p data-model="${model}" data-status="new">${model} <button class="btn-flat green-text waves-effect waves-light right-align"><i class="material-icons">add</i></button></p>`)
+                        .on('click', modelFun));
                 }
+
+                for(let getModel of data) {
+                    resultModel.push($(`<p data-model="${getModel.title}" data-status="old">${getModel.title} <button class="btn-flat green-text waves-effect waves-light right-align"><i class="material-icons">open_in_new</i></button></p>`)
+                        .on('click', modelFun));
+                }
+
+                showModel.html(resultModel);
+                resultModel = [];
+
             });
 
         function modelFun(e) {

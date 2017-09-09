@@ -19,6 +19,8 @@
                 font-weight: 100;
                 height: 100vh;
                 margin: 0;
+                background: url({{ asset("/images/bg.jpeg") }});
+                background-size: cover;
             }
 
             .full-height {
@@ -47,6 +49,11 @@
 
             .title {
                 font-size: 84px;
+                color: springgreen;
+            }
+
+            .title a, a :visited, :hover, :target{
+                color: springgreen;
             }
 
             .links > a {
@@ -79,7 +86,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    <a href="{{ route('home') }}" style="text-decoration: none;">Master Service</a>
+                    <a class="" href="{{ route('home') }}" style="text-decoration: none;">Master Service</a>
                 </div>
             </div>
         </div>

@@ -1,3 +1,8 @@
+body {
+    background: url("../images/bg.jpeg");
+    background-size: cover;
+}
+
 input[type="search"] {
     height: 64px !important; /* or height of nav */
 }
