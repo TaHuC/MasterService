@@ -1,10 +1,24 @@
 body {
-    background: url("../images/bg.jpeg");
+    background: url("../images/bg.jpeg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     background-size: cover;
 }
 
 input[type="search"] {
     height: 64px !important; /* or height of nav */
+}
+
+.typeCheckBox {
+    position: fixed;
+    top: 40%;
+    left: 10%;
+    margin-top: -50px;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.3)
 }
 
 .navbar-brand {

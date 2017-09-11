@@ -31,7 +31,7 @@
             <div class="nav-wrapper navbar-fixed navbar-fixed-top blue">
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
+                    <a class="navbar-brand" href="{{ url('/home') }}">
                          {{ config('app.name', 'Master Service') }}
                     </a>
                     <a href="#" data-activates="modeli_navigation" class="button-collapse">

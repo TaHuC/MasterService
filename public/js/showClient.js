@@ -20,6 +20,7 @@ $(() => {
     function setType() {
         product.typeId = Number($(this).find('input').val());
         let textType = $(this).text();
+        $('#typeCheckBox').removeClass('typeCheckBox');
 
         typeDiv.fadeOut(() => {
             typeDiv.html(`<h3 class="center">${textType}</h3>`).fadeIn(() => {
@@ -76,7 +77,7 @@ $(() => {
                     resultBrand.push($(`<p data-brand="${brand}" data-status="new">${brand} <button class="btn-flat green-text waves-effect waves-light right-align"><i class="material-icons">add</i></button></p>`)
                         .on('click', brandFun));
                 }
-
+                    
                 for(let getBrand of data) {
                     resultBrand.push($(`<p data-brand="${getBrand.title}" data-status="old">${getBrand.title} <button class="btn-flat green-text waves-effect waves-light right-align"><i class="material-icons">open_in_new</i></button></p>`)
                         .on('click', brandFun));
@@ -108,7 +109,9 @@ $(() => {
                     typeId: product.typeId,
                     _token: product._token
                 };
-                remote.getParams('/brand/', 'post', dataSend)
+
+                console.log(dataSend);
+                remote.getParams('/brand', 'post', dataSend)
                     .then( function(data){
                         product.brandId = data;
                         Materialize.toast(`Brand: ${dataSend.brand}, added`, 2500);
@@ -184,7 +187,7 @@ $(() => {
                     _token: product._token
                 };
 
-                remote.getParams('/model/', 'post', dataSend)
+                remote.getParams('/model', 'post', dataSend)
                     .then( function(data){
                         product.modelId = data;
                         Materialize.toast(`Model: ${dataSend.model}, added`, 2500);
@@ -206,7 +209,7 @@ $(() => {
         product.comment = $('#comment').val() || 'No comment';
         product.clientId = Number($('#clientId').val());
 
-        remote.getParams('/product/', 'post', product)
+        remote.getParams('/product', 'post', product)
             .then(data => {
                 window.location.pathname = '/product/'+data;
             });

@@ -59,9 +59,9 @@
             <div class="row">
                 <form class="col m12 s12">
                     <div class="row">
-                        <div class="col s12 center-block" id="typeCheckBox">
+                        <div class="col s12 typeCheckBox" id="typeCheckBox">
                             @foreach($types as $type)
-                                <div class="col s4 hoverable waves-block waves-green waves-effect z-depth-2 center typeButton">
+                                <div class="col s5 hoverable waves-block waves-green waves-effect z-depth-2 center typeButton">
                                     <input type="hidden" name="type" id="{{ $type['id'] }}" value="{{ $type['id'] }}" />
                                     <h4 class="">{{ $type['title'] }}</h4>
                                 </div>

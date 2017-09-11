@@ -247,7 +247,7 @@ $(document).ready(function () {
             order.deposit = 0;
         }
 
-        remote.getParams('/order/', 'post', order)
+        remote.getParams('/order', 'post', order)
             .then((data) => {
                 console.log(data);
                 Materialize.toast('Order create successfull!', 3000);
@@ -268,7 +268,7 @@ $(document).ready(function () {
             return;
         }
 
-        remote.getParams('/repair/', 'post', repair)
+        remote.getParams('/repair', 'post', repair)
             .then(() => {
                 Materialize.toast('Add repair successfull', 3000);
                 clear();
