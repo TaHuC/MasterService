@@ -22,7 +22,16 @@ class OrderController extends Controller
     public function index()
     {
         //
+        $orders = Order::with(['status', 'product', 'user'])
+            ->get();
 
+        for($i = 0; $i < count($orders); $i++)
+        {
+            $clientName = Client::where('id', $orders[$i]->product->clientId)->get();
+            $orders[$i]->product->client = $clientName[0];
+        }
+
+        return $orders;
     }
 
     /**

@@ -2,6 +2,39 @@ $(() => {
     (()=>{
         finalOrders();
         lastOrders();
+
+        remote.getParams('order', 'get')
+            .then((data) => {
+                //console.log(data);
+                let resultOrder = [];
+                for(let i = 0; i < data.length; i++) {
+                    resultOrder[i] = {
+                        id: data[i].id,
+                        client: data[i].product.client.name,
+                        phone: data[i].product.client.phone,
+                        serial: data[i].product.serial,
+                        problem: data[i].problem,
+                        status: data[i].status.status,
+                        price: data[i].price,
+                        url: `<a href="/product/${data[i].productId}">Open</a>`
+                    }
+                    //resultOrder[i].push(data[i].status[0].status);
+                }
+
+                $('#orderTable').DataTable({
+                    data: resultOrder,
+                    columns: [
+                        { data: 'id' },
+                        { data: 'client' },
+                        { data: 'phone' },
+                        { data: 'serial' },
+                        { data: 'problem' },
+                        { data: 'status' },
+                        { data: 'price' },
+                        { data: 'url' }
+                    ]
+                });
+            });
     })();
     
     function finalOrders() {

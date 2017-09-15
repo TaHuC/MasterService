@@ -5,7 +5,7 @@
         <div class="col m12 s12">
             <div class="card">
                 <div class="card-content">
-                    <span class="card-title">Dashboard</span>
+                    <span class="card-title white-text">Dashboard</span>
                     <div class="row">
                         <div class="col m6 s12" id="finalOrders">
                             <ul class="collection with-header z-depth-2">
@@ -22,6 +22,28 @@
                             </ul>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="col s12">
+            <div class="card">
+                <div class="card-content">
+                    <table id="orderTable" class="white-text">
+                        <thead class="">
+                        <tr>
+                            <th>Order</th>
+                            <th>Client</th>
+                            <th>Phone</th>
+                            <th>Serial</th>
+                            <th>Status</th>
+                            <th>Problem</th>
+                            <th>Price</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody class="black-text">
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
