@@ -16,7 +16,8 @@
     <!-- Styles -->
     <link href="{{ asset('css/materialize.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/master.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/plugins/jquery.dataTables.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/plugins/dataTables.material.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/plugins/material.min.css') }}" rel="stylesheet">
     @yield('cssImport')
 
     <!-- Scripts -->
@@ -129,6 +130,7 @@
     <script src="{{ asset('js/remote.js') }}"></script>
     <script src="{{ asset('js/notifycations.js') }}"></script>
     <script src="{{ asset('js/plugins/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/dataTables.material.min.js') }}"></script>
     @yield('jsImport')
 </body>
 </html>

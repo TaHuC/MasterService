@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 class TypeController extends Controller
 {
-
     /**
      * Create a new controller instance.
      *

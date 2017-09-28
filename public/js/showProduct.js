@@ -24,7 +24,6 @@ $(document).ready(function () {
                                 product.model = data.title;
                                 remote.getParams('/client/show/', 'get', product.clientId)
                                     .then((data) => {
-                                        console.log(data);
                                         product.clientName = data.name;
                                         domProduct();
                                     });
@@ -46,7 +45,6 @@ $(document).ready(function () {
             .then((data) => {
                 if(data.length > 0){
                     repair.orderId = data[0].id;
-                    order.active = data[0].active;
                     ordersFunc(data);
                 } else {
                     addOrder();
@@ -197,7 +195,6 @@ $(document).ready(function () {
 
 
         }
-        $('ul.tabs').tabs();
     }
     
     function changeStatus() {
@@ -283,4 +280,6 @@ $(document).ready(function () {
         cardProduct.append($(`<span class="card-title">`));
         domProduct();
     }
+
+    $('ul.tabs').tabs();
 });

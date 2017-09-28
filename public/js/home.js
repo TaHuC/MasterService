@@ -9,36 +9,47 @@ $(() => {
                 let resultOrder = [];
                 for(let i = 0; i < data.length; i++) {
                     resultOrder[i] = {
-                        id: data[i].id,
+                        id: `<h5 class="center">${data[i].id}</h5>`,
                         client: data[i].product.client.name,
                         phone: data[i].product.client.phone,
                         serial: data[i].product.serial,
                         problem: data[i].problem,
                         status: data[i].status.status,
-                        price: data[i].price,
-                        url: `<a href="/product/${data[i].productId}">Open</a>`
+                        price: data[i].price+'лв.',
+                        url: `<a class="btn btn-link waves-effect indigo" href="/product/${data[i].productId}"><i class="material-icons">assignment</i></a> <a class="btn btn-link waves-effect indigo" href="/client/${data[i].product.clientId}"><i class="material-icons">assignment_ind</i></a>`
                     }
                     //resultOrder[i].push(data[i].status[0].status);
                 }
 
+                // Orders table
                 $('#orderTable').DataTable({
                     data: resultOrder,
                     columns: [
-                        { data: 'id' },
+                        {
+                            data: 'id'
+                        },
                         { data: 'client' },
                         { data: 'phone' },
                         { data: 'serial' },
                         { data: 'problem' },
                         { data: 'status' },
-                        { data: 'price' },
-                        { data: 'url' }
-                    ]
+                        {
+                            class: 'right-align',
+                            data: 'price'
+                        },
+                        {
+                            class: 'right-align',
+                            data: 'url'
+                        }
+                    ],
+                    "order": [[0, 'desc']],
+                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
                 });
             });
     })();
     
     function finalOrders() {
-        let finalOrders = $('#finalOrders').find($('ul'));
+        let finalOrders = $('#finalOrders').find($('#completedOrders'));
 
         remote.getParams('/order/params/', 'get', 'complate')
             .then((data) => {
@@ -63,7 +74,7 @@ $(() => {
 
     function lastOrders() {
         let limit = 5;
-        let ordersDiv = $('#lastOrders').find($('ul'));
+        let ordersDiv = $('#lastOrders').find($('#lastOrder'));
 
         remote.getParams('/order/params/', 'get', `last/${limit}`)
             .then((data) => {
