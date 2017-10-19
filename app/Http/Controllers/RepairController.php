@@ -6,6 +6,7 @@ use App\Order;
 use App\Repair;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class RepairController extends Controller
 {
@@ -65,6 +66,8 @@ class RepairController extends Controller
         $order->price = $request->price;
         $order->statusId = 2;
         $order->save();
+
+        return redirect()->route('product.show', ['id' => $request->productId])->with('messages', 'Add successed!');
     }
 
     /**

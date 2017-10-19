@@ -16,37 +16,41 @@ class Product extends Model
         'modelId',
         'userId',
         'serial',
-        'comment',
-        'client.name'
+        'comment'
     ];
 
     public function client()
     {
-        $this->belongsTo(Client::class, 'clientId', 'id');
+        return $this->belongsTo(Client::class, 'clientId', 'id');
     }
 
     public function type()
     {
-        $this->belongsTo(Type::class, 'typeId', 'id');
+        return $this->belongsTo(Type::class, 'typeId', 'id');
     }
 
     public function brand()
     {
-        $this->belongsTo(Brand::class, 'brandId', 'id');
+        return $this->belongsTo(Brand::class, 'brandId', 'id');
     }
 
     public function model()
     {
-        $this->belongsTo(ModelBrand::class, 'modelId', 'id');
+        return $this->belongsTo(ModelBrand::class, 'modelId', 'id');
     }
 
     public function user()
     {
-        $this->belongsTo(User::class, 'userId', 'id');
+        return $this->belongsTo(User::class, 'userId', 'id');
     }
 
-    public function order()
+    public function orders()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Order::class, 'productId', 'id');
+    }
+
+    public function repairs()
+    {
+        return $this->hasManyThrough(Repair::class, Order::class, 'productId', 'orderId',  'id', 'productId');
     }
 }

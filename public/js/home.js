@@ -9,14 +9,14 @@ $(() => {
                 let resultOrder = [];
                 for(let i = 0; i < data.length; i++) {
                     resultOrder[i] = {
-                        id: `<h5 class="center">${data[i].id}</h5>`,
+                        id: `<h6 class="title">${data[i].id}</h6>`,
                         client: data[i].product.client.name,
                         phone: data[i].product.client.phone,
                         serial: data[i].product.serial,
                         problem: data[i].problem,
                         status: data[i].status.status,
                         price: data[i].price+'лв.',
-                        url: `<a class="btn btn-link waves-effect indigo" href="/product/${data[i].productId}"><i class="material-icons">assignment</i></a> <a class="btn btn-link waves-effect indigo" href="/client/${data[i].product.clientId}"><i class="material-icons">assignment_ind</i></a>`
+                        url: `<a class="btn btn-link" href="/product/${data[i].productId}"><i class="material-icons">assignment</i></a> <a class="btn btn-link" href="/client/${data[i].product.clientId}"><i class="material-icons">assignment_ind</i></a>`
                     }
                     //resultOrder[i].push(data[i].status[0].status);
                 }
@@ -34,11 +34,11 @@ $(() => {
                         { data: 'problem' },
                         { data: 'status' },
                         {
-                            class: 'right-align',
+                            class: 'text-right',
                             data: 'price'
                         },
                         {
-                            class: 'right-align',
+                            class: 'text-right',
                             data: 'url'
                         }
                     ],

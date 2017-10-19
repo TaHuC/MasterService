@@ -103,7 +103,7 @@ class OrderController extends Controller
         $order->description = $request->description;
         $order->save();
 
-        return $order->id;
+        return redirect()->route('product.show', ['id' => $request->productId])->with(['messages' => 'Add new Order']);
 
     }
 
@@ -115,10 +115,39 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order = Order::where('productId', '=', $id)
+        $orders = Order::where('productId', '=', $id)
             ->orderBy('id', 'desc')
+            ->with('status', 'product', 'user')
             ->get();
-        return $order;
+
+        for($i = 0; $i < count($orders); $i++)
+        {
+            $clientName = Client::where('id', $orders[$i]->product->clientId)->get();
+            $orders[$i]->product->client = $clientName[0];
+        }
+
+        return $orders;
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function changeStatus(Request $request)
+    {
+        $this->validate($request, [
+           'status' => 'required|numeric',
+           'orderId' => 'required|numeric',
+           'productId' => 'required|numeric'
+        ]);
+
+        $order = Order::find($request->orderId);
+        $order->statusId = $request->status;
+        $order->save();
+
+        return redirect()->route('product.show', ['id' => $request->productId])->with('messages', 'Successed.');
     }
 
     /**

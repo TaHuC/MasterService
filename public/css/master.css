@@ -10,11 +10,8 @@ input[type="search"] {
     height: 64px !important; /* or height of nav */
 }
 
-.typeCheckBox {
-    position: fixed;
-    top: 40%;
-    left: 10%;
-    margin-top: -50px;
+.typeButton {
+    cursor: pointer;
 }
 
 .card {
@@ -64,4 +61,17 @@ input[type="search"] {
     margin: 3px;
     padding-top: 8px;
     padding-bottom: 5px;
+}
+
+#orderColBtn {
+    padding: 20px;
+}
+
+#repairTabContent {
+    padding-top: 20px;
+    padding-bottom: 30px;
+}
+
+#orderForm, #repairForm {
+    margin-top: 20px;
 }

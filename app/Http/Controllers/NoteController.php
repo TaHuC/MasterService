@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Note;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NoteController extends Controller
 {
@@ -46,6 +48,27 @@ class NoteController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request, [
+            'note' => 'required'
+        ]);
+
+        $note = new Note();
+
+        if($request->orderId != null){
+            $note->note = $request->note;
+            $note->orderId = $request->orderId;
+            $note->userId = Auth::user()->id;
+            $note->save();
+
+            return redirect()->route('product.show', ['id' => $request->productId])->with('messages', 'Add successed!');
+        } elseif ($request->clientId != null){
+            $note->note = $request->note;
+            $note->userId = Auth::user()->id;
+            $note->clientId = $request->clientId;
+            $note->save();
+
+            return redirect()->route('client.show', ['id' => $request->clientId])->with('messages', 'Add successed!');
+        }
     }
 
     /**
@@ -57,6 +80,30 @@ class NoteController extends Controller
     public function show($id)
     {
         //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @param  string  $param
+     * @return \Illuminate\Http\Response
+     */
+    public function showNotes($id, $param)
+    {
+        switch ($param){
+            case 'order':
+                return Note::with('user')
+                    ->where('orderId', '=', $id)
+                    ->get();
+                break;
+            case 'client':
+                return Note::where('clientId', '=', $id)->get();
+                break;
+            case 'user':
+                return Note::where('userId', '=', $id)->get();
+                break;
+        }
     }
 
     /**

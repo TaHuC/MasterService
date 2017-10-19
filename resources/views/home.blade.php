@@ -2,50 +2,65 @@
 
 @section('content')
     <div class="row">
-        <div class="col m12 s12">
+        <div class="col-12">
             <div class="card">
-                <div class="card-content">
-                    <span class="card-title white-text">Dashboard</span>
+                <div class="card-body">
+                    <h4 class="card-title">Dashboard</h4>
                     <div class="row">
-                        <div class="col m6 s12" id="finalOrders">
-                            <ul class="collapsible" data-collapsible="accordion">
-                                <li>
-                                    <div class="collapsible-header"><i class="material-icons">reorder</i>Completed orders</div>
-                                    <div class="collapsible-body">
+                        <div class="col-6" id="finalOrders">
+                            <div class="card">
+                                <div class="card-header" role="tab" id="headingOne">
+                                    <h5 class="mb-0">
+                                        <a data-toggle="collapse" href="#collapseComp" aria-expanded="true" aria-controls="collapseComp">
+                                            Completed orders
+                                        </a>
+                                    </h5>
+                                </div>
+
+                                <div id="collapseComp" class="collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+                                    <div class="card-body">
                                         <ul class="collection with-header z-depth-2" id="completedOrders"></ul>
                                     </div>
-                                </li>
-                            </ul>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="col m6 s12" id="lastOrders">
-                            <ul class="collapsible" data-collapsible="accordion">
-                                <li>
-                                    <div class="collapsible-header"><i class="material-icons">reorder</i>Last five orders</div>
-                                    <div class="collapsible-body">
+                        <div class="col-6" id="lastOrders">
+                            <div class="card">
+                                <div class="card-header" role="tab" id="headingOne">
+                                    <h5 class="mb-0">
+                                        <a data-toggle="collapse" href="#collapseLast" aria-expanded="true" aria-controls="collapseLast">
+                                            Last five orders
+                                        </a>
+                                    </h5>
+                                </div>
+
+                                <div id="collapseLast" class="collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+                                    <div class="card-body">
                                         <ul class="collection with-header z-depth-2" id="lastOrder"></ul>
                                     </div>
-                                </li>
-                            </ul>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="com s12 ">
-                            <table id="orderTable" class="white-text grey highlight responsive-table">
-                                <thead class="">
-                                <tr>
-                                    <th>Order</th>
-                                    <th>Client</th>
-                                    <th>Phone</th>
-                                    <th>Serial</th>
-                                    <th>Problem</th>
-                                    <th>Status</th>
-                                    <th>Price</th>
-                                    <th>Actions</th>
-                                </tr>
-                                </thead>
-                                <tbody class="black-text">
-                                </tbody>
-                            </table>
+                        <div class="col-12">
+                                <table id="orderTable" class="table table-inverse">
+                                    <thead class="">
+                                    <tr>
+                                        <th>Order</th>
+                                        <th>Client</th>
+                                        <th>Phone</th>
+                                        <th>Serial</th>
+                                        <th>Problem</th>
+                                        <th>Status</th>
+                                        <th>Price</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="">
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -23,13 +23,11 @@ $(() => {
         $('#typeCheckBox').removeClass('typeCheckBox');
 
         typeDiv.fadeOut(() => {
-            typeDiv.html(`<h3 class="center">${textType}</h3>`).fadeIn(() => {
-                brandModelRow.fadeIn(() => {
-                    serialDiv.fadeIn(serialGet);
+            $('.card-header').text(textType);
+            brandModelRow.fadeIn(() => {
+            serialDiv.fadeIn(serialGet);
                 });
-            });
         });
-
 
     }
     
@@ -46,7 +44,6 @@ $(() => {
                         } else {
                             brandDiv.fadeOut();
                             serialInput.css('color', 'red');
-                            Materialize.toast(`<span>${data[0].serial}</span><a class="btn-flat toast-action white-text red" href="/product/${data[0].id}">&#10174;</a>`, 10000);
                         }
                     });
             }
@@ -74,12 +71,12 @@ $(() => {
                 });
 
                 if(data.length === 0 || check !== true){
-                    resultBrand.push($(`<p data-brand="${brand}" data-status="new">${brand} <button class="btn-flat green-text waves-effect waves-light right-align"><i class="material-icons">add</i></button></p>`)
+                    resultBrand.push($(`<p data-brand="${brand}" data-status="new">${brand} <button class="btn btn-sm"><i class="material-icons">add</i></button></p>`)
                         .on('click', brandFun));
                 }
                     
                 for(let getBrand of data) {
-                    resultBrand.push($(`<p data-brand="${getBrand.title}" data-status="old">${getBrand.title} <button class="btn-flat green-text waves-effect waves-light right-align"><i class="material-icons">open_in_new</i></button></p>`)
+                    resultBrand.push($(`<p data-brand="${getBrand.title}" data-status="old">${getBrand.title} <button class="btn btn-sm"><i class="material-icons">open_in_new</i></button></p>`)
                         .on('click', brandFun));
                 }
 
@@ -114,7 +111,6 @@ $(() => {
                 remote.getParams('/brand', 'post', dataSend)
                     .then( function(data){
                         product.brandId = data;
-                        Materialize.toast(`Brand: ${dataSend.brand}, added`, 2500);
                         $('#showBrand').empty().hide();
                         $('#brand').attr('disabled', 'true');
                         modelDiv.fadeIn(() => {
@@ -149,12 +145,12 @@ $(() => {
                 });
 
                 if(data.length === 0 || check !== true){
-                    resultModel.push($(`<p data-model="${model}" data-status="new">${model} <button class="btn-flat green-text waves-effect waves-light right-align"><i class="material-icons">add</i></button></p>`)
+                    resultModel.push($(`<p data-model="${model}" data-status="new">${model} <button class="btn btn-sm"><i class="material-icons">add</i></button></p>`)
                         .on('click', modelFun));
                 }
 
                 for(let getModel of data) {
-                    resultModel.push($(`<p data-model="${getModel.title}" data-status="old">${getModel.title} <button class="btn-flat green-text waves-effect waves-light right-align"><i class="material-icons">open_in_new</i></button></p>`)
+                    resultModel.push($(`<p data-model="${getModel.title}" data-status="old">${getModel.title} <button class="btn btn-sm"><i class="material-icons">open_in_new</i></button></p>`)
                         .on('click', modelFun));
                 }
 
@@ -190,7 +186,6 @@ $(() => {
                 remote.getParams('/model', 'post', dataSend)
                     .then( function(data){
                         product.modelId = data;
-                        Materialize.toast(`Model: ${dataSend.model}, added`, 2500);
                         showModel.empty().hide();
                         $('#model').attr('disabled', 'true');
                         commentRow.fadeIn(() => {

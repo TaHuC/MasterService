@@ -7,7 +7,9 @@ use App\Client;
 use App\ModelBrand;
 use App\Product;
 use App\Order;
+use App\Repair;
 use App\Status;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -32,7 +34,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        //s
+        $products = Product::with('client', 'type', 'brand', 'model', 'user')->get();
+
+        return view('product.index', compact('products'));
     }
 
     public function getSerial($serial)
@@ -87,11 +92,22 @@ class ProductController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     *
+     * for ($i = 0; $i < count($product->orders); $i++){
+     *$repairs = Repair::where('orderId', '=', $product->orders[$i]->id)->get();
+     *$product->orders[$i]->repairs = $repairs;
+     *}
      */
     public function show($id)
     {
         //
-        $product = Product::find($id);
+        $product = Product::with('client', 'type', 'brand', 'model', 'user', 'orders', 'repairs')
+        ->find($id);
+
+        for($i = 0; $i < count($product->repairs); $i++)
+        {
+            $product->repairs[$i]->user = User::where('id', '=', $product->repairs[$i]->userId)->first();
+        }
 
         return view('product.show', compact('product'));
     }

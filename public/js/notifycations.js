@@ -1,7 +1,7 @@
 $(() => {
     $(document).on({
         ajaxStart: function () {
-            Materialize.toast('Loading...', 3500);
+            console.log('loading')
         },
         ajaxStop: function () {
 

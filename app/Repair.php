@@ -17,14 +17,4 @@ class Repair extends Model
         'created_at',
         'updated_at'
     ];
-
-    public function repairOrder()
-    {
-        $this->hasMany(Order::class);
-    }
-
-    public function repairUser()
-    {
-        $this->hasMany(User::class);
-    }
 }

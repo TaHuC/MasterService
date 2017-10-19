@@ -14,7 +14,7 @@ let remote = (() => {
     
     function get(url, values) {
         return $.ajax(makeRequest('GET', url, values))
-            .error((err) => {
+            .catch((err) => {
                 Materialize.toast(err, 2500);
             });
     }
@@ -28,7 +28,7 @@ let remote = (() => {
             method: 'PUT',
             url,
             data: values,
-        }).error((err) => {
+        }).catch((err) => {
                 Materialize.toast(err, 2500);
             });
     }
