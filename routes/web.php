@@ -31,6 +31,7 @@ Route::get('/product/serial/{serial}', 'ProductController@getSerial');
 Route::resource('/order', 'OrderController');
 Route::post('/order/status', 'OrderController@changeStatus')->name('order.changeStatus');
 Route::get('/order/params/{status}/{limit?}', 'OrderController@paramsOrder');
+Route::get('/order/productId/{id}', 'OrderController@getProductId');
 Route::resource('/repair', 'RepairController');
 Route::resource('/status', 'StatusController');
 Route::resource('/users', 'UsersController');

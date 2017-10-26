@@ -62,11 +62,13 @@ class ClientController extends Controller
         $this->validate($request, [
            'name' => 'required|max:255',
             'email' => 'min:3|max:255|unique:clients',
-            'phone' => 'required|unique:clients|numeric'
+            'phone' => 'required|unique:clients|numeric',
+            'idNumber' => 'numeric'
         ]);
 
         $client = new Client();
         $client->name = $request->name;
+        $client->idNumber = $request->idNumber;
         $client->email = $request->email;
         $client->phone = $request->phone;
         $client->save();

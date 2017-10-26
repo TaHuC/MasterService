@@ -10,7 +10,7 @@ $(() => {
                 for(let i = 0; i < data.length; i++) {
                     resultOrder[i] = {
                         id: `<h6 class="title">${data[i].id}</h6>`,
-                        client: data[i].product.client.name,
+                        client: data[i].product.client.name + ` <p class="text-muted">${data[i].product.client.idNumber === '0' ? '' : 'ID: '+ data[i].product.client.idNumber}</p>`,
                         phone: data[i].product.client.phone,
                         serial: data[i].product.serial,
                         problem: data[i].problem,
@@ -43,7 +43,7 @@ $(() => {
                         }
                     ],
                     "order": [[0, 'desc']],
-                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+                    "lengthMenu": [[10, 50, 100, -1], [10, 50, 100, "All"]]
                 });
             });
     })();

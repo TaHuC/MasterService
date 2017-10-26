@@ -48,7 +48,7 @@
                                     <thead class="">
                                     <tr>
                                         <th>Order</th>
-                                        <th>Client</th>
+                                        <th>Client / ID</th>
                                         <th>Phone</th>
                                         <th>Serial</th>
                                         <th>Problem</th>

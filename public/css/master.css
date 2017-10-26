@@ -10,6 +10,11 @@ input[type="search"] {
     height: 64px !important; /* or height of nav */
 }
 
+.nav-item {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
 .typeButton {
     cursor: pointer;
 }

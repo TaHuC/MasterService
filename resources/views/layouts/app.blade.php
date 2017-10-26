@@ -17,7 +17,6 @@
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/master.css') }}" rel="stylesheet">
     <link href="{{ asset('css/plugins/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/plugins/material.min.css') }}" rel="stylesheet">
     @yield('cssImport')
 
     <!-- Scripts -->
@@ -29,50 +28,68 @@
 </head>
 <body>
     <div id="app">
-        <nav class="">
-            <div class="navbar navbar-expand-md navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark justify-content-between">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Branding Image -->
+            <a class="navbar-brand" href="{{ url('/home') }}">
+                 {{ config('app.name', 'Master Service') }}
+            </a>
 
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/home') }}">
-                         {{ config('app.name', 'Master Service') }}
-                    </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+                <!-- Right Side Of Navbar -->
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <!-- Authentication Links -->
+                    @if (Auth::guest())
+                        <li class="nav-item" ><a class="btn btn-outline-success my-2 my-sm-0" href="{{ route('login') }}">Login</a></li>
+                        <li class="nav-item" ><a class="btn btn-outline-success my-2 my-sm-0" href="{{ route('register') }}">Register</a></li>
+                    @else
+                        <li class="nav-item dropdown">
+                            <a href="#" class="dropdown-toggle btn btn-outline-success my-2 my-sm-0" data-toggle="dropdown" id="userDropdown">
+                                references <span class="caret"></span>
+                            </a>
 
-                    <!-- Right Side Of Navbar -->
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <ul class="navbar-nav">
-                        <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li class="nav-item" ><a href="{{ route('login') }}">Login</a></li>
-                            <li class="nav-item" ><a href="{{ route('register') }}">Register</a></li>
-                        @else
-                            <li>
-                                <a href="{{ route('client.create') }}" class="btn btn-link">Add</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="userDropdown">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
+                            <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                                <li class="nav-item text-center">
+                                    <a class="btn btn-outline-success my-2 my-sm-0" href="#"></a>
+                                </li>
+                            </ul>
+                        </li>
 
-                                <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('logout') }}"
-                                           onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="btn btn-outline-success my-2 my-sm-0 dropdown-toggle" data-toggle="dropdown" id="userDropdown">
+                                {{ Auth::user()->name }} <span class="caret"></span>
+                            </a>
 
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endif
-                    </ul>
+                            <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                                <li class="nav-item text-center">
+                                    <a class="btn btn-outline-warning my-2 my-sm-0" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                                        Logout
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        {{ csrf_field() }}
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    @endif
+                </ul>
+                @if(!Auth::guest())
+                <div class="form-inline my-2 my-lg-0">
+                    {{ csrf_field() }}
+                    <input class="form-control mr-sm-2" id="idOrder" type="search" placeholder="Order ID" aria-label="Order">
+                    <button class="btn btn-outline-success my-2 my-sm-0" id="loadOrderBtn">Load</button>
                 </div>
+                    <ul class="navbar-nav">
+                        <li class="nav-item align-bottom">
+                            <a href="{{ route('client.create') }}" class="btn btn-outline-success my-2 my-sm-0">Add</a>
+                        </li>
+                    </ul>
+                @endif
             </div>
         </nav>
 
@@ -97,6 +114,7 @@
     <script src="{{ asset('js/notifycations.js') }}"></script>
     <script src="{{ asset('js/plugins/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/plugins/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('js/appMaster.js') }}"></script>
     @yield('jsImport')
 </body>
 </html>

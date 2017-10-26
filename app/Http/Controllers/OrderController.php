@@ -130,6 +130,26 @@ class OrderController extends Controller
     }
 
     /**
+     * @param $id
+     *
+     */
+    public function getProductId($id)
+    {
+        if(is_numeric($id))
+        {
+            $productId = Order::find($id);
+
+            if(count($productId)){
+                return $productId->productId;
+            } else {
+                return 'orderNull';
+            }
+        } else {
+            return 'orderNull';
+        }
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
