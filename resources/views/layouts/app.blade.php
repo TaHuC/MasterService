@@ -52,7 +52,10 @@
 
                             <ul class="dropdown-menu" aria-labelledby="userDropdown">
                                 <li class="nav-item text-center">
-                                    <a class="btn btn-outline-success my-2 my-sm-0" href="#"></a>
+                                    <a class="btn btn-outline-success my-2 my-sm-0" href="{{ route('client.index') }}">Clients</a>
+                                </li>
+                                <li class="nav-item text-center">
+                                    <a class="btn btn-outline-success my-2 my-sm-0" href="{{ route('product.index') }}">Devices</a>
                                 </li>
                             </ul>
                         </li>

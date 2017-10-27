@@ -80,3 +80,7 @@ input[type="search"] {
 #orderForm, #repairForm {
     margin-top: 20px;
 }
+
+.dropdown-menu li {
+    margin-bottom: 10px;
+}
