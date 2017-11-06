@@ -27,7 +27,7 @@
                             <td>{{ $product->brand->title }} {{ $product->model->title }}</td>
                             <td>{{ $product->serial }}</td>
                             <td>{{ $product->comment }}</td>
-                            <td><a class="btn btn-outline-info" href="product/{{ $product->id }}">Open</a></td>
+                            <td><a class="btn btn-outline-info" href="product/{{ $product->id }}"><i class="material-icons">link</i></a></td>
                         </tr>
                     @endforeach
                     </tbody>

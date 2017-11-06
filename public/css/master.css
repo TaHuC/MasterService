@@ -20,7 +20,9 @@ input[type="search"] {
 }
 
 .card {
-    background: rgba(255, 255, 255, 0.3)
+    margin-right: 15px;
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.7)
 }
 
 .navbar-brand {
@@ -83,4 +85,8 @@ input[type="search"] {
 
 .dropdown-menu li {
     margin-bottom: 10px;
+}
+
+.card {
+    margin-top: 20px;
 }

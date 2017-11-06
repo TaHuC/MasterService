@@ -14,7 +14,7 @@
                         <div class="col-8">
                             <h1 class="align-text-bottom">
                                 {{ $client->name }}
-                                <a href="{{ route('client.edit', ['id' => $client->id]) }}" class="btn"><i class="material-icons">edit</i></a>
+                                <a href="{{ route('client.edit', ['id' => $client->id]) }}" class="btn btn-outline-dark"><i class="material-icons">edit</i></a>
                             </h1>
                         </div>
                     </div>
@@ -73,7 +73,7 @@
                                 <div class="form-group float-right row">
                                     <div class="col-12">
                                         <input type="hidden" name="clientId" id="clientId" value="{{ $client->id }}">
-                                        <button id="saveProduct" disabled="disabled" class="btn btn-success">Save</button>
+                                        <button id="saveProduct" disabled="disabled" class="btn btn-outline-success">Save</button>
                                     </div>
                                 </div>
                             </form>
@@ -103,7 +103,7 @@
                                 <td>{{ $product['serial'] }}</td>
                                 <td>{{ $product['created_at'] }}</td>
                                 <td>{{ $product['status'] }}</td>
-                                <td><a href="{{ asset('/product/'.$product['id']) }}" class="btn wave-effect tooltipped lime accent-3 amber-text" data-position="top" data-delay="100" data-tooltip="Open Device"><i class="large material-icons">link</i></a></td>
+                                <td><a href="{{ asset('/product/'.$product['id']) }}" class="btn btn-outline-info" data-position="top" data-delay="100" data-tooltip="Open Device"><i class="large material-icons">link</i></a></td>
                             </tr>
                         @endforeach
                     @endif

@@ -11,18 +11,18 @@
                                 <span class="badge badge-primary"> {{ $product->orders->last()->status->status }}</span>
                             @endif
                         </h4>
-                    <p class="text-secondary">serial:  {{ $product->serial }}</p>
+                    <p class="text-secondary"><i class="material-icons">fingerprint</i>  {{ $product->serial }}</p>
                     <hr>
-                    <h5>Comment: <small>{{ $product->comment }}</small></h5>
+                    <h5><i class="material-icons">comment</i> <small>{{ $product->comment }}</small></h5>
                     <hr>
                     <div class="card">
                         <div class="card-header">
                             <strong class="card-title">{{ $product->client->name }}</strong>
-                            <a class="btn btn-link float-right" href="{{ asset('/client/'.$product->client->id) }}">Open</a>
+                            <a class="btn btn-outline-dark float-right" href="{{ asset('/client/'.$product->client->id) }}"><i class="material-icons">link</i></a>
                         </div>
                         <div class="card-body">
-                            <p><strong>Phone: </strong> {{ $product->client->phone }}</p>
-                            <p><strong>Email: </strong> {{ $product->client->email }}</p>
+                            <p><i class="material-icons">phone</i> {{ $product->client->phone }}</p>
+                            <p><i class="material-icons text">email</i> {{ $product->client->email }}</p>
                         </div>
                     </div>
                 </div>
@@ -31,34 +31,34 @@
                         <form class="" method="post" action="{{ route('order.store') }}" id="orderForm" novalidate>
                             {{ csrf_field() }}
                             <div class="row">
-                                <div class="col-md-6 mb-3">
+                                <div class="col-6 form-group">
                                     <label for="problem">Problem</label>
                                     <input type="text" class="form-control" autocomplete="off" name="problem" id="problem" placeholder="Problem..." required>
                                 </div>
-                                <div class="col-md-6 mb-3">
+                                <div class="col-6 form-group">
                                     <label for="Now">Now</label>
                                     <input type="text" class="form-control" autocomplete="off" name="now" id="now" placeholder="Now..." required>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6 mb-3">
+                                <div class="col-6 form-group">
                                     <label for="password">Password</label>
                                     <input type="text" class="form-control" autocomplete="off" id="password" placeholder="password...">
                                 </div>
-                                <div class="col-md-6 mb-3">
+                                <div class="col-6 form-group">
                                     <label for="description">Description</label>
                                     <textarea class="form-control" id="description" autocomplete="off" name="description"></textarea>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6 mb-3">
+                                <div class="col-6 form-group">
                                     <label for="price">Price</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control text-right" autocomplete="off" name="price" id="price" placeholder="20..." value="0">
                                         <div class="input-group-addon">лв.</div>
                                     </div>
                                 </div>
-                                <div class="col-md-6 mb-3">
+                                <div class="col-6 form-group">
                                     <label for="deposit">Deposit</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control text-right" id="deposit" autocomplete="off" name="deposit" placeholder="10..." value="0">
@@ -66,9 +66,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 text-right">
+                            <div class="col-12 form-group text-right">
                                 <input type="hidden" name="productId" value="{{ $product->id }}">
-                                <button class="btn btn-primary" type="submit">Submit</button>
+                                <button class="btn btn-outline-primary" type="submit"><i class="material-icons">done</i></button>
                             </div>
                         </form>
                     @else
@@ -80,25 +80,25 @@
                         @elseif($product->orders->last()->statusId <= 2)
                             <form class="" id="repairForm" method="post" action="{{ route('repair.store') }}">
                                 {{ csrf_field() }}
-                                <div class="col-md-12 mb-3">
+                                <div class="col-12 form-group">
                                     <label for="repair">Repair</label>
                                     <input type="text" class="form-control" autocomplete="off" name="repair" id="repair" placeholder="Repair..." required>
                                 </div>
-                                <div class="col-md-12 mb-3">
+                                <div class="col-12 form-group">
                                     <label for="description">Description</label>
                                     <textarea class="form-control" autocomplete="off" name="description" id="description"></textarea>
                                 </div>
-                                <div class="col-md-12 mb-3">
+                                <div class="col-12 form-group">
                                     <label for="price">Price</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control text-right" autocomplete="off" name="price" id="price" placeholder="20..." value="{{ $product->orders[count($product->orders) - 1]->price }}">
                                         <div class="input-group-addon">лв.</div>
                                     </div>
                                 </div>
-                                <div class="col-12 text-right">
+                                <div class="form-group col-12 text-right">
                                     <input type="hidden" name="orderId" value="{{ $product->orders->last()->id }}">
                                     <input type="hidden" name="productId" value="{{ $product->id }}">
-                                    <button class="btn btn-primary" type="submit">Submit</button>
+                                    <button class="btn btn-outline-primary" type="submit"><i class="material-icons">done</i></button>
                                 </div>
                             </form>
                         @endif
@@ -170,7 +170,7 @@
                                                                 <input type="hidden" name="orderId" value="{{ $order->id }}">
                                                                 <input type="hidden" name="productId" value="{{ $product->id }}">
                                                                 <input type="hidden" name="status" value="5">
-                                                                <button type="submit" class="btn btn-sm btn-warning">За част</button>
+                                                                <button type="submit" class="btn btn-sm btn-outline-warning">За част</button>
                                                             </form>
                                                         @endif
 
@@ -180,7 +180,7 @@
                                                                 <input type="hidden" name="orderId" value="{{ $order->id }}">
                                                                 <input type="hidden" name="productId" value="{{ $product->id }}">
                                                                 <input type="hidden" name="status" value="3">
-                                                                <button type="submit" class="btn btn-sm btn-success">Приключи</button>
+                                                                <button type="submit" class="btn btn-sm btn-outline-success">Приключи</button>
                                                             </form>
                                                         @endif
 
@@ -190,12 +190,12 @@
                                                                 <input type="hidden" name="orderId" value="{{ $order->id }}">
                                                                 <input type="hidden" name="productId" value="{{ $product->id }}">
                                                                 <input type="hidden" name="status" value="4">
-                                                                <button type="submit" class="btn btn-sm btn-info">Взета</button>
+                                                                <button type="submit" class="btn btn-sm btn-outline-info">Взета</button>
                                                             </form>
                                                         @endif
                                                         @if($order->statusId !== 4)
                                                             <div class="col-3">
-                                                                <button id="noteAddBtn" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#noteModal">Add Note</button>
+                                                                <button id="noteAddBtn" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#noteModal">Add Note</button>
                                                             </div>
                                                         @endif
                                                     </div>
@@ -349,8 +349,8 @@
                             <input type="hidden" name="productId" value="{{ $product->id }}">
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save note</button>
+                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"><i class="material-icons">close</i></button>
+                            <button type="submit" class="btn btn-outline-primary"><i class="material-icons">save</i></button>
                         </div>
                     </form>
                 </div>

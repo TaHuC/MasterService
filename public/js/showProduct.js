@@ -5,7 +5,6 @@ $(document).ready(function () {
             .then(function (result) {
                 if(result.length !== 0){
                     for(let i = 0; i < result.length; i++){
-                        console.log(result[i]);
                         $(noteList).append($('<li class="list-group-item list-group-item-dark">')
                             .append($('<div class="d-flex w-100 justify-content-between">')
                                 .append(`<p class="mb-1 col-9">${result[i]['note']}</p>`)

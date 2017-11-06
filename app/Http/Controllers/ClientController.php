@@ -169,14 +169,16 @@ class ClientController extends Controller
                 Rule::unique('client')->ignore($id),
             'phone' => 'required|numeric',
                 Rule::unique('client')->ignore($id),
+            'idNumber' => 'numeric',
         ]);
 
         $client->name = $request->name;
+        $client->idNumber = $request->idNumber;
         $client->email = $request->email;
         $client->phone = $request->phone;
         $client->save();
 
-        return redirect()->route('client.show', ['id' => $client->id]);
+        return redirect('client.show', ['id' => $client->id]);
     }
 
     /**

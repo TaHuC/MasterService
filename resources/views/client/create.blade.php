@@ -20,7 +20,7 @@
 
                             <div class="form-group {{ $errors->has('idNumber') ? ' has-error' : '' }}">
                                 <label for="idNumber" class="active">ID Number</label>
-                                <input id="idNumber" type="text" autocomplete="off" class="form-control" name="idNumber" value="{{ old('idNumber') }}">
+                                <input id="idNumber" type="text" autocomplete="off" class="form-control" name="idNumber" value="{{ old('idNumber') ? old('idNumber') : 0 }}">
                                 @if ($errors->has('idNumber'))
                                     <span class="form-text">
                                         <strong>{{ $errors->first('idNumber') }}</strong>

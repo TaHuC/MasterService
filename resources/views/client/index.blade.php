@@ -33,7 +33,10 @@
                             </td>
                             <td>{{ $client->phone }}</td>
                             <td>{{ $client->email }}</td>
-                            <td><a class="btn btn-outline-info" href="client/{{ $client->id }}">Open</a></td>
+                            <td>
+                                <a class="btn btn-outline-info" href="client/{{ $client->id }}"><i class="material-icons">link</i></a>
+                                <a class="btn btn-outline-info" href="client/{{ $client->id }}/edit"><i class="material-icons">edit</i></a>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>
