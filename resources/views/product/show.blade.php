@@ -77,7 +77,7 @@
                                 <h4 class="text-center">Тази поръчка е пруключена!</h4>
                             </div>
 
-                        @elseif($product->orders->last()->statusId <= 2)
+                        @elseif($product->orders->last()->statusId >= 2)
                             <form class="" id="repairForm" method="post" action="{{ route('repair.store') }}">
                                 {{ csrf_field() }}
                                 <div class="col-12 form-group">
@@ -164,7 +164,7 @@
                                                 <td class="text-center">Description</td>
                                                 <td class="text-right">
                                                     <div class="row card-group">
-                                                        @if($order->statusId !== 5 && $order->statusId < 2)
+                                                        @if($order->statusId < 2)
                                                             <form action="{{ route('order.changeStatus') }}" method="post" class="col-3">
                                                                 {{ csrf_field() }}
                                                                 <input type="hidden" name="orderId" value="{{ $order->id }}">
