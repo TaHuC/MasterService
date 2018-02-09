@@ -9,6 +9,10 @@
                     <div class="row">
 
                         <div class="col-12">
+                            
+                        </div>
+
+                        <div class="col-12">
                                 <table id="orderTable" class="table table-inverse">
                                     <thead class="">
                                     <tr>

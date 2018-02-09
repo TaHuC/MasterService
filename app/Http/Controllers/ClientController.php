@@ -62,7 +62,7 @@ class ClientController extends Controller
         //
         $this->validate($request, [
            'name' => 'required|max:255',
-            'email' => 'min:3|max:255|unique:clients',
+            'email' => 'sometimes|nullable|email|unique:clients',
             'phone' => 'required|unique:clients|numeric',
             'idNumber' => 'numeric'
         ]);
@@ -163,9 +163,10 @@ class ClientController extends Controller
         //
         $client = Client::find($id);
 
+        return dd($request);
         $this->validate($request, [
             'name' => 'required|max:255',
-            'email' => 'min:3|max:255',
+            'email' => 'sometimes|nullable|email',
                 Rule::unique('client')->ignore($id),
             'phone' => 'required|numeric',
                 Rule::unique('client')->ignore($id),
