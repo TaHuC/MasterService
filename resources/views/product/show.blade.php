@@ -77,7 +77,7 @@
                                 <h4 class="text-center">Тази поръчка е пруключена!</h4>
                             </div>
 
-                        @elseif($product->orders->last()->statusId >= 2)
+                        @elseif($product->orders->last()->statusId > 0)
                             <form class="" id="repairForm" method="post" action="{{ route('repair.store') }}">
                                 {{ csrf_field() }}
                                 <div class="col-12 form-group">
