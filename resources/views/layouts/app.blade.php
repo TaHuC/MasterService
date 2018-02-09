@@ -43,13 +43,14 @@
                     <!-- Authentication Links -->
                     @if (Auth::guest())
                         <li class="nav-item" ><a class="btn btn-outline-success my-2 my-sm-0" href="{{ route('login') }}">Login</a></li>
+                    @if(\App\Settings::no_reg() === 0)
                         <li class="nav-item" ><a class="btn btn-outline-success my-2 my-sm-0" href="{{ route('register') }}">Register</a></li>
+                    @endif
                     @else
                         <li class="nav-item dropdown">
                             <a href="#" class="dropdown-toggle btn btn-outline-success my-2 my-sm-0" data-toggle="dropdown" id="userDropdown">
                                 references <span class="caret"></span>
                             </a>
-
                             <ul class="dropdown-menu" aria-labelledby="userDropdown">
                                 <li class="nav-item text-center">
                                     <a class="btn btn-outline-success my-2 my-sm-0" href="{{ route('client.index') }}">Clients</a>
@@ -66,6 +67,9 @@
                             </a>
 
                             <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                                <li class="nav-item text-center">
+                                    <a class="btn btn-outline-warning my-2 my-sm-0" href="{{ route('settings') }}">Настройки</a>
+                                </li>
                                 <li class="nav-item text-center">
                                     <a class="btn btn-outline-warning my-2 my-sm-0" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();

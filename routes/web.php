@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('wellcome');
 
 Auth::routes();
 
@@ -37,3 +37,5 @@ Route::resource('/status', 'StatusController');
 Route::resource('/users', 'UsersController');
 Route::resource('/notes', 'NoteController');
 Route::get('/notes/{id}/{param}', 'NoteController@showNotes');
+Route::get('/settings', 'SettingsController@index')->name('settings');
+Route::put('/settings', 'SettingsController@update')->name('settings.update');

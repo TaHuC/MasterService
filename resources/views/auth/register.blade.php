@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+    @if(\App\Settings::no_reg() === 1)
+        <script>window.location = "/";</script>
+    @endif
 <div class="container">
     <br>
     <div class="row col-12 justify-content-center">
