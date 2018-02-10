@@ -65,7 +65,6 @@ class ModelController extends Controller
         //Valideite data
         $this->validate($request, [
             'brand' => 'required|numeric',
-            'model' => 'required|unique:models,brandId,'.$request->brand,
         ]);
 
         $modelBrand = new ModelBrand();
