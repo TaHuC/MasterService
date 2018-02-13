@@ -107,7 +107,7 @@ $(() => {
                     _token: product._token
                 };
 
-                console.log(dataSend);
+                //console.log(dataSend);
                 remote.getParams('/brand', 'post', dataSend)
                     .then( function(data){
                         product.brandId = data;
@@ -196,10 +196,18 @@ $(() => {
             }
         }
     });
+    
+    $('#randomSerial').on('click', function (e) {
+        e.preventDefault();
+        let numRandom = Math.floor(Math.random() * 100000);
+        let date = new Date();
+        $(serialDiv.find('input')).val(date.getDay()+''+date.getDate()+''+date.getFullYear()+''+numRandom);
+        brandDiv.fadeIn();
+        //console.log();
+    })
 
     $('#saveProduct').on('click', function (e) {
         e.preventDefault();
-
         product.serial = $('#serial').val();
         product.comment = $('#comment').val() || 'No comment';
         product.clientId = Number($('#clientId').val());

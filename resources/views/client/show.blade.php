@@ -51,8 +51,11 @@
                                     @endforeach
                                 </div>
                                 <div class="form-group row" id="serialDiv">
-                                    <div class="col-12">
+                                    <div class="col-10">
                                         <input id="serial" type="text" placeholder="Serial Number" autocomplete="off" class="form-control">
+                                    </div>
+                                    <div class="col-2">
+                                        <button id="randomSerial" class="btn btn-outline-info btn-sm"><i class="material-icons">loop</i></button>
                                     </div>
                                 </div>
                                 <div class="form-group row" id="brandModelRow">
@@ -73,7 +76,7 @@
                                 <div class="form-group float-right row">
                                     <div class="col-12">
                                         <input type="hidden" name="clientId" id="clientId" value="{{ $client->id }}">
-                                        <button id="saveProduct" disabled="disabled" class="btn btn-outline-success">Save</button>
+                                        <button id="saveProduct" disabled="disabled" class="btn btn-outline-success"><i class="material-icons">save</i></button>
                                     </div>
                                 </div>
                             </form>
