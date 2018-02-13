@@ -43,7 +43,7 @@
                             <div class="row">
                                 <div class="col-6 form-group">
                                     <label for="password">Password</label>
-                                    <input type="text" class="form-control" autocomplete="off" id="password" placeholder="password...">
+                                    <input type="text" name="password" class="form-control" autocomplete="off" id="password" placeholder="password...">
                                 </div>
                                 <div class="col-6 form-group">
                                     <label for="description">Description</label>
