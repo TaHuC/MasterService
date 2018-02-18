@@ -74,7 +74,7 @@
                                     <a class="btn btn-outline-warning my-2 my-sm-0" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">
-                                        Logout
+                                        Изход
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -89,11 +89,11 @@
                 <div class="form-inline my-2 my-lg-0">
                     {{ csrf_field() }}
                     <input class="form-control mr-sm-2" id="idOrder" type="search" placeholder="Order ID" aria-label="Order">
-                    <button class="btn btn-outline-success my-2 my-sm-0" id="loadOrderBtn">Load</button>
+                    <button class="btn btn-outline-success my-2 my-sm-0" id="loadOrderBtn" data-toggle="tooltip" data-placement="top" title="Зареди поръчка"><i class="material-icons">touch_app</i></button>
                 </div>
                     <ul class="navbar-nav">
                         <li class="nav-item align-bottom">
-                            <a href="{{ route('client.create') }}" class="btn btn-outline-success my-2 my-sm-0">Add</a>
+                            <a href="{{ route('client.create') }}" class="btn btn-outline-success my-2 my-sm-0" data-toggle="tooltip" data-placement="top" title="Добави"><i class="material-icons">add</i></a>
                         </li>
                     </ul>
                 @endif

@@ -16,8 +16,11 @@ function getOrder(){
                     problem: data[i].problem,
                     status: data[i].status.status,
                     price: data[i].price+'лв.',
-                    url: `<a class="btn btn-outline-light" href="/product/${data[i].productId}"><i class="material-icons">assignment</i></a> <a class="btn btn-outline-light" href="/client/${data[i].product.clientId}"><i class="material-icons">assignment_ind</i></a>`
+                    url: `<a class="btn btn-outline-light" href="/product/${data[i].productId}" data-toggle="tooltip" data-placement="top" title="Отвори поръчката"><i class="material-icons">assignment</i></a> <a class="btn btn-outline-light" href="/client/${data[i].product.clientId}" data-toggle="tooltip" data-placement="top" title="Отвори клиента"><i class="material-icons">assignment_ind</i></a>`
                 }
+                $(function () {
+                    $('[data-toggle="tooltip"]').tooltip()
+                });
                 //resultOrder[i].push(data[i].status[0].status);
             }
 

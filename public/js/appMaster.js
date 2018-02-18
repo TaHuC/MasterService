@@ -6,6 +6,9 @@ $(() => {
             getOrderFunc();
         }
     });
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    });
 });
 
 function getOrderFunc() {
@@ -44,4 +47,5 @@ function getOrderFunc() {
                 return;
             }
         });
+
 }

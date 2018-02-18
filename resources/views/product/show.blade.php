@@ -18,7 +18,7 @@
                     <div class="card">
                         <div class="card-header">
                             <strong class="card-title">{{ $product->client->name }}</strong>
-                            <a class="btn btn-outline-dark float-right" href="{{ asset('/client/'.$product->client->id) }}"><i class="material-icons">link</i></a>
+                            <a class="btn btn-outline-dark float-right" data-toggle="tooltip" data-placement="top" title="Отвори" href="{{ asset('/client/'.$product->client->id) }}"><i class="material-icons">link</i></a>
                         </div>
                         <div class="card-body">
                             <p><i class="material-icons">phone</i> {{ $product->client->phone }}</p>
@@ -68,7 +68,7 @@
                             </div>
                             <div class="col-12 form-group text-right">
                                 <input type="hidden" name="productId" value="{{ $product->id }}">
-                                <button class="btn btn-outline-primary" type="submit"><i class="material-icons">done</i></button>
+                                <button class="btn btn-outline-primary" type="submit" data-toggle="tooltip" data-placement="top" title="Запамети"><i class="material-icons">done</i></button>
                             </div>
                         </form>
                     @else
@@ -98,7 +98,7 @@
                                 <div class="form-group col-12 text-right">
                                     <input type="hidden" name="orderId" value="{{ $product->orders->last()->id }}">
                                     <input type="hidden" name="productId" value="{{ $product->id }}">
-                                    <button class="btn btn-outline-primary" type="submit"><i class="material-icons">done</i></button>
+                                    <button class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Запамети" type="submit"><i class="material-icons">done</i></button>
                                 </div>
                             </form>
                         @endif
@@ -134,6 +134,8 @@
                                                 <th>{{ $order->now }}</th>
                                                 <th>{{ $order->password }}</th>
                                                 <th>{{ $order->created_at }}</th>
+                                                <th>{{ $order->updated_at }}</th>
+                                                <th>{{ $order->user->name }}</th>
                                                 <th>{{ $order->description }}</th>
                                                 <th class="float-right">
                                                     <table class="table-inverse">
@@ -146,9 +148,9 @@
                                                         </thead>
                                                         <tbody>
                                                         <tr>
-                                                            <td>Deposit</td>
-                                                            <td>Price</td>
-                                                            <td>Total</td>
+                                                            <td>Депосит</td>
+                                                            <td>Цена</td>
+                                                            <td>Всичко</td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
@@ -157,11 +159,13 @@
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td class="text-center">Problem</td>
-                                                <td class="text-center">Now</td>
-                                                <td class="text-center">Password</td>
-                                                <td class="text-center">Created</td>
-                                                <td class="text-center">Description</td>
+                                                <td class="text-center">Проблем</td>
+                                                <td class="text-center">Състояние</td>
+                                                <td class="text-center">Парола</td>
+                                                <td class="text-center">Приета на</td>
+                                                <td class="text-center">Последно на</td>
+                                                <td class="text-center">Приета от</td>
+                                                <td class="text-center">Информация</td>
                                                 <td class="text-right">
                                                     <div class="row card-group">
                                                         @if($order->statusId < 2)
@@ -170,7 +174,7 @@
                                                                 <input type="hidden" name="orderId" value="{{ $order->id }}">
                                                                 <input type="hidden" name="productId" value="{{ $product->id }}">
                                                                 <input type="hidden" name="status" value="5">
-                                                                <button type="submit" class="btn btn-sm btn-outline-warning">За част</button>
+                                                                <button type="submit" class="btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="top" title="За части"><i class="material-icons">extension</i></button>
                                                             </form>
                                                         @endif
 
@@ -180,7 +184,7 @@
                                                                 <input type="hidden" name="orderId" value="{{ $order->id }}">
                                                                 <input type="hidden" name="productId" value="{{ $product->id }}">
                                                                 <input type="hidden" name="status" value="3">
-                                                                <button type="submit" class="btn btn-sm btn-outline-success">Приключи</button>
+                                                                <button type="submit" class="btn btn-sm btn-outline-success" data-toggle="tooltip" data-placement="top" title="Приключи"><i class="material-icons">done</i></button>
                                                             </form>
                                                         @endif
 
@@ -190,12 +194,12 @@
                                                                 <input type="hidden" name="orderId" value="{{ $order->id }}">
                                                                 <input type="hidden" name="productId" value="{{ $product->id }}">
                                                                 <input type="hidden" name="status" value="4">
-                                                                <button type="submit" class="btn btn-sm btn-outline-info">Взета</button>
+                                                                <button type="submit" class="btn btn-sm btn-outline-info"><i class="material-icons" data-toggle="tooltip" data-placement="top" title="Взета">exit app</i></button>
                                                             </form>
                                                         @endif
                                                         @if($order->statusId !== 4)
                                                             <div class="col-3">
-                                                                <button id="noteAddBtn" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#noteModal">Add Note</button>
+                                                                <button id="noteAddBtn" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#noteModal"><i class="material-icons">note_add</i></button>
                                                             </div>
                                                         @endif
                                                     </div>
@@ -207,7 +211,7 @@
                                             <div class="col-6">
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <h5 class="card-title">Repairs List</h5>
+                                                        <h5 class="card-title"><i class="material-icons">build</i> List</h5>
                                                     </div>
                                                     <div class="card-body">
                                                         <ul class="list-group">
@@ -231,7 +235,7 @@
                                                 <div class="card">
                                                     <div class="card-header">
                                                         <div class="row">
-                                                            <h5 class="card-title">Notes List</h5>
+                                                            <h5 class="card-title"><i class="material-icons">note</i> List</h5>
                                                         </div>
                                                     </div>
                                                     <div class="card-body">
@@ -278,7 +282,7 @@
                                                 <td class="text-center">Password</td>
                                                 <td class="text-center">Created</td>
                                                 <td class="text-center">Description</td>
-                                                <td class="text-center"></td>
+                                                <td class="text-center">{{ $order->user->name }} | <small>{{ $order->updated_at }}</small></td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -337,7 +341,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="noteModalLabel">Note</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-toggle="tooltip" data-placement="top" title="Затвори" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -349,8 +353,8 @@
                             <input type="hidden" name="productId" value="{{ $product->id }}">
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"><i class="material-icons">close</i></button>
-                            <button type="submit" class="btn btn-outline-primary"><i class="material-icons">save</i></button>
+                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" data-toggle="tooltip" data-placement="top" title="Затвори"><i class="material-icons">close</i></button>
+                            <button type="submit" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Запамети"><i class="material-icons">save</i></button>
                         </div>
                     </form>
                 </div>

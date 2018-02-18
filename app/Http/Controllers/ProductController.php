@@ -109,6 +109,11 @@ class ProductController extends Controller
             $product->repairs[$i]->user = User::where('id', '=', $product->repairs[$i]->userId)->first();
         }
 
+        for ($i = 0; $i < count($product->orders); $i++)
+        {
+            $product->orders[$i]->user = User::where('id', '=', $product->orders[$i]->userId)->first();
+        }
+
         //dd($product);
         return view('product.show', compact('product'));
     }

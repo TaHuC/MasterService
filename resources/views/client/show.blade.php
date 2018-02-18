@@ -14,7 +14,7 @@
                         <div class="col-8">
                             <h1 class="align-text-bottom">
                                 {{ $client->name }}
-                                <a href="{{ route('client.edit', ['id' => $client->id]) }}" class="btn btn-outline-dark"><i class="material-icons">edit</i></a>
+                                <a href="{{ route('client.edit', ['id' => $client->id]) }}" data-toggle="tooltip" data-placement="top" title="Редактирай" class="btn btn-outline-dark"><i class="material-icons">edit</i></a>
                             </h1>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
 
                 <div class="col-6">
                     <div class="card text-white bg-dark mb-3">
-                        <div class="card-header">Add new product</div>
+                        <div class="card-header">Добавяне на ново устройство</div>
                         <div class="card-body">
 
                             <form class="">
@@ -55,7 +55,7 @@
                                         <input id="serial" type="text" placeholder="Serial Number" autocomplete="off" class="form-control">
                                     </div>
                                     <div class="col-2">
-                                        <button id="randomSerial" class="btn btn-outline-info btn-sm"><i class="material-icons">loop</i></button>
+                                        <button id="randomSerial" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="Генерирай случаен"><i class="material-icons">loop</i></button>
                                     </div>
                                 </div>
                                 <div class="form-group row" id="brandModelRow">
@@ -76,7 +76,7 @@
                                 <div class="form-group float-right row">
                                     <div class="col-12">
                                         <input type="hidden" name="clientId" id="clientId" value="{{ $client->id }}">
-                                        <button id="saveProduct" disabled="disabled" class="btn btn-outline-success"><i class="material-icons">save</i></button>
+                                        <button id="saveProduct" disabled="disabled" class="btn btn-outline-success" data-toggle="tooltip" data-placement="top" title="Запамети"><i class="material-icons">save</i></button>
                                     </div>
                                 </div>
                             </form>
@@ -106,7 +106,7 @@
                                 <td>{{ $product['serial'] }}</td>
                                 <td>{{ $product['created_at'] }}</td>
                                 <td>{{ $product['status'] }}</td>
-                                <td><a href="{{ asset('/product/'.$product['id']) }}" class="btn btn-outline-info" data-position="top" data-delay="100" data-tooltip="Open Device"><i class="large material-icons">link</i></a></td>
+                                <td><a href="{{ asset('/product/'.$product['id']) }}" class="btn btn-outline-info" data-toggle="tooltip" data-placement="top" title="Отвори"><i class="large material-icons">link</i></a></td>
                             </tr>
                         @endforeach
                     @endif
