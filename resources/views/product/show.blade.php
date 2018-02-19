@@ -194,7 +194,7 @@
                                                                 <input type="hidden" name="orderId" value="{{ $order->id }}">
                                                                 <input type="hidden" name="productId" value="{{ $product->id }}">
                                                                 <input type="hidden" name="status" value="4">
-                                                                <button type="submit" class="btn btn-sm btn-outline-info"><i class="material-icons" data-toggle="tooltip" data-placement="top" title="Взета">exit app</i></button>
+                                                                <button type="submit" class="btn btn-sm btn-outline-info"><i class="material-icons" data-toggle="tooltip" data-placement="top" title="Взета">exit_to_app</i></button>
                                                             </form>
                                                         @endif
                                                         @if($order->statusId !== 4)
