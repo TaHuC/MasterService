@@ -161,9 +161,7 @@ class ClientController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $client = Client::find($id);
-
-        return dd($request);
+        //return dd($request);
         $this->validate($request, [
             'name' => 'required|max:255',
             'email' => 'sometimes|nullable|email',
@@ -173,13 +171,14 @@ class ClientController extends Controller
             'idNumber' => 'numeric',
         ]);
 
+        $client = Client::find($id);
         $client->name = $request->name;
         $client->idNumber = $request->idNumber;
         $client->email = $request->email;
         $client->phone = $request->phone;
         $client->save();
 
-        return redirect('client.show', ['id' => $client->id]);
+        return redirect()->route('client.show', ['id' => $client->id]);
     }
 
     /**

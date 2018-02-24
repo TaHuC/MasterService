@@ -19,18 +19,18 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-2 text-right">
-                            <p>Email:</p>
+                        <div class="col-1">
+                            <i class="material-icons">email</i>
                         </div>
-                        <div class="col-10 text-left">
-                            <p> {{ $client->email }} </p>
+                        <div class="col-11">
+                            <p class=""> {{ $client->email }} </p>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-2 text-right">
-                            <p>Phone:</p>
+                        <div class="col-1">
+                            <i class="material-icons">phone</i>
                         </div>
-                        <div class="col-10 text-left">
+                        <div class="col-11">
                             <p> {{ $client->phone }} </p>
                         </div>
                     </div>
@@ -91,11 +91,11 @@
                 <table class="table table-inverse">
                     <thead>
                     <tr>
-                        <th>Devices</th>
-                        <th>Date add</th>
-                        <th>Serial</th>
-                        <th>Status</th>
-                        <th>Options</th>
+                        <th><i class="material-icons">devices</i></th>
+                        <th><i class="material-icons">fingerprint</i></th>
+                        <th><i class="material-icons">update</i></th>
+                        <th><i class="material-icons">new_releases</i></th>
+                        <th><i class="material-icons">widgets</i></th>
                     </tr>
                     </thead>
                     <tbody>

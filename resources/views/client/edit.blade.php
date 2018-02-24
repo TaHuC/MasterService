@@ -8,6 +8,7 @@
                 <h4 class="title">Add Client</h4>
                 <form class="" role="form" method="post" action="{{ route('client.update', $client->id) }}">
                     {{ csrf_field() }}
+                    <input type="hidden" name="_method" value="put">
                     <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }}">
                         <label for="name" class="active">Name</label>
                         <input id="name" type="text" autocomplete="off" class="form-control" name="name" value="{{ $client->name }}" required autofocus>
@@ -48,7 +49,7 @@
                         @endif
                     </div>
                     <div class="form-group text-right">
-                        <button type="submit" class="btn btn-outline-primary">
+                        <button type="submit" data-toggle="tooltip" data-placement="top" title="Запамети" class="btn btn-outline-primary">
                             <i class="material-icons">save</i>
                         </button>
                     </div>

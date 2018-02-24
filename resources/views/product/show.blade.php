@@ -133,9 +133,6 @@
                                                 <th>{{ $order->problem }}</th>
                                                 <th>{{ $order->now }}</th>
                                                 <th>{{ $order->password }}</th>
-                                                <th>{{ $order->created_at }}</th>
-                                                <th>{{ $order->updated_at }}</th>
-                                                <th>{{ $order->user->name }}</th>
                                                 <th>{{ $order->description }}</th>
                                                 <th class="float-right">
                                                     <table class="table-inverse">
@@ -162,46 +159,15 @@
                                                 <td class="text-center">Проблем</td>
                                                 <td class="text-center">Състояние</td>
                                                 <td class="text-center">Парола</td>
-                                                <td class="text-center">Приета на</td>
-                                                <td class="text-center">Последно на</td>
-                                                <td class="text-center">Приета от</td>
                                                 <td class="text-center">Информация</td>
-                                                <td class="text-right">
-                                                    <div class="row card-group">
-                                                        @if($order->statusId < 2)
-                                                            <form action="{{ route('order.changeStatus') }}" method="post" class="col-3">
-                                                                {{ csrf_field() }}
-                                                                <input type="hidden" name="orderId" value="{{ $order->id }}">
-                                                                <input type="hidden" name="productId" value="{{ $product->id }}">
-                                                                <input type="hidden" name="status" value="5">
-                                                                <button type="submit" class="btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="top" title="За части"><i class="material-icons">extension</i></button>
-                                                            </form>
-                                                        @endif
+                                                <td class="">
+                                                    <div class="col-4 text-right float-right">
+                                                        <i class="material-icons text-right" data-toggle="tooltip" data-placement="top" title="Поръчката е приета от: {{ $order->user->name }}">face</i>
+                                                        <i class="material-icons text-right" data-toggle="tooltip" data-placement="top" data-html="true" title="Поръчката е приета на: <b>{{ $order->created_at }}</b> <br> Последно редактирана на: <b>{{ $order->updated_at }}</b>">access_time</i>
+                                                    </div>
+                                                    <div class="row col-8 float-right">
 
-                                                        @if($order->statusId === 2 || $order->statusId === 5)
-                                                            <form action="{{ route('order.changeStatus') }}" method="post" class="col-4">
-                                                                {{ csrf_field() }}
-                                                                <input type="hidden" name="orderId" value="{{ $order->id }}">
-                                                                <input type="hidden" name="productId" value="{{ $product->id }}">
-                                                                <input type="hidden" name="status" value="3">
-                                                                <button type="submit" class="btn btn-sm btn-outline-success" data-toggle="tooltip" data-placement="top" title="Приключи"><i class="material-icons">done</i></button>
-                                                            </form>
-                                                        @endif
 
-                                                        @if($order->statusId === 3)
-                                                            <form action="{{ route('order.changeStatus') }}" method="post" class="col-3">
-                                                                {{ csrf_field() }}
-                                                                <input type="hidden" name="orderId" value="{{ $order->id }}">
-                                                                <input type="hidden" name="productId" value="{{ $product->id }}">
-                                                                <input type="hidden" name="status" value="4">
-                                                                <button type="submit" class="btn btn-sm btn-outline-info"><i class="material-icons" data-toggle="tooltip" data-placement="top" title="Взета">exit_to_app</i></button>
-                                                            </form>
-                                                        @endif
-                                                        @if($order->statusId !== 4)
-                                                            <div class="col-3">
-                                                                <button id="noteAddBtn" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#noteModal"><i class="material-icons">note_add</i></button>
-                                                            </div>
-                                                        @endif
                                                     </div>
                                                 </td>
                                             </tr>
@@ -211,7 +177,38 @@
                                             <div class="col-6">
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <h5 class="card-title"><i class="material-icons">build</i> List</h5>
+                                                        <h5 class="card-title float-left"><i class="material-icons">build</i> Ремонти</h5>
+                                                        <span class="float-right">
+                                                            @if($order->statusId < 2)
+                                                                <form action="{{ route('order.changeStatus') }}" method="post" class="col-3">
+                                                                {{ csrf_field() }}
+                                                                    <input type="hidden" name="orderId" value="{{ $order->id }}">
+                                                                <input type="hidden" name="productId" value="{{ $product->id }}">
+                                                                <input type="hidden" name="status" value="5">
+                                                                <button type="submit" class="btn btn-sm btn-warning" data-toggle="tooltip" data-placement="top" title="За части"><i class="material-icons">extension</i></button>
+                                                            </form>
+                                                            @endif
+
+                                                            @if($order->statusId === 2 || $order->statusId === 5)
+                                                                <form action="{{ route('order.changeStatus') }}" method="post" class="col-4">
+                                                                {{ csrf_field() }}
+                                                                    <input type="hidden" name="orderId" value="{{ $order->id }}">
+                                                                <input type="hidden" name="productId" value="{{ $product->id }}">
+                                                                <input type="hidden" name="status" value="3">
+                                                                <button type="submit" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="top" title="Приключи"><i class="material-icons">done</i></button>
+                                                            </form>
+                                                            @endif
+
+                                                            @if($order->statusId === 3)
+                                                                <form action="{{ route('order.changeStatus') }}" method="post" class="col-3">
+                                                                {{ csrf_field() }}
+                                                                    <input type="hidden" name="orderId" value="{{ $order->id }}">
+                                                                <input type="hidden" name="productId" value="{{ $product->id }}">
+                                                                <input type="hidden" name="status" value="4">
+                                                                <button type="submit" class="btn btn-sm btn-info"><i class="material-icons" data-toggle="tooltip" data-placement="top" title="Взета">exit_to_app</i></button>
+                                                            </form>
+                                                            @endif
+                                                        </span>
                                                     </div>
                                                     <div class="card-body">
                                                         <ul class="list-group">
@@ -234,9 +231,10 @@
                                             <div class="col-6">
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <div class="row">
-                                                            <h5 class="card-title"><i class="material-icons">note</i> List</h5>
-                                                        </div>
+                                                                <h5 class="card-title float-left"><i class="material-icons">note</i> Забележки</h5>
+                                                            @if($order->statusId !== 4)
+                                                                        <button id="noteAddBtn" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#noteModal"><i class="material-icons">note_add</i></button>
+                                                            @endif
                                                     </div>
                                                     <div class="card-body">
                                                         <ul class="list-group notesList" data-orderId="{{ $order->id }}"></ul>
