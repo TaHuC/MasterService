@@ -29,21 +29,21 @@ class User extends Authenticatable
 
     public function product()
     {
-        $this->hasMany(Product::class);
+        return $this->hasMany(Product::class);
     }
 
     public function client()
     {
-        $this->hasMany(Client::class);
+        return $this->hasMany(Client::class);
     }
 
     public function order()
     {
-        $this->hasMany(Order::class);
+        return $this->hasMany(Order::class);
     }
 
     public function repair()
     {
-        $this->hasMany(Repair::class);
+        return $this->hasMany(Repair::class);
     }
 }

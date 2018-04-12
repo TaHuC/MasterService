@@ -19,7 +19,7 @@ class CreateNotesTable extends Migration
             $table->foreign('userId')->references('id')->on('users');
             $table->integer('clientId')->unsigned()->nullable();
             $table->integer('orderId')->unsigned()->nullable();
-            $table->string('note')->unique();
+            $table->string('note');
             $table->timestamps();
         });
     }

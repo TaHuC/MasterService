@@ -11,6 +11,6 @@ class Note extends Model
 
     public function user()
     {
-        return $this->hasMany(User::class, 'id', 'userId');
+        return $this->hasMany(User::class, 'id','userId');
     }
 }
