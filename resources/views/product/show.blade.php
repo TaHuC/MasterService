@@ -73,7 +73,8 @@
                         </form>
                     @else
                         @if($product->orders->last()->statusId === 3)
-                            <div class="row col-12">
+
+                            <div class="row d-flex justify-content-center" style="height: 100%;">
                                 <h4 class="text-center">Тази поръчка е пруключена!</h4>
                             </div>
 
@@ -127,7 +128,9 @@
                             @foreach($product->orders as $order)
                                 @if($order->id === $product->orders->last()->id)
                                     <div class="tab-pane fade show active" id="{{ $order->id }}" role="tabpanel" aria-labelledby="">
-                                        <table class="table table-inverse table-responsive">
+                                        <div class="row">
+                                            <div class="card bg-dark" style="width: 100%;">
+                                                <table class="table table-inverse">
                                             <thead>
                                             <tr>
                                                 <th>{{ $order->problem }}</th>
@@ -173,6 +176,8 @@
                                             </tr>
                                             </tbody>
                                         </table>
+                                            </div>
+                                        </div>
                                         <div class="row">
                                             <div class="col-6">
                                                 <div class="card">

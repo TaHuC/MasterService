@@ -85,10 +85,13 @@
                 </div>
             </div>
         </div>
-
-        <div class="container">
             <div class="row" id="show">
-                <table class="table table-inverse">
+                <div class="card bg-dark text-white border border-primary" style="width: 100%;">
+                    <div class="card-header">
+                        <h3>Device List</h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="table bg-dark table-inverse">
                     <thead>
                     <tr>
                         <th><i class="material-icons">devices</i></th>
@@ -112,9 +115,10 @@
                     @endif
                     </tbody>
                 </table>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 @endsection
 
 @section('jsImport')

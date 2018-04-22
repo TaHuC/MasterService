@@ -39,3 +39,5 @@ Route::resource('/notes', 'NoteController');
 Route::get('/notes/{id}/{param}', 'NoteController@showNotes');
 Route::get('/settings', 'SettingsController@index')->name('settings');
 Route::put('/settings', 'SettingsController@update')->name('settings.update');
+Route::resource('/api/tasks', 'TaskController');
+Route::get('/api/tasks/filter/{filter}', 'TaskController@index')->name('tasks.completed');

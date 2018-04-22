@@ -16,7 +16,7 @@ function getOrder(){
                     problem: data[i].problem,
                     status: data[i].status.status,
                     price: data[i].price+'лв.',
-                    url: `<a class="btn btn-outline-light" href="/product/${data[i].productId}" data-toggle="tooltip" data-placement="top" title="Отвори поръчката"><i class="material-icons">assignment</i></a> <a class="btn btn-outline-light" href="/client/${data[i].product.clientId}" data-toggle="tooltip" data-placement="top" title="Отвори клиента"><i class="material-icons">assignment_ind</i></a>`
+                    url: `<a class="btn btn-sm btn-outline-light" href="/product/${data[i].productId}" data-toggle="tooltip" data-placement="top" title="Отвори поръчката"><i class="material-icons">assignment</i></a> <a class="btn btn-sm btn-outline-light" href="/client/${data[i].product.clientId}" data-toggle="tooltip" data-placement="top" title="Отвори клиента"><i class="material-icons">assignment_ind</i></a>`
                 }
                 $(function () {
                     $('[data-toggle="tooltip"]').tooltip()
@@ -27,26 +27,29 @@ function getOrder(){
             // Orders table
             $('#orderTable').DataTable({
                 data: resultOrder,
+                responsive: true,
                 columns: [
                     {
                         data: 'id'
                     },
                     { data: 'client' },
                     { data: 'phone' },
+                    
                     { data: 'serial' },
-                    { data: 'problem' },
+                    // { data: 'problem' },
                     { data: 'status' },
-                    {
-                        class: 'text-right',
-                        data: 'price'
-                    },
+                    // {
+                    //     class: 'text-right',
+                    //     data: 'price'
+                    // },
                     {
                         class: 'text-right',
                         data: 'url'
-                    }
+                    },
+                   
                 ],
                 "order": [[0, 'desc']],
-                "lengthMenu": [[10, 50, 100, -1], [10, 50, 100, "All"]]
+                "lengthMenu": [[5, 50, 100, -1], [5, 50, 100, "All"]]
             });
         });
 };

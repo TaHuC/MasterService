@@ -6,16 +6,30 @@
  */
 
 require('./bootstrap');
+require('animate.css');
+import axios from 'axios';
+import Resource from 'vue-resource';
+import BootstrapVue from 'bootstrap-vue'
 
 window.Vue = require('vue');
+
+window.axios = axios;
+
+window.axios.defaults.headers.common = {
+    'X-Requested-With': 'XMLHttpRequest',
+    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+};
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+Vue.use(Resource);
+Vue.use(BootstrapVue);
+Vue.component('tasks', require('./components/Task'));
 
-Vue.component('example', require('./components/Example.vue'));
+Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
 const app = new Vue({
     el: '#app'

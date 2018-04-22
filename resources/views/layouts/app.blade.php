@@ -16,7 +16,9 @@
     <!-- Styles -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/master.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/plugins/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+    {{--  <link href="{{ asset('css/plugins/dataTables.bootstrap4.min.css') }}" rel="stylesheet">  --}}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4-4.0.0/dt-1.10.16/r-2.2.1/datatables.min.css"/>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
     @yield('cssImport')
 
     <!-- Scripts -->
@@ -42,36 +44,36 @@
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <!-- Authentication Links -->
                     @if (Auth::guest())
-                        <li class="nav-item" ><a class="btn btn-outline-success my-2 my-sm-0" href="{{ route('login') }}">Login</a></li>
+                        <li class="nav-item" ><a class="btn btn-outline-success btn-sm my-2 my-sm-0" href="{{ route('login') }}">Login</a></li>
                     @if(\App\Settings::no_reg() === 0)
-                        <li class="nav-item" ><a class="btn btn-outline-success my-2 my-sm-0" href="{{ route('register') }}">Register</a></li>
+                        <li class="nav-item" ><a class="btn btn-outline-success btn-sm my-2 my-sm-0" href="{{ route('register') }}">Register</a></li>
                     @endif
                     @else
                         <li class="nav-item dropdown">
-                            <a href="#" class="dropdown-toggle btn btn-outline-success my-2 my-sm-0" data-toggle="dropdown" id="userDropdown">
+                            <a href="#" class="dropdown-toggle btn btn-outline-success btn-sm my-2 my-sm-0" data-toggle="dropdown" id="userDropdown">
                                 references <span class="caret"></span>
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                            <ul class="dropdown-menu bg-dark" aria-labelledby="userDropdown">
                                 <li class="nav-item text-center">
-                                    <a class="btn btn-outline-success my-2 my-sm-0" href="{{ route('client.index') }}">Clients</a>
+                                    <a class="btn btn-outline-success btn-block btn-sm my-2 my-sm-0" href="{{ route('client.index') }}">Clients</a>
                                 </li>
                                 <li class="nav-item text-center">
-                                    <a class="btn btn-outline-success my-2 my-sm-0" href="{{ route('product.index') }}">Devices</a>
+                                    <a class="btn btn-outline-success btn-block btn-sm my-2 my-sm-0" href="{{ route('product.index') }}">Devices</a>
                                 </li>
                             </ul>
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a href="#" class="btn btn-outline-success my-2 my-sm-0 dropdown-toggle" data-toggle="dropdown" id="userDropdown">
+                            <a href="#" class="btn btn-outline-success btn-sm my-2 my-sm-0 dropdown-toggle" data-toggle="dropdown" id="userDropdown">
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
 
-                            <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                            <ul class="dropdown-menu bg-dark" aria-labelledby="userDropdown">
                                 <li class="nav-item text-center">
-                                    <a class="btn btn-outline-warning my-2 my-sm-0" href="{{ route('settings') }}">Настройки</a>
+                                    <a class="btn btn-outline-success btn-block btn-sm my-2 my-sm-0" href="{{ route('settings') }}">Настройки</a>
                                 </li>
                                 <li class="nav-item text-center">
-                                    <a class="btn btn-outline-warning my-2 my-sm-0" href="{{ route('logout') }}"
+                                    <a class="btn btn-outline-warning btn-block btn-sm my-2 my-sm-0" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">
                                         Изход
@@ -89,11 +91,11 @@
                 <div class="form-inline my-2 my-lg-0">
                     {{ csrf_field() }}
                     <input class="form-control mr-sm-2" id="idOrder" type="search" placeholder="Order ID" aria-label="Order">
-                    <button class="btn btn-outline-success my-2 my-sm-0" id="loadOrderBtn" data-toggle="tooltip" data-placement="top" title="Зареди поръчка"><i class="material-icons">touch_app</i></button>
+                    <button class="btn btn-outline-success btn-sm my-2 my-sm-0" id="loadOrderBtn" data-toggle="tooltip" data-placement="top" title="Зареди поръчка"><i class="material-icons">touch_app</i></button>
                 </div>
                     <ul class="navbar-nav">
                         <li class="nav-item align-bottom">
-                            <a href="{{ route('client.create') }}" class="btn btn-outline-success my-2 my-sm-0" data-toggle="tooltip" data-placement="top" title="Добави"><i class="material-icons">add</i></a>
+                            <a href="{{ route('client.create') }}" class="btn btn-sm btn-outline-success my-2 my-sm-0" data-toggle="tooltip" data-placement="top" title="Добави"><i class="material-icons">add</i></a>
                         </li>
                     </ul>
                 @endif
@@ -110,17 +112,22 @@
             </div>
         @endif
 
-        @yield('content')
+        <div class="container-fluid">
+            <tasks></tasks>
+            @yield('content')
+        </div>
     </div>
 
     <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/remote.js') }}"></script>
     <script src="{{ asset('js/notifycations.js') }}"></script>
-    <script src="{{ asset('js/plugins/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/dataTables.bootstrap4.min.js') }}"></script>
+    {{--  <script src="{{ asset('js/plugins/jquery.dataTables.min.js') }}"></script>  --}}
+    {{--  <script src="{{ asset('js/plugins/dataTables.bootstrap4.min.js') }}"></script>  --}}
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.0.0/dt-1.10.16/r-2.2.1/datatables.min.js"></script>
     <script src="{{ asset('js/appMaster.js') }}"></script>
     @yield('jsImport')
 </body>

@@ -6,8 +6,17 @@ body {
     background-size: cover;
 }
 
-input[type="search"] {
-    height: 64px !important; /* or height of nav */
+#idOrder {
+    height: 40px !important;
+    /* or height of nav */
+}
+
+.container-fluid {
+    margin-top: 20px;
+}
+
+#homeRow .col-12 {
+    margin-bottom: 10px;
 }
 
 .nav-item {
@@ -45,22 +54,22 @@ input[type="search"] {
     position: absolute;
     min-width: 100px;
     margin-top: -15px;
-    border-top:0px;
+    border-top: 0px;
     overflow: hidden;
     background-color: white;
     z-index: 550;
 }
 
-.showBrand{
-    font-family:tahoma;
-    padding:5px;
-    font-size:15px;
+.showBrand {
+    font-family: tahoma;
+    padding: 5px;
+    font-size: 15px;
     z-index: 550;
 }
 
 .showBrand:hover {
-    color:#3d6983;
-    cursor:pointer;
+    color: #3d6983;
+    cursor: pointer;
 }
 
 .typeButton {
@@ -79,7 +88,8 @@ input[type="search"] {
     padding-bottom: 30px;
 }
 
-#orderForm, #repairForm {
+#orderForm,
+#repairForm {
     margin-top: 20px;
 }
 
@@ -89,4 +99,8 @@ input[type="search"] {
 
 .card {
     margin-top: 20px;
+}
+
+.tableCol {
+    padding-bottom: 20px;
 }
