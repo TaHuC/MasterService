@@ -113,7 +113,9 @@
         @endif
 
         <div class="container-fluid">
+            @if (!Auth::guest())
             <tasks></tasks>
+            @endif
             @yield('content')
         </div>
     </div>

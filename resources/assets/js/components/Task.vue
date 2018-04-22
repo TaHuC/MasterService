@@ -34,7 +34,7 @@
                     <button class="btn btn-outline-warning btn-sm" @click="showAdd=false">close</button>
                 </div>
             </div>
-            <ul class="list-group list-group-flush" id="tolltipsEnable" v-else style="overflow:auto;">
+            <ul class="list-group list-group-flush bg-dark" id="tolltipsEnable" v-else style="overflow:auto;">
                 <li class="list-group-item" v-for="(task, index) in tasks" v-b-tooltip.html :title="task.completed ? `<small>`+ task.user.name + ` на: ` +  task.updated_at +  ` Информация: ` + task.description +`</small>` : `<small>`+task.user.name + ` на: ` +  task.created_at +  ` Информация: ` + task.description + `</small>` ">
                     <input type="checkbox" :disabled="task.completed ? true : false" :checked="task.completed" class="" @click="complatedTask(task.id)">
                     <label class="form-check-label" :class="task.completed ? 'completedClass' : 'text-danger'">{{task.title}}</label>
