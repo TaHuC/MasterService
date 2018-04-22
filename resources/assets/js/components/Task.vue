@@ -71,17 +71,22 @@
             }
         },
         created() {
-            this.getAllTasks()
+            this.getAllTasks();
+            setInterval(() => {
+                this.getAllTasks();
+            }, 10000);
         },
         methods: {
             getAllTasks() {
                 this.showActive = true;
                 axios.get('/api/tasks')
-                .then(results => {
-                    this.tasks = results.data
+                    .then(results => {
+                        this.tasks = results.data
+
+                    })
+                    .catch(err => console.log(err))
                     
-                })
-                .catch(err => console.log(err))
+                
             },
             addNewTask() {
                 axios({
@@ -125,6 +130,10 @@
             }
         }
     }
+
+    setTimeout(() => {
+            console.log('test time out');
+        }, 3000);
 </script>
 
 <style>

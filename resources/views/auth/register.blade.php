@@ -7,7 +7,7 @@
 <div class="container">
     <br>
     <div class="row col-12 justify-content-center">
-        <div class="col-6 bg-dark mb-3 text-white align-middle" id="add-client-col">
+        <div class="col-md-6 col-xs-12 bg-dark mb-3 text-white align-middle" id="add-client-col">
             <h4 class="title">Register</h4>
             <form class="" role="form" method="POST" action="{{ route('register') }}">
                 {{ csrf_field() }}

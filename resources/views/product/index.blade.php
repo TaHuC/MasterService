@@ -4,7 +4,7 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 bg-dark">
                 <h2 class="title text-white">Devices</h2>
                 <div class="form-group text-right">
                     <label for="filter" class="col-1 text-white">Filter:</label>
