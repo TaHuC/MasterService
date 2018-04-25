@@ -41,3 +41,9 @@ Route::get('/settings', 'SettingsController@index')->name('settings');
 Route::put('/settings', 'SettingsController@update')->name('settings.update');
 Route::resource('/api/tasks', 'TaskController');
 Route::get('/api/tasks/filter/{filter}', 'TaskController@index')->name('tasks.completed');
+Route::post('/api/realTimeService', 'RealTimeUserCheckController@store');
+Route::get('/api/realTimeService/{service}/{serviceId}', 'RealTimeUserCheckController@checkService');
+Route::get('/api/realTimeService', 'RealTimeUserCheckController@index');
+
+Route::delete('/api/realTimeService/{id}', 'RealTimeUserCheckController@destroy');
+

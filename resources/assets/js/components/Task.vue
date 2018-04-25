@@ -73,20 +73,24 @@
         created() {
             this.getAllTasks();
             setInterval(() => {
-                this.getAllTasks();
-            }, 10000);
+                this.checkRealService();
+            }, 1000);
         },
         methods: {
+            makeService() {
+                axios.post('/api/realTimeService', { realTimeServiceId: true })
+                    .then((result) => {
+                      //console.log(result);  
+                    })
+                    .catch(err => console.log(err));
+            },
             getAllTasks() {
                 this.showActive = true;
                 axios.get('/api/tasks')
                     .then(results => {
-                        this.tasks = results.data
-
+                        this.tasks = results.data;
                     })
-                    .catch(err => console.log(err))
-                    
-                
+                    .catch(err => console.log(err));
             },
             addNewTask() {
                 axios({
@@ -97,17 +101,19 @@
                 })
                 .then(result => {
                     //console.log(result.data);
+                    this.makeService();
                     this.getAllTasks();
                     this.showAdd = false;
                     this.task.title = '';
                     this.task.description = '';
+
                 })
                 .catch(err => console.log(err))
             },
             complatedTask(id) {
                 axios.put(`/api/tasks/${id}`)
                 .then(result => {
-
+                    this.makeService();
                 })
                 .catch(err => console.log(err));
                 this.getAllTasks();
@@ -127,13 +133,24 @@
             },
             hideTaskList() {
                 this.showTasksLs = false;
+            },
+            checkRealService() {
+                axios.get(`/api/realTimeService/task/1`)
+                .then(result => {
+                    if(result.data) {
+                        this.getAllTasks();
+                        this.showTasksLs = true;
+                        axios.delete('/api/realTimeService/' + result.data)
+                        .then(result => {
+                            //console.log(result);
+                        })
+                        .catch(err => console.log(err));
+                    }
+                })
+                .catch(err => console.log(err));
             }
         }
     }
-
-    setTimeout(() => {
-            console.log('test time out');
-        }, 3000);
 </script>
 
 <style>

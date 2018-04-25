@@ -10346,11 +10346,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         this.getAllTasks();
         setInterval(function () {
-            _this.getAllTasks();
-        }, 10000);
+            _this.checkRealService();
+        }, 1000);
     },
 
     methods: {
+        makeService: function makeService() {
+            axios.post('/api/realTimeService', { realTimeServiceId: true }).then(function (result) {
+                //console.log(result);  
+            }).catch(function (err) {
+                return console.log(err);
+            });
+        },
         getAllTasks: function getAllTasks() {
             var _this2 = this;
 
@@ -10371,6 +10378,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 data: this.task
             }).then(function (result) {
                 //console.log(result.data);
+                _this3.makeService();
                 _this3.getAllTasks();
                 _this3.showAdd = false;
                 _this3.task.title = '';
@@ -10380,18 +10388,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         complatedTask: function complatedTask(id) {
-            axios.put('/api/tasks/' + id).then(function (result) {}).catch(function (err) {
+            var _this4 = this;
+
+            axios.put('/api/tasks/' + id).then(function (result) {
+                _this4.makeService();
+            }).catch(function (err) {
                 return console.log(err);
             });
             this.getAllTasks();
             $('#element').tooltip('enable');
         },
         getCompletedTask: function getCompletedTask() {
-            var _this4 = this;
+            var _this5 = this;
 
             this.showActive = false;
             axios.get('/api/tasks/filter/completed').then(function (results) {
-                _this4.tasks = results.data;
+                _this5.tasks = results.data;
             }).catch(function (err) {
                 return console.log(err);
             });
@@ -10402,13 +10414,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         hideTaskList: function hideTaskList() {
             this.showTasksLs = false;
+        },
+        checkRealService: function checkRealService() {
+            var _this6 = this;
+
+            axios.get('/api/realTimeService/task/1').then(function (result) {
+                if (result.data) {
+                    _this6.getAllTasks();
+                    _this6.showTasksLs = true;
+                    axios.delete('/api/realTimeService/' + result.data).then(function (result) {
+                        //console.log(result);
+                    }).catch(function (err) {
+                        return console.log(err);
+                    });
+                }
+            }).catch(function (err) {
+                return console.log(err);
+            });
         }
     }
 });
-
-setTimeout(function () {
-    console.log('test time out');
-}, 3000);
 
 /***/ }),
 /* 92 */
