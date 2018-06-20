@@ -12,7 +12,7 @@ $(document).ready(function () {
                                 .append(`<small>${result[i]['user'][0]['name']}</small>`));
                     }
                 } else {
-                    $(noteList).append('<li><h3>Not notes</h3></li>');
+                    $(noteList).append('<li class="list-group-item"><h3>Няма бележки</h3></li>');
                 }
             });
     });

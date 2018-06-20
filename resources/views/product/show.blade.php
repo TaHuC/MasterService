@@ -32,34 +32,34 @@
                             {{ csrf_field() }}
                             <div class="row">
                                 <div class="col-6 form-group">
-                                    <label for="problem">Problem</label>
-                                    <input type="text" class="form-control" autocomplete="off" name="problem" id="problem" placeholder="Problem..." required>
+                                    <label for="problem">Проблем</label>
+                                    <input type="text" class="form-control" autocomplete="off" name="problem" id="problem" placeholder="Проблем..." required>
                                 </div>
                                 <div class="col-6 form-group">
-                                    <label for="Now">Now</label>
-                                    <input type="text" class="form-control" autocomplete="off" name="now" id="now" placeholder="Now..." required>
+                                    <label for="Now">Състояние</label>
+                                    <input type="text" class="form-control" autocomplete="off" name="now" id="now" placeholder="Състояние..." required>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-6 form-group">
-                                    <label for="password">Password</label>
+                                    <label for="password">Парола</label>
                                     <input type="text" name="password" class="form-control" autocomplete="off" id="password" placeholder="password...">
                                 </div>
                                 <div class="col-6 form-group">
-                                    <label for="description">Description</label>
+                                    <label for="description">Информация</label>
                                     <textarea class="form-control" id="description" autocomplete="off" name="description"></textarea>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-6 form-group">
-                                    <label for="price">Price</label>
+                                    <label for="price">Цена</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control text-right" autocomplete="off" name="price" id="price" placeholder="20..." value="0">
                                         <div class="input-group-addon">лв.</div>
                                     </div>
                                 </div>
                                 <div class="col-6 form-group">
-                                    <label for="deposit">Deposit</label>
+                                    <label for="deposit">Депосит</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control text-right" id="deposit" autocomplete="off" name="deposit" placeholder="10..." value="0">
                                         <div class="input-group-addon">лв.</div>
@@ -82,15 +82,15 @@
                             <form class="" id="repairForm" method="post" action="{{ route('repair.store') }}">
                                 {{ csrf_field() }}
                                 <div class="col-12 form-group">
-                                    <label for="repair">Repair</label>
-                                    <input type="text" class="form-control" autocomplete="off" name="repair" id="repair" placeholder="Repair..." required>
+                                    <label for="repair">Ремонт</label>
+                                    <input type="text" class="form-control" autocomplete="off" name="repair" id="repair" placeholder="Ремонт..." required>
                                 </div>
                                 <div class="col-12 form-group">
-                                    <label for="description">Description</label>
+                                    <label for="description">Информация</label>
                                     <textarea class="form-control" autocomplete="off" name="description" id="description"></textarea>
                                 </div>
                                 <div class="col-12 form-group">
-                                    <label for="price">Price</label>
+                                    <label for="price">Цена</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control text-right" autocomplete="off" name="price" id="price" placeholder="20..." value="{{ $product->orders[count($product->orders) - 1]->price }}">
                                         <div class="input-group-addon">лв.</div>
@@ -250,7 +250,9 @@
                                     </div>
                                 @else
                                     <div class="tab-pane fade" id="{{ $order->id }}" role="tabpanel" aria-labelledby="">
-                                        <table class="table table-inverse table-responsive">
+                                        <div class="row">
+                                            <div class="card bg-dark" style="width: 100%;">
+                                                <table class="table table-inverse">
                                             <thead>
                                             <tr>
                                                 <th>{{ $order->problem }}</th>
@@ -269,9 +271,9 @@
                                                         </thead>
                                                         <tbody>
                                                         <tr>
-                                                            <td>Deposit</td>
-                                                            <td>Price</td>
-                                                            <td>Total</td>
+                                                            <td>Депосит</td>
+                                                            <td>Цена</td>
+                                                            <td>Всичко</td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
@@ -280,20 +282,22 @@
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td class="text-center">Problem</td>
-                                                <td class="text-center">Now</td>
-                                                <td class="text-center">Password</td>
-                                                <td class="text-center">Created</td>
-                                                <td class="text-center">Description</td>
+                                                <td class="text-center">Проблем</td>
+                                                <td class="text-center">Състояние</td>
+                                                <td class="text-center">Парола</td>
+                                                <td class="text-center">Приета</td>
+                                                <td class="text-center">Информация</td>
                                                 <td class="text-center">{{ $order->user->name }} | <small>{{ $order->updated_at }}</small></td>
                                             </tr>
                                             </tbody>
                                         </table>
+                                            </div>
+                                        </div>
                                         <div class="row">
                                             <div class="col-6">
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <h5 class="card-title">Repairs List</h5>
+                                                        <h5 class="card-title"><i class="material-icons">build</i> Ремонти</h5>
                                                     </div>
                                                     <div class="card-body">
                                                         <ul class="list-group">
@@ -316,7 +320,7 @@
                                             <div class="col-6">
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <h5 class="card-title">Notes List</h5>
+                                                        <h5 class="card-title"><i class="material-icons">note</i> Забележки</h5>
                                                     </div>
                                                     <div class="card-body">
                                                         <ul class="list-group notesList" data-orderId="{{ $order->id }}">
@@ -330,7 +334,7 @@
                             @endforeach
                         </div>
                     @else
-                       <h3 class="title text-center">No orders</h3>
+                       <h3 class="title text-center">Няма Ремонти</h3>
                     @endif
                 </div>
             </div>
@@ -343,7 +347,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="noteModalLabel">Note</h5>
+                        <h5 class="modal-title" id="noteModalLabel">Бележка</h5>
                         <button type="button" class="close" data-toggle="tooltip" data-placement="top" title="Затвори" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
