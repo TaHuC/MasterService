@@ -59,6 +59,7 @@ class InlineTest extends TestCase
             array('!php/const PHP_INT_MAX', PHP_INT_MAX),
             array('[!php/const PHP_INT_MAX]', array(PHP_INT_MAX)),
             array('{ foo: !php/const PHP_INT_MAX }', array('foo' => PHP_INT_MAX)),
+            array('!php/const NULL', null),
         );
     }
 
@@ -251,9 +252,9 @@ class InlineTest extends TestCase
     {
         if (method_exists($this, 'expectExceptionMessage')) {
             $this->expectException(ParseException::class);
-            $this->expectExceptionMessage(sprintf('cannot start a plain scalar; you need to quote the scalar at line 1 (near "%sfoo ").', $indicator));
+            $this->expectExceptionMessage(sprintf('cannot start a plain scalar; you need to quote the scalar at line 1 (near "%sfoo").', $indicator));
         } else {
-            $this->setExpectedException(ParseException::class, sprintf('cannot start a plain scalar; you need to quote the scalar at line 1 (near "%sfoo ").', $indicator));
+            $this->setExpectedException(ParseException::class, sprintf('cannot start a plain scalar; you need to quote the scalar at line 1 (near "%sfoo").', $indicator));
         }
 
         Inline::parse(sprintf('{ foo: %sfoo }', $indicator));
@@ -271,9 +272,9 @@ class InlineTest extends TestCase
     {
         if (method_exists($this, 'expectExceptionMessage')) {
             $this->expectException(ParseException::class);
-            $this->expectExceptionMessage(sprintf('cannot start a plain scalar; you need to quote the scalar at line 1 (near "%sfoo ").', $indicator));
+            $this->expectExceptionMessage(sprintf('cannot start a plain scalar; you need to quote the scalar at line 1 (near "%sfoo").', $indicator));
         } else {
-            $this->setExpectedException(ParseException::class, sprintf('cannot start a plain scalar; you need to quote the scalar at line 1 (near "%sfoo ").', $indicator));
+            $this->setExpectedException(ParseException::class, sprintf('cannot start a plain scalar; you need to quote the scalar at line 1 (near "%sfoo").', $indicator));
         }
 
         Inline::parse(sprintf('{ foo: %sfoo }', $indicator));
@@ -746,5 +747,14 @@ class InlineTest extends TestCase
         $this->assertInstanceOf(TaggedValue::class, $value['foo']);
         $this->assertSame('bar', $value['foo']->getTag());
         $this->assertSame('', $value['foo']->getValue());
+    }
+
+    /**
+     * @expectedException \Symfony\Component\Yaml\Exception\ParseException
+     * @expectedExceptionMessage Unexpected end of line, expected one of ",}" at line 1 (near "{abc: 'def'").
+     */
+    public function testUnfinishedInlineMap()
+    {
+        Inline::parse("{abc: 'def'");
     }
 }

@@ -9426,7 +9426,7 @@ var app = new Vue({
 /* 73 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: ModuleBuildError: Module build failed: Error: Node Sass does not yet support your current environment: OS X 64-bit with Unsupported runtime (59)\nFor more information on which environments are supported please see:\nhttps://github.com/sass/node-sass/releases/tag/v4.5.3\n    at module.exports (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/node-sass/lib/binding.js:13:13)\n    at Object.<anonymous> (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/node-sass/lib/index.js:14:35)\n    at Module._compile (module.js:641:30)\n    at Object.Module._extensions..js (module.js:652:10)\n    at Module.load (module.js:560:32)\n    at tryModuleLoad (module.js:503:12)\n    at Function.Module._load (module.js:495:3)\n    at Module.require (module.js:585:17)\n    at require (internal/module.js:11:18)\n    at Object.<anonymous> (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/sass-loader/lib/loader.js:3:14)\n    at Module._compile (module.js:641:30)\n    at Object.Module._extensions..js (module.js:652:10)\n    at Module.load (module.js:560:32)\n    at tryModuleLoad (module.js:503:12)\n    at Function.Module._load (module.js:495:3)\n    at Module.require (module.js:585:17)\n    at require (internal/module.js:11:18)\n    at loadLoader (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/loadLoader.js:13:17)\n    at iteratePitchingLoaders (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/LoaderRunner.js:173:18\n    at loadLoader (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/loadLoader.js:36:3)\n    at iteratePitchingLoaders (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/LoaderRunner.js:173:18\n    at loadLoader (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/loadLoader.js:36:3)\n    at iteratePitchingLoaders (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/LoaderRunner.js:173:18\n    at loadLoader (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/loadLoader.js:36:3)\n    at runLoaders (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/webpack/lib/NormalModule.js:192:19)\n    at /Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/LoaderRunner.js:364:11\n    at /Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/LoaderRunner.js:170:18\n    at loadLoader (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/loadLoader.js:27:11)\n    at iteratePitchingLoaders (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/LoaderRunner.js:173:18\n    at loadLoader (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/loadLoader.js:36:3)\n    at iteratePitchingLoaders (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/LoaderRunner.js:173:18\n    at loadLoader (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/loadLoader.js:36:3)\n    at iteratePitchingLoaders (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/LoaderRunner.js:173:18\n    at loadLoader (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/loadLoader.js:36:3)\n    at iteratePitchingLoaders (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at runLoaders (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/loader-runner/lib/LoaderRunner.js:362:2)\n    at NormalModule.doBuild (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/webpack/lib/NormalModule.js:179:3)\n    at NormalModule.build (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/webpack/lib/NormalModule.js:268:15)\n    at Compilation.buildModule (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/webpack/lib/Compilation.js:142:10)\n    at moduleFactory.create (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/webpack/lib/Compilation.js:429:9)\n    at /Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/webpack/lib/NormalModuleFactory.js:251:4\n    at /Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/webpack/lib/NormalModuleFactory.js:93:13\n    at /Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/tapable/lib/Tapable.js:250:11\n    at NormalModuleFactory.params.normalModuleFactory.plugin (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/webpack/lib/CompatibilityPlugin.js:52:5)\n    at NormalModuleFactory.applyPluginsAsyncWaterfall (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/tapable/lib/Tapable.js:254:13)\n    at onDoneResolving (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/webpack/lib/NormalModuleFactory.js:68:11)\n    at onDoneResolving (/Volumes/DATA/Applications/MAMP/htdocs/masterService/node_modules/webpack/lib/NormalModuleFactory.js:197:6)\n    at _combinedTickCallback (internal/process/next_tick.js:131:7)");
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 /* 74 */
@@ -10324,16 +10324,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 // import axios from 'axios';
-
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "tasks",
     data: function data() {
         return {
             tasks: '',
+            countTask: '',
             showAdd: false,
-            showTasksLs: true,
+            showTasksLs: false,
             task: {
                 title: '',
                 description: ''
@@ -10341,7 +10342,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             showActive: true
         };
     },
-    created: function created() {
+    beforeMount: function beforeMount() {
         var _this = this;
 
         this.getAllTasks();
@@ -10363,7 +10364,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.showActive = true;
             axios.get('/api/tasks').then(function (results) {
+                // console.log(results.data)
                 _this2.tasks = results.data;
+                _this2.countTask = results.data.length;
             }).catch(function (err) {
                 return console.log(err);
             });
@@ -10421,7 +10424,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get('/api/realTimeService/task/1').then(function (result) {
                 if (result.data) {
                     _this6.getAllTasks();
-                    _this6.showTasksLs = true;
+                    // this.showTasksLs = true;
                     axios.delete('/api/realTimeService/' + result.data).then(function (result) {
                         //console.log(result);
                     }).catch(function (err) {
@@ -33719,7 +33722,7 @@ module.exports = startCase;
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '4.17.4';
+  var VERSION = '4.17.10';
 
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
@@ -33850,7 +33853,6 @@ module.exports = startCase;
   /** Used to match property names within property paths. */
   var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/,
       reIsPlainProp = /^\w*$/,
-      reLeadingDot = /^\./,
       rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
 
   /**
@@ -33950,8 +33952,8 @@ module.exports = startCase;
       reOptMod = rsModifier + '?',
       rsOptVar = '[' + rsVarRange + ']?',
       rsOptJoin = '(?:' + rsZWJ + '(?:' + [rsNonAstral, rsRegional, rsSurrPair].join('|') + ')' + rsOptVar + reOptMod + ')*',
-      rsOrdLower = '\\d*(?:(?:1st|2nd|3rd|(?![123])\\dth)\\b)',
-      rsOrdUpper = '\\d*(?:(?:1ST|2ND|3RD|(?![123])\\dTH)\\b)',
+      rsOrdLower = '\\d*(?:1st|2nd|3rd|(?![123])\\dth)(?=\\b|[A-Z_])',
+      rsOrdUpper = '\\d*(?:1ST|2ND|3RD|(?![123])\\dTH)(?=\\b|[a-z_])',
       rsSeq = rsOptVar + reOptMod + rsOptJoin,
       rsEmoji = '(?:' + [rsDingbat, rsRegional, rsSurrPair].join('|') + ')' + rsSeq,
       rsSymbol = '(?:' + [rsNonAstral + rsCombo + '?', rsCombo, rsRegional, rsSurrPair, rsAstral].join('|') + ')';
@@ -34144,6 +34146,14 @@ module.exports = startCase;
   /** Used to access faster Node.js helpers. */
   var nodeUtil = (function() {
     try {
+      // Use `util.types` for Node.js 10+.
+      var types = freeModule && freeModule.require && freeModule.require('util').types;
+
+      if (types) {
+        return types;
+      }
+
+      // Legacy `process.binding('util')` for Node.js < 10.
       return freeProcess && freeProcess.binding && freeProcess.binding('util');
     } catch (e) {}
   }());
@@ -34157,34 +34167,6 @@ module.exports = startCase;
       nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
 
   /*--------------------------------------------------------------------------*/
-
-  /**
-   * Adds the key-value `pair` to `map`.
-   *
-   * @private
-   * @param {Object} map The map to modify.
-   * @param {Array} pair The key-value pair to add.
-   * @returns {Object} Returns `map`.
-   */
-  function addMapEntry(map, pair) {
-    // Don't return `map.set` because it's not chainable in IE 11.
-    map.set(pair[0], pair[1]);
-    return map;
-  }
-
-  /**
-   * Adds `value` to `set`.
-   *
-   * @private
-   * @param {Object} set The set to modify.
-   * @param {*} value The value to add.
-   * @returns {Object} Returns `set`.
-   */
-  function addSetEntry(set, value) {
-    // Don't return `set.add` because it's not chainable in IE 11.
-    set.add(value);
-    return set;
-  }
 
   /**
    * A faster alternative to `Function#apply`, this function invokes `func`
@@ -34950,6 +34932,20 @@ module.exports = startCase;
       }
     }
     return result;
+  }
+
+  /**
+   * Gets the value at `key`, unless `key` is "__proto__".
+   *
+   * @private
+   * @param {Object} object The object to query.
+   * @param {string} key The key of the property to get.
+   * @returns {*} Returns the property value.
+   */
+  function safeGet(object, key) {
+    return key == '__proto__'
+      ? undefined
+      : object[key];
   }
 
   /**
@@ -36384,7 +36380,7 @@ module.exports = startCase;
           if (!cloneableTags[tag]) {
             return object ? value : {};
           }
-          result = initCloneByTag(value, tag, baseClone, isDeep);
+          result = initCloneByTag(value, tag, isDeep);
         }
       }
       // Check for circular references and return its corresponding clone.
@@ -36394,6 +36390,22 @@ module.exports = startCase;
         return stacked;
       }
       stack.set(value, result);
+
+      if (isSet(value)) {
+        value.forEach(function(subValue) {
+          result.add(baseClone(subValue, bitmask, customizer, subValue, value, stack));
+        });
+
+        return result;
+      }
+
+      if (isMap(value)) {
+        value.forEach(function(subValue, key) {
+          result.set(key, baseClone(subValue, bitmask, customizer, key, value, stack));
+        });
+
+        return result;
+      }
 
       var keysFunc = isFull
         ? (isFlat ? getAllKeysIn : getAllKeys)
@@ -37322,7 +37334,7 @@ module.exports = startCase;
         }
         else {
           var newValue = customizer
-            ? customizer(object[key], srcValue, (key + ''), object, source, stack)
+            ? customizer(safeGet(object, key), srcValue, (key + ''), object, source, stack)
             : undefined;
 
           if (newValue === undefined) {
@@ -37349,8 +37361,8 @@ module.exports = startCase;
      *  counterparts.
      */
     function baseMergeDeep(object, source, key, srcIndex, mergeFunc, customizer, stack) {
-      var objValue = object[key],
-          srcValue = source[key],
+      var objValue = safeGet(object, key),
+          srcValue = safeGet(source, key),
           stacked = stack.get(srcValue);
 
       if (stacked) {
@@ -38259,20 +38271,6 @@ module.exports = startCase;
     }
 
     /**
-     * Creates a clone of `map`.
-     *
-     * @private
-     * @param {Object} map The map to clone.
-     * @param {Function} cloneFunc The function to clone values.
-     * @param {boolean} [isDeep] Specify a deep clone.
-     * @returns {Object} Returns the cloned map.
-     */
-    function cloneMap(map, isDeep, cloneFunc) {
-      var array = isDeep ? cloneFunc(mapToArray(map), CLONE_DEEP_FLAG) : mapToArray(map);
-      return arrayReduce(array, addMapEntry, new map.constructor);
-    }
-
-    /**
      * Creates a clone of `regexp`.
      *
      * @private
@@ -38283,20 +38281,6 @@ module.exports = startCase;
       var result = new regexp.constructor(regexp.source, reFlags.exec(regexp));
       result.lastIndex = regexp.lastIndex;
       return result;
-    }
-
-    /**
-     * Creates a clone of `set`.
-     *
-     * @private
-     * @param {Object} set The set to clone.
-     * @param {Function} cloneFunc The function to clone values.
-     * @param {boolean} [isDeep] Specify a deep clone.
-     * @returns {Object} Returns the cloned set.
-     */
-    function cloneSet(set, isDeep, cloneFunc) {
-      var array = isDeep ? cloneFunc(setToArray(set), CLONE_DEEP_FLAG) : setToArray(set);
-      return arrayReduce(array, addSetEntry, new set.constructor);
     }
 
     /**
@@ -39893,7 +39877,7 @@ module.exports = startCase;
      */
     function initCloneArray(array) {
       var length = array.length,
-          result = array.constructor(length);
+          result = new array.constructor(length);
 
       // Add properties assigned by `RegExp#exec`.
       if (length && typeof array[0] == 'string' && hasOwnProperty.call(array, 'index')) {
@@ -39920,16 +39904,15 @@ module.exports = startCase;
      * Initializes an object clone based on its `toStringTag`.
      *
      * **Note:** This function only supports cloning values with tags of
-     * `Boolean`, `Date`, `Error`, `Number`, `RegExp`, or `String`.
+     * `Boolean`, `Date`, `Error`, `Map`, `Number`, `RegExp`, `Set`, or `String`.
      *
      * @private
      * @param {Object} object The object to clone.
      * @param {string} tag The `toStringTag` of the object to clone.
-     * @param {Function} cloneFunc The function to clone values.
      * @param {boolean} [isDeep] Specify a deep clone.
      * @returns {Object} Returns the initialized clone.
      */
-    function initCloneByTag(object, tag, cloneFunc, isDeep) {
+    function initCloneByTag(object, tag, isDeep) {
       var Ctor = object.constructor;
       switch (tag) {
         case arrayBufferTag:
@@ -39948,7 +39931,7 @@ module.exports = startCase;
           return cloneTypedArray(object, isDeep);
 
         case mapTag:
-          return cloneMap(object, isDeep, cloneFunc);
+          return new Ctor;
 
         case numberTag:
         case stringTag:
@@ -39958,7 +39941,7 @@ module.exports = startCase;
           return cloneRegExp(object);
 
         case setTag:
-          return cloneSet(object, isDeep, cloneFunc);
+          return new Ctor;
 
         case symbolTag:
           return cloneSymbol(object);
@@ -40005,10 +39988,13 @@ module.exports = startCase;
      * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
      */
     function isIndex(value, length) {
+      var type = typeof value;
       length = length == null ? MAX_SAFE_INTEGER : length;
+
       return !!length &&
-        (typeof value == 'number' || reIsUint.test(value)) &&
-        (value > -1 && value % 1 == 0 && value < length);
+        (type == 'number' ||
+          (type != 'symbol' && reIsUint.test(value))) &&
+            (value > -1 && value % 1 == 0 && value < length);
     }
 
     /**
@@ -40458,11 +40444,11 @@ module.exports = startCase;
      */
     var stringToPath = memoizeCapped(function(string) {
       var result = [];
-      if (reLeadingDot.test(string)) {
+      if (string.charCodeAt(0) === 46 /* . */) {
         result.push('');
       }
-      string.replace(rePropName, function(match, number, quote, string) {
-        result.push(quote ? string.replace(reEscapeChar, '$1') : (number || match));
+      string.replace(rePropName, function(match, number, quote, subString) {
+        result.push(quote ? subString.replace(reEscapeChar, '$1') : (number || match));
       });
       return result;
     });
@@ -44070,9 +44056,11 @@ module.exports = startCase;
       function remainingWait(time) {
         var timeSinceLastCall = time - lastCallTime,
             timeSinceLastInvoke = time - lastInvokeTime,
-            result = wait - timeSinceLastCall;
+            timeWaiting = wait - timeSinceLastCall;
 
-        return maxing ? nativeMin(result, maxWait - timeSinceLastInvoke) : result;
+        return maxing
+          ? nativeMin(timeWaiting, maxWait - timeSinceLastInvoke)
+          : timeWaiting;
       }
 
       function shouldInvoke(time) {
@@ -46504,9 +46492,35 @@ module.exports = startCase;
      * _.defaults({ 'a': 1 }, { 'b': 2 }, { 'a': 3 });
      * // => { 'a': 1, 'b': 2 }
      */
-    var defaults = baseRest(function(args) {
-      args.push(undefined, customDefaultsAssignIn);
-      return apply(assignInWith, undefined, args);
+    var defaults = baseRest(function(object, sources) {
+      object = Object(object);
+
+      var index = -1;
+      var length = sources.length;
+      var guard = length > 2 ? sources[2] : undefined;
+
+      if (guard && isIterateeCall(sources[0], sources[1], guard)) {
+        length = 1;
+      }
+
+      while (++index < length) {
+        var source = sources[index];
+        var props = keysIn(source);
+        var propsIndex = -1;
+        var propsLength = props.length;
+
+        while (++propsIndex < propsLength) {
+          var key = props[propsIndex];
+          var value = object[key];
+
+          if (value === undefined ||
+              (eq(value, objectProto[key]) && !hasOwnProperty.call(object, key))) {
+            object[key] = source[key];
+          }
+        }
+      }
+
+      return object;
     });
 
     /**
@@ -46903,6 +46917,11 @@ module.exports = startCase;
      * // => { '1': 'c', '2': 'b' }
      */
     var invert = createInverter(function(result, value, key) {
+      if (value != null &&
+          typeof value.toString != 'function') {
+        value = nativeObjectToString.call(value);
+      }
+
       result[value] = key;
     }, constant(identity));
 
@@ -46933,6 +46952,11 @@ module.exports = startCase;
      * // => { 'group1': ['a', 'c'], 'group2': ['b'] }
      */
     var invertBy = createInverter(function(result, value, key) {
+      if (value != null &&
+          typeof value.toString != 'function') {
+        value = nativeObjectToString.call(value);
+      }
+
       if (hasOwnProperty.call(result, value)) {
         result[value].push(key);
       } else {
@@ -51105,7 +51129,7 @@ var Component = __webpack_require__(212)(
   /* cssModules */
   null
 )
-Component.options.__file = "/Volumes/DATA/Applications/MAMP/htdocs/masterService/resources/assets/js/components/Task.vue"
+Component.options.__file = "/Volumes/DATA/Applications/MAMP/htdocs/MasterService/resources/assets/js/components/Task.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Task.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -51116,9 +51140,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-43142e20", Component.options)
+    hotAPI.createRecord("data-v-c8840400", Component.options)
   } else {
-    hotAPI.reload("data-v-43142e20", Component.options)
+    hotAPI.reload("data-v-c8840400", Component.options)
   }
 })()}
 
@@ -51197,7 +51221,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "card border-dark mb-3",
     staticStyle: {
       "width": "100%",
-      "height": "100%"
+      "height": "100%",
+      "display": "block"
     }
   }, [_c('div', {
     staticClass: "card-header d-flex"
@@ -51212,17 +51237,35 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "fas fa-chevron-circle-down"
   })])]), _vm._v(" "), _c('div', {
     staticClass: "col-6 text-right"
-  }, [(_vm.showActive == true) ? _c('button', {
+  }, [_c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.showActive == true),
+      expression: "showActive == true"
+    }],
     staticClass: "btn btn-link text-primary btn-sm",
     on: {
       "click": _vm.getCompletedTask
     }
-  }, [_c('small', [_vm._v("Актив.")])]) : (_vm.showActive == false) ? _c('button', {
+  }, [_c('small', [_vm._v("Актив.")])]), _vm._v(" "), _c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.showActive == false),
+      expression: "showActive == false"
+    }],
     staticClass: "btn btn-link text-primary btn-sm",
     on: {
       "click": _vm.getAllTasks
     }
-  }, [_c('small', [_vm._v("Прикл.")])]) : _vm._e(), _vm._v(" "), (!_vm.showAdd) ? _c('button', {
+  }, [_c('small', [_vm._v("Прикл.")])]), _vm._v(" "), _c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (!_vm.showAdd),
+      expression: "!showAdd"
+    }],
     staticClass: "btn btn-link text-success btn-sm",
     on: {
       "click": function($event) {
@@ -51231,7 +51274,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "fas fa-plus-square"
-  })]) : _vm._e()])]), _vm._v(" "), (_vm.showAdd) ? _c('div', {
+  })])])]), _vm._v(" "), (_vm.showAdd) ? _c('div', {
     staticClass: "card-body"
   }, [_c('div', {
     staticClass: "form-group col-12"
@@ -51335,11 +51378,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "floating-buttonList"
     }
   }, [_c('button', {
-    staticClass: "btn btn-outline-primary",
+    staticClass: "btn",
+    class: _vm.countTask ? 'btn-warning' : 'btn-outline-primary',
     on: {
       "click": _vm.showTaskList
     }
-  }, [_c('i', {
+  }, [(_vm.countTask) ? _c('strong', [_vm._v(_vm._s(this.countTask))]) : _c('i', {
     staticClass: "fas fa-chevron-circle-up"
   })])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -51359,7 +51403,7 @@ module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-43142e20", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-c8840400", module.exports)
   }
 }
 
@@ -52940,13 +52984,13 @@ var content = __webpack_require__(201);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(216)("2d8ad922", content, false);
+var update = __webpack_require__(216)("56425cc0", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-43142e20\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Task.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-43142e20\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Task.vue");
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-c8840400\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Task.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-c8840400\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Task.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });

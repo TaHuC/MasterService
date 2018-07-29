@@ -1,8 +1,8 @@
 <template>
 <div class="row">
     <div id="floating-taskList" v-if="showTasksLs">
-        <div class="card border-dark mb-3" style="width: 100%; height: 100%;">
-            <div class="card-header d-flex">
+        <div class="card border-dark mb-3" style="width: 100%; height: 100%; display: block;">
+            <div class="card-header d-flex" >
                 <div class="col-6 text-left">
                     Задачи
                     <button class="btn btn-sm btn-link" @click="hideTaskList">
@@ -10,13 +10,13 @@
                     </button>
                 </div>
                 <div class="col-6 text-right">
-                    <button v-if="showActive == true" @click="getCompletedTask" class="btn btn-link text-primary btn-sm">
+                    <button v-show="showActive == true" @click="getCompletedTask" class="btn btn-link text-primary btn-sm">
                         <small>Актив.</small>
                     </button>
-                    <button v-else-if="showActive == false" @click="getAllTasks" class="btn btn-link text-primary btn-sm">
+                    <button v-show="showActive == false" @click="getAllTasks" class="btn btn-link text-primary btn-sm">
                         <small>Прикл.</small>
                     </button>
-                    <button v-if="!showAdd" @click="showAdd=true" class="btn btn-link text-success btn-sm">
+                    <button v-show="!showAdd" @click="showAdd=true" class="btn btn-link text-success btn-sm">
                         <i class="fas fa-plus-square"></i>
                     </button>
                 </div>
@@ -46,8 +46,9 @@
         </div>
     </div>
     <div v-else id="floating-buttonList">
-        <button class="btn btn-outline-primary" @click="showTaskList">
-            <i class="fas fa-chevron-circle-up"></i>
+        <button class="btn" v-bind:class="countTask ? 'btn-warning' : 'btn-outline-primary'" @click="showTaskList">
+            <strong v-if="countTask">{{ this.countTask }}</strong>
+            <i v-else class="fas fa-chevron-circle-up"></i>
         </button>
     </div>
 </div>
@@ -55,14 +56,14 @@
 
 <script>
     // import axios from 'axios';
-
     export default {
         name: "tasks",
         data() {
             return {
                 tasks: '',
+                countTask: '',
                 showAdd: false,
-                showTasksLs: true,
+                showTasksLs: false,
                 task: {
                     title: '',
                     description: ''
@@ -70,7 +71,7 @@
                 showActive: true,
             }
         },
-        created() {
+        beforeMount() {
             this.getAllTasks();
             setInterval(() => {
                 this.checkRealService();
@@ -88,7 +89,9 @@
                 this.showActive = true;
                 axios.get('/api/tasks')
                     .then(results => {
+                        // console.log(results.data)
                         this.tasks = results.data;
+                        this.countTask = results.data.length;
                     })
                     .catch(err => console.log(err));
             },
@@ -139,7 +142,7 @@
                 .then(result => {
                     if(result.data) {
                         this.getAllTasks();
-                        this.showTasksLs = true;
+                        // this.showTasksLs = true;
                         axios.delete('/api/realTimeService/' + result.data)
                         .then(result => {
                             //console.log(result);
