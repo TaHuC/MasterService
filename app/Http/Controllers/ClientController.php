@@ -41,6 +41,17 @@ class ClientController extends Controller
     }
 
     /**
+     * Display a listing of the resource
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function allClients()
+    {
+        $clients = Client::all();
+        return $clients;
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

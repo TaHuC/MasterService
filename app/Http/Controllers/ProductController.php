@@ -40,6 +40,38 @@ class ProductController extends Controller
         return view('product.index', compact('products'));
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function allDevices()
+    {
+        //s
+        $devices = Product::with('client', 'type', 'brand', 'model', 'user')->get();
+
+        $data = null;
+
+        for($i = 0; $i < count($devices); $i++) {
+            $data[$i]['data'] = [
+                array(
+                'idClient' => $devices[$i]['client']['id'], 
+                'client' => $devices[$i]['client']['name'], 
+                'phone' => $devices[$i]['client']['phone'],
+                'devicetype' => $devices[$i]['type']['title'],
+                'device' => $devices[$i]['brand']['title'].' '.$devices[$i]['model']['title'],
+                'idDevice' => $devices[$i]['id'],
+                'serial' =>  $devices[$i]['serial'],
+                'comment' =>  $devices[$i]['comment'],
+                'url' => '<a class="btn btn-sm btn-outline-light" href="/product/'.$devices[$i]['id'].'" data-toggle="tooltip" data-placement="top" title="Отвори поръчката"><i class="material-icons">assignment</i></a> <a class="btn btn-sm btn-outline-light" href="/client/'.$devices[$i]['client']['id'].'" data-toggle="tooltip" data-placement="top" title="Отвори клиента"><i class="material-icons">assignment_ind</i></a>')
+            ];
+        }
+
+        //$data['length'] = count($devices);
+
+        return $data;
+    }
+
     public function getSerial($serial)
     {
 

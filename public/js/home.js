@@ -1,11 +1,12 @@
 $(() => {
-    getOrder();
+    //getOrder();
+    getDevices()
 });
 
 function getOrder(){
-    remote.getParams('order', 'get')
+     remote.getParams('order', 'get')
         .then((data) => {
-            //console.log(data);
+            //console.log(data[0]);
             let resultOrder = [];
             for(let i = 0; i < data.length; i++) {
                 resultOrder[i] = {
@@ -23,8 +24,7 @@ function getOrder(){
                 });
                 //resultOrder[i].push(data[i].status[0].status);
             }
-
-            // Orders table
+            
             $('#orderTable').DataTable({
                 data: resultOrder,
                 responsive: true,
@@ -53,3 +53,33 @@ function getOrder(){
             });
         });
 };
+
+async function getClients() {
+    return allClients = await remote.getParams('clients', 'get')
+    .then((results) => {
+        return results;
+    })
+}
+
+async function getDevices() {
+    $('#devicesTable').DataTable({
+        'processing': true,
+        'language': {
+        'processing': 'Зареждане...'
+        },
+        'serviceSide': true,
+        'ajax': {
+            "url": "devices/",
+            "dataSrc": ""
+        },
+        "columns": [
+            {"data": "data[0].client"},
+            {"data": "data[0].phone"},
+            {"data": "data[0].device"},
+            {"data": "data[0].serial"},
+            {
+                "data": "data[0].url"
+            }
+        ]
+    })
+}

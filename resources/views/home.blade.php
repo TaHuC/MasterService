@@ -3,7 +3,7 @@
 @section('content')
     <div class="row" id="homeRow">
         
-        <div class="col-12 tableCol bg-light border border-success">
+        <!-- <div class="col-12 tableCol bg-light border border-success">
             <table id="orderTable" class="table table-dark dt-responsive nowrap" style="width: 100%;">
                 <thead class="">
                     <tr>
@@ -20,6 +20,20 @@
                     </tr>
                 </thead>
                 <tbody class=""></tbody>
+            </table>
+        </div> -->
+        <div class="col-8 tableCol bg-light border border-success">
+            <table id="devicesTable" class="table table-dark dt-responsive nowrap" style="width: 100%">
+            <thead class="">
+                <tr>
+                    <th>Клиенти</th>
+                    <th>Телефон</th>
+                    <th>Устройство</th>
+                    <th>Сериен N</th>
+                    <th>Опций</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
             </table>
         </div>
     </div>
