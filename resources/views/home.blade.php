@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('cssImport')
+    <link rel="stylesheet" href="{{ asset('css/home.css')}}">
+@endsection
+
 @section('content')
     <div class="row" id="homeRow">
         
@@ -22,7 +26,7 @@
                 <tbody class=""></tbody>
             </table>
         </div> -->
-        <div class="col-8 tableCol bg-light border border-success">
+        <div class="col-8 offset-1 tableCol bg-light border border-success">
             <table id="devicesTable" class="table table-dark dt-responsive nowrap" style="width: 100%">
             <thead class="">
                 <tr>
@@ -35,6 +39,27 @@
             </thead>
             <tbody></tbody>
             </table>
+        </div>
+        <div class="col-1 offset-2">
+        <div class="row">
+        <div class="col-xs-3">
+                    <div class="offer offer-primary">
+                        <div class="shape">
+                            <div class="shape-text">
+                                Last							
+                            </div>
+                        </div>
+                        <div class="offer-content">
+                            <h2 class="lead">
+                                <span class="badge badge-primary">
+                                    {{ $lastOrder->id }}
+                                </span>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 @endsection
