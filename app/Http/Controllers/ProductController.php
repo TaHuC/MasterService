@@ -75,7 +75,7 @@ class ProductController extends Controller
     public function getSerial($serial)
     {
 
-        $get = Product::where('serial', 'LIKE', '%'.$serial.'%')->get();
+        $get = Product::where('serial', $serial)->first();
 
         return $get;
     }
@@ -171,6 +171,17 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        
+        if($request->newOwner) {
+            $product = Product::find($id);
+            $product->clientId = $request->clientId;
+            $product->save();
+
+            return $id;
+        }
+
+        return;
     }
 
     /**

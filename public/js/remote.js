@@ -25,7 +25,7 @@ let remote = (() => {
 
     function put(url, values) {
         return $.ajax({
-            method: 'PUT',
+            type: 'PUT',
             url,
             data: values,
         }).catch((err) => {

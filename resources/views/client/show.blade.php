@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('cssImport')
+<link rel="stylesheet" href="{{ asset('css/showClient.css') }}">
+@endsection
+
 @section('content')
     <div class="container-fluid">
         <div class="jumbotron">
@@ -53,6 +57,19 @@
                                 <div class="form-group row" id="serialDiv">
                                     <div class="col-10">
                                         <input id="serial" type="text" placeholder="Serial Number" autocomplete="off" class="form-control">
+
+                                        <div class="col-12" style="display: none" id="showDevice">
+                                           <div class="card text-white border-danger bg-dark mb-3" style="max-width: 18rem;">
+                                                <div class="card-header" id="showClientDivHeader"></div>
+                                                <div class="card-body">
+                                                    <p class="card-text">Това устройство е налично на профила на <b id="clientName"></b> </p>
+                                                    <a href="#" class="card-link" id="setNewOwner" >Премести</a>
+                                                    <input type="hidden" name="ownerId" id="ownerId" value="{{ $client->id }}">
+                                                    <a href="#" class="card-link" id="openClientLink" >Отвори</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <div class="col-2">
                                         <button id="randomSerial" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="Генерирай случаен"><i class="material-icons">loop</i></button>

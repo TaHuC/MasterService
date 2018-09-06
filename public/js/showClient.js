@@ -40,15 +40,51 @@ $(() => {
     
     function serialGet() {
         let serialInput = serialDiv.find('input');
+        let showDeviceDiv = $('#showDevice');
         serialInput.focus();
         serialInput.keyup(() => {
             if(serialInput.val().length > 3) {
                 remote.getParams('/product/serial/', 'get', serialInput.val())
                     .then(data => {
                         if(data.length === 0){
+                            showDeviceDiv.hide();
                             brandDiv.fadeIn();
                             serialInput.css('color', 'black');
                         } else {
+                            //console.log(data)
+                            remote.getParams(`/brand/${data.brandId}`, 'get').then((brand) => {
+                               remote.getParams(`/model/${data.modelId}`, 'get')
+                               .then((model) => {
+                                   remote.getParams(`/client/show/${data.clientId}`, 'get')
+                                   .then((client) => {
+                                       $('#showClientDivHeader').text(brand.title + ' ' + model.title)
+                                       $('#clientName').text(client.name);
+
+                                       $('#setNewOwner').on('click', function (e) {
+                                           e.preventDefault()
+                                           let updateOwner = {
+                                               clientId: $('#ownerId').val(),
+                                               newOwner: true,
+                                               _token: product._token
+                                           }
+
+                                           remote.getParams(`/product/${data.id}`, 'put', updateOwner)
+                                           .then((response) => {
+                                                //console.log(response)
+                                                $(location).attr('href', `/product/${data.id}`)
+                                           })
+                                          
+                                       })
+
+                                       $('#openClientLink').on('click', function(e) {
+                                           e.preventDefault()
+                                           $(location).attr('href', `/client/${data.clientId}`)
+                                       })
+                                   })
+                               })
+                            });
+
+                            showDeviceDiv.fadeIn('slow')
                             brandDiv.fadeOut();
                             serialInput.css('color', 'red');
                         }
