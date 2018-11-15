@@ -22,20 +22,22 @@ export default {
       props: { mode: 'out-in' },
       on: {
         beforeEnter: this.beforeEnter,
-        afterEnter: this.afterEnter,
-        afterLeave: this.afterLeave
+        beforeLeave: this.beforeLeave
       }
     }, [content]);
   },
 
   methods: {
     beforeEnter: function beforeEnter() {
-      this.show = false;
+      var _this = this;
+
+      // change opacity 1 frame after display
+      // otherwise css transition won't happen
+      window.requestAnimationFrame(function () {
+        _this.show = true;
+      });
     },
-    afterEnter: function afterEnter() {
-      this.show = true;
-    },
-    afterLeave: function afterLeave() {
+    beforeLeave: function beforeLeave() {
       this.show = false;
     }
   },

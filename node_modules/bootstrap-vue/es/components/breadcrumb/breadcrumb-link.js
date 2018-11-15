@@ -32,17 +32,13 @@ export default {
 
     var tag = suppliedProps.active ? 'span' : Link;
 
-    var componentData = {
-      props: pluckProps(props, suppliedProps),
-      domProps: { innerHTML: suppliedProps.text }
-    };
-
+    var componentData = { props: pluckProps(props, suppliedProps) };
     if (suppliedProps.active) {
       componentData.attrs = { 'aria-current': suppliedProps.ariaCurrent };
     } else {
       componentData.attrs = { href: suppliedProps.href };
     }
 
-    return h(tag, mergeData(data, componentData), children);
+    return h(tag, mergeData(data, componentData), children || suppliedProps.text);
   }
 };

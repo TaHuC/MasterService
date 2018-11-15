@@ -145,7 +145,42 @@ class ClientController extends Controller
      */
     public function getClient($id) {
         $client = Client::find($id);
-        return $client;
+         $types = Type::all();
+
+        $products = Product::where('clientId', $client->id)->get();
+        $finalProducts = null;
+
+        for ($i = 0; $i < count($products); $i++)
+        {
+            $type = Type::where('id', $products[$i]->typeId)->first();
+            $brand = Brand::where('id', $products[$i]->brandId)->first();
+            $model = ModelBrand::where('id', $products[$i]->modelId)->first();
+            $user = User::where('id', $products[$i]->userId)->first();
+            $order = Order::where('productId', $products[$i]->id)->orderBy('id', 'DESC')->first();
+
+            if($order != null)
+            {
+                $status = Status::where('id', $order->statusId)->first();
+                $status = $status->status;
+            }
+            else
+            {
+                $status = 'No order';
+            }
+
+            $finalProducts[$i] = [
+                'id' => $products[$i]->id,
+                'type' => $type->title,
+                'brand' => $brand->title,
+                'model' => $model->title,
+                'user' => $user->name,
+                'status' => $status,
+                'created_at' => $products[$i]->created_at,
+                'serial' => $products[$i]->serial
+            ];
+        }
+
+        return [$client, $finalProducts];
     }
 
     /**
@@ -190,6 +225,20 @@ class ClientController extends Controller
         $client->save();
 
         return redirect()->route('client.show', ['id' => $client->id]);
+    }
+
+    /**
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        //return $request->search;
+        $search = $request->search;
+        $clients = Client::where('name', 'like', '%'.$search.'%')->orWhere('phone', 'like', '%'.$search.'%')->paginate(10);
+
+        return $clients;
     }
 
     /**

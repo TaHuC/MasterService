@@ -23,6 +23,8 @@
     "bootstrap-vue": "^2.0.0-rc.8",
     "npm": "^6.4.1",
     "v-tooltip": "^2.0.0-rc.31",
-    "vue-resource": "^1.5.0"
+    "vue-resource": "^1.5.0",
+    "vue-router": "^3.0.1",
+    "vue-top-progress": "^0.7.0"
   }
 }

@@ -147,7 +147,36 @@ class ProductController extends Controller
         }
 
         //dd($product);
-        return view('product.show', compact('product'));
+        //return view('product.show', compact('product'));
+
+        //return $product;
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getProduct($id)
+    {
+        //
+        $product = Product::with('client', 'type', 'brand', 'modelBrand', 'user', 'orders', 'repairs')
+        ->find($id);
+
+        for($i = 0; $i < count($product->repairs); $i++)
+        {
+            $product->repairs[$i]->user = User::where('id', '=', $product->repairs[$i]->userId)->first();
+        }
+
+        for ($i = 0; $i < count($product->orders); $i++)
+        {
+            $product->orders[$i]->user = User::where('id', '=', $product->orders[$i]->userId)->first();
+            $product->orders[$i]->status = Status::where('id', '=', $product->orders[$i]->statusId)->first();
+        }
+
+        //dd($product);
+        return $product;
     }
 
     /**
@@ -193,5 +222,19 @@ class ProductController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+     /**
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        //return $request->search;
+        $search = $request->search;
+        $products = Product::where('name', 'like', '%'.$search.'%')->orWhere('phone', 'like', '%'.$search.'%')->paginate(10);
+
+        return $products;
     }
 }

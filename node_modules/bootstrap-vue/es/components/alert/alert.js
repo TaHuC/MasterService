@@ -1,5 +1,7 @@
 import bButtonClose from '../button/button-close';
 
+import './alert.css';
+
 export default {
   components: { bButtonClose: bButtonClose },
   render: function render(h) {
@@ -12,7 +14,8 @@ export default {
       // Add dismiss button
       dismissBtn = h('b-button-close', { attrs: { 'aria-label': this.dismissLabel }, on: { click: this.dismiss } }, [this.$slots.dismiss]);
     }
-    return h('div', { class: this.classObject, attrs: { role: 'alert', 'aria-live': 'polite', 'aria-atomic': true } }, [dismissBtn, this.$slots.default]);
+    var alert = h('div', { class: this.classObject, attrs: { role: 'alert', 'aria-live': 'polite', 'aria-atomic': true } }, [dismissBtn, this.$slots.default]);
+    return !this.fade ? alert : h('transition', { props: { name: 'fade', appear: true } }, [alert]);
   },
 
   model: {
@@ -53,6 +56,10 @@ export default {
     },
     show: {
       type: [Boolean, Number],
+      default: false
+    },
+    fade: {
+      type: Boolean,
       default: false
     }
   },

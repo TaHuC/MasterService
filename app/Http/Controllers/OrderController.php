@@ -115,7 +115,7 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $orders = Order::where('productId', '=', $id)
+        $orders = Order::where('id', '=', $id)
             ->orderBy('id', 'desc')
             ->with('status', 'product', 'user')
             ->get();
@@ -124,6 +124,24 @@ class OrderController extends Controller
         {
             $clientName = Client::where('id', $orders[$i]->product->clientId)->get();
             $orders[$i]->product->client = $clientName[0];
+        }
+
+        for($i = 0; $i < count($orders); $i++)
+        {
+            $typeName = Type::where('id', $orders[$i]->product->typeId)->get();
+            $orders[$i]->product->type = $typeName[0];
+        }
+
+        for($i = 0; $i < count($orders); $i++)
+        {
+            $brandName = Brand::where('id', $orders[$i]->product->brandId)->get();
+            $orders[$i]->product->brand = $brandName[0];
+        }
+    
+        for($i = 0; $i < count($orders); $i++)
+        {
+            $modelName = ModelBrand::where('id', $orders[$i]->product->modelId)->get();
+            $orders[$i]->product->model_brand = $modelName[0];
         }
 
         return $orders;

@@ -1,10 +1,11 @@
 /* @flow */
 
-import { cachedEscape } from '../util'
+import { escape } from '../util'
 
 import {
   isDef,
-  isUndef
+  isUndef,
+  extend
 } from 'shared/util'
 
 import {
@@ -12,6 +13,8 @@ import {
   isEnumeratedAttr,
   isFalsyAttrValue
 } from 'web/util/attrs'
+
+import { isSSRUnsafeAttr } from 'web/server/util'
 
 export default function renderAttrs (node: VNodeWithData): string {
   let attrs = node.data.attrs
@@ -22,7 +25,7 @@ export default function renderAttrs (node: VNodeWithData): string {
     let parent = node.parent
     while (isDef(parent)) {
       if (isDef(parent.data) && isDef(parent.data.attrs)) {
-        attrs = Object.assign({}, attrs, parent.data.attrs)
+        attrs = extend(extend({}, attrs), parent.data.attrs)
       }
       parent = parent.parent
     }
@@ -33,6 +36,9 @@ export default function renderAttrs (node: VNodeWithData): string {
   }
 
   for (const key in attrs) {
+    if (isSSRUnsafeAttr(key)) {
+      continue
+    }
     if (key === 'style') {
       // leave it to the style module
       continue
@@ -50,7 +56,7 @@ export function renderAttr (key: string, value: string): string {
   } else if (isEnumeratedAttr(key)) {
     return ` ${key}="${isFalsyAttrValue(value) || value === 'false' ? 'false' : 'true'}"`
   } else if (!isFalsyAttrValue(value)) {
-    return ` ${key}="${typeof value === 'string' ? cachedEscape(value) : value}"`
+    return ` ${key}="${escape(String(value))}"`
   }
   return ''
 }

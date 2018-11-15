@@ -26,8 +26,10 @@ Route::get('/model/select/{model}/{brandId}', 'ModelController@findModel');
 Route::resource('/client', 'ClientController');
 Route::get('/client/show/{id}', 'ClientController@getClient');
 Route::get('/clients', 'ClientController@allClients');
-Route::resource('/search', 'SearchController');
+Route::get('/clients/search', 'ClientController@search')->name('client.search');
+//Route::resource('/search', 'SearchController');
 Route::resource('/product', 'ProductController');
+Route::get('/product/show/{id}', 'ProductController@getProduct');
 Route::get('/devices', 'ProductController@allDevices');
 Route::get('/product/serial/{serial}', 'ProductController@getSerial');
 Route::resource('/order', 'OrderController');
@@ -48,4 +50,6 @@ Route::get('/api/realTimeService/{service}/{serviceId}', 'RealTimeUserCheckContr
 Route::get('/api/realTimeService', 'RealTimeUserCheckController@index');
 
 Route::delete('/api/realTimeService/{id}', 'RealTimeUserCheckController@destroy');
+
+Route::get('{path}', 'HomeController@index')->where('path', '([A-z\d-\/_.]+)?');
 

@@ -15,7 +15,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/master.css') }}" rel="stylesheet">
+    {{--  <link href="{{ asset('css/master.css') }}" rel="stylesheet">  --}}
+    <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
     {{--  <link href="{{ asset('css/plugins/dataTables.bootstrap4.min.css') }}" rel="stylesheet">  --}}
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4-4.0.0/dt-1.10.16/r-2.2.1/datatables.min.css"/>
     <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
@@ -29,96 +30,191 @@
     </script>
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark justify-content-between">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <!-- Branding Image -->
-            <a class="navbar-brand" href="{{ url('/home') }}">
-                 {{ config('app.name', 'Master Service') }}
-            </a>
-
-                <!-- Right Side Of Navbar -->
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <!-- Authentication Links -->
-                    @if (Auth::guest())
-                        <li class="nav-item" ><a class="btn btn-outline-success btn-sm my-2 my-sm-0" href="{{ route('login') }}">Login</a></li>
-                    @if(\App\Settings::no_reg() === 0)
-                        <li class="nav-item" ><a class="btn btn-outline-success btn-sm my-2 my-sm-0" href="{{ route('register') }}">Register</a></li>
-                    @endif
-                    @else
-                        <li class="nav-item dropdown">
-                            <a href="#" class="dropdown-toggle btn btn-outline-success btn-sm my-2 my-sm-0" data-toggle="dropdown" id="userDropdown">
-                                references <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu bg-dark" aria-labelledby="userDropdown">
-                                <li class="nav-item text-center">
-                                    <a class="btn btn-outline-success btn-block btn-sm my-2 my-sm-0" href="{{ route('client.index') }}">Clients</a>
-                                </li>
-                                <li class="nav-item text-center">
-                                    <a class="btn btn-outline-success btn-block btn-sm my-2 my-sm-0" href="{{ route('product.index') }}">Devices</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a href="#" class="btn btn-outline-success btn-sm my-2 my-sm-0 dropdown-toggle" data-toggle="dropdown" id="userDropdown">
-                                {{ Auth::user()->name }} <span class="caret"></span>
-                            </a>
-
-                            <ul class="dropdown-menu bg-dark" aria-labelledby="userDropdown">
-                                <li class="nav-item text-center">
-                                    <a class="btn btn-outline-success btn-block btn-sm my-2 my-sm-0" href="{{ route('settings') }}">Настройки</a>
-                                </li>
-                                <li class="nav-item text-center">
-                                    <a class="btn btn-outline-warning btn-block btn-sm my-2 my-sm-0" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
-                                        Изход
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        {{ csrf_field() }}
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
-                    @endif
-                </ul>
-                @if(!Auth::guest())
-                <div class="form-inline my-2 my-lg-0">
-                    {{ csrf_field() }}
-                    <input class="form-control mr-sm-2" id="idOrder" type="search" placeholder="Order ID" aria-label="Order">
-                    <button class="btn btn-outline-success btn-sm my-2 my-sm-0" id="loadOrderBtn" data-toggle="tooltip" data-placement="top" title="Зареди поръчка"><i class="material-icons">touch_app</i></button>
-                </div>
-                    <ul class="navbar-nav">
-                        <li class="nav-item align-bottom">
-                            <a href="{{ route('client.create') }}" class="btn btn-sm btn-outline-success my-2 my-sm-0" data-toggle="tooltip" data-placement="top" title="Добави"><i class="material-icons">add</i></a>
-                        </li>
-                    </ul>
-                @endif
-            </div>
-        </nav>
-
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        <div class="container-fluid">
-            @if (!Auth::guest())
-            <tasks></tasks>
-            @endif
-            @yield('content')
+  <div id="app" >
+    @if (!Auth::guest())
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Company name</a>
+      
+        <div class="input-group">
+            <input class="form-control form-control-dark" type="text" @keyup.enter="searchit" v-model="search"  placeholder="Search" aria-label="Search">
+          <div class="input-group-append" id="button-addon4">
+              <button class="btn btn-outline-light" style="border-radius: 0%;" @click="searchit" type="button"><i class="fa fa-search"></i></button>
+              <button class="btn btn-outline-light" style="border-radius: 0%;" type="button"><i class="fa fa-plus"></i></button>
+          </div>
         </div>
-    </div>
+      <ul class="navbar-nav px-3"></ul>
+      
+    </nav>
+    @endif
+    <div class="container-fluid">
+        @if(!Auth::guest())
+        <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-dark text-white sidebar">
+          <div class="sidebar-sticky">
+
+            <div class="card border-danger mb-3 bg-dark text-white" style="max-width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title text-uppercase text-danger text-center">{{ Auth::user()->name }}</h5>
+                    <div class="mx-auto" style="width: 100px;">
+                        <a class="btn btn-link text-white-50 btn-sm" href="{{ route('settings') }}"><i class="fa fa-cogs"></i></a>
+                        <a class="btn btn-link text-white-50 btn-sm" href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
+                            <i class="fa fa-power-off"></i>
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>    
+                    </div>
+                </div>
+            </div>   
+
+            <div class="card border-danger mb-3 bg-dark text-white" style="max-width: 18rem;">
+                <div class="card-body">
+                    <h6 class="card-title text-uppercase text-danger text-center">Поръчки</h6>
+                    <a href="#" class="badge badge-light">2222</a>
+                    <a href="#" class="badge badge-light">2222</a>
+                    <a href="#" class="badge badge-light">2222</a>
+                    <a href="#" class="badge badge-light">2222</a>
+                    <a href="#" class="badge badge-light">2222</a>
+                    <a href="#" class="badge badge-light">2222</a>
+                    <a href="#" class="badge badge-light">2222</a>
+                    <a href="#" class="badge badge-light">2222</a>
+                    <a href="#" class="badge badge-light">2222</a>
+                    <a href="#" class="badge badge-light">2222</a>
+                </div>
+            </div>  
+            
+
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link active" href="#">
+                  <span data-feather="home"></span>
+                  Dashboard <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="file"></span>
+                  Orders
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="shopping-cart"></span>
+                  Products
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="users"></span>
+                  Customers
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="bar-chart-2"></span>
+                  Reports
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="layers"></span>
+                  Integrations
+                </a>
+              </li>
+            </ul>
+
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+              <span>Saved reports</span>
+              <a class="d-flex align-items-center text-muted" href="#">
+                <span data-feather="plus-circle"></span>
+              </a>
+            </h6>
+            <ul class="nav flex-column mb-2">
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="file-text"></span>
+                  Current month
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="file-text"></span>
+                  Last quarter
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="file-text"></span>
+                  Social engagement
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="file-text"></span>
+                  Year-end sale
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        @endif
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 pt-48">
+            <div class="row">
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+
+                <div class="col-md-9 col-sm float-left">
+                  <router-view></router-view>
+                </div>
+
+                <div class="col-md-3 col-sm float-right">
+
+                  <div class="card bg-dark text-white border border-danger float-right mb-2">
+                    <div class="card-body">
+                      <h6 class="card-title text-center">За части</h6>
+                      <a href="#" class="badge badge-warning">11554</a>
+                      <a href="#" class="badge badge-warning">1155</a>
+                      <a href="#" class="badge badge-warning">115</a>
+                      <a href="#" class="badge badge-warning">1155</a>
+                      <a href="#" class="badge badge-warning">1155</a>
+                      <a href="#" class="badge badge-warning">1155</a>
+                      <a href="#" class="badge badge-warning">1155</a>
+                      <a href="#" class="badge badge-warning">15</a>
+                      <a href="#" class="badge badge-warning">115</a>
+                      <a href="#" class="badge badge-warning">15</a>
+                      <a href="#" class="badge badge-warning">1155</a>
+                      <a href="#" class="badge badge-warning">1155</a>
+                      <a href="#" class="badge badge-warning">1155</a>
+                    </div>
+                  </div>
+
+                  <div class="card bg-dark text-white border border-danger float-right mb-2" style="width: 100%;">
+                    <div class="card-header">Задачи</div>
+                    <div class="card-body">
+                      <h2 class="text-center">7</h2>
+                    </div>
+                  </div>
+
+                </div>
+                  @if (!Auth::guest())
+                  <tasks></tasks>
+                @endif
+              </div>
+                @yield('content')
+            </div>
+        </main>    
+      </div>
+    </div> 
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
