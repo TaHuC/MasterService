@@ -75,7 +75,7 @@
             this.getAllTasks();
             setInterval(() => {
                 this.checkRealService();
-            }, 1000);
+            }, 10000);
         },
         methods: {
             makeService() {

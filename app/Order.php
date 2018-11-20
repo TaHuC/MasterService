@@ -28,12 +28,12 @@ class Order extends Model
 
     public function status()
     {
-        return $this->belongsTo(Status::class, 'statusId', 'id');
+        return $this->hasOne(Status::class, 'id', 'statusId');
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'userId', 'id');
+        return $this->hasOne(User::class, 'id', 'userId');
     }
 
     public function repairs()

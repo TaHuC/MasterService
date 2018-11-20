@@ -50,6 +50,7 @@ class RepairController extends Controller
     public function store(Request $request)
     {
 
+        //return $request;
         $this->validate($request, [
             'repair' => 'required|max:255',
             'orderId' => 'required|integer',
@@ -67,7 +68,8 @@ class RepairController extends Controller
         $order->statusId = 2;
         $order->save();
 
-        return redirect()->route('product.show', ['id' => $request->productId])->with('messages', 'Add successed!');
+        //return redirect()->route('product.show', ['id' => $request->productId])->with('messages', 'Add successed!');
+        return $repair;
     }
 
     /**
@@ -79,7 +81,7 @@ class RepairController extends Controller
     public function show($id)
     {
         //
-        $repairs = Repair::where('orderId', '=', $id)->get();
+        $repairs = Repair::where('orderId', '=', $id)->with('user')->get();
 
         return $repairs;
     }

@@ -17,4 +17,9 @@ class Repair extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'userId');
+    }
 }

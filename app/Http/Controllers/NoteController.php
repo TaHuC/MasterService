@@ -60,7 +60,8 @@ class NoteController extends Controller
             $note->userId = Auth::user()->id;
             @$note->save();
 
-            return redirect()->route('product.show', ['id' => $request->productId])->with('messages', 'Add successed!');
+            //return redirect()->route('product.show', ['id' => $request->productId])->with('messages', 'Add successed!');
+            return $note;
         } elseif ($request->clientId){
             $note->note = $request->note;
             $note->userId = Auth::user()->id;

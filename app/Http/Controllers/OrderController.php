@@ -83,6 +83,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         //
+        //return $request->all();
         $order = new Order();
         $this->validate($request, [
             'productId' => 'required|integer',
@@ -103,7 +104,8 @@ class OrderController extends Controller
         $order->description = $request->description;
         $order->save();
 
-        return redirect()->route('product.show', ['id' => $request->productId])->with(['messages' => 'Add new Order']);
+        //return redirect()->route('product.show', ['id' => $request->productId])->with(['messages' => 'Add new Order']);
+        return $order;
 
     }
 
@@ -185,7 +187,7 @@ class OrderController extends Controller
         $order->statusId = $request->status;
         $order->save();
 
-        return redirect()->route('product.show', ['id' => $request->productId])->with('messages', 'Successed.');
+        return $order;
     }
 
     /**

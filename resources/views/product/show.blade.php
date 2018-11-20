@@ -51,14 +51,16 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-6 form-group">
+                                <div class="col-6 input-group">
                                     <label for="price">Цена</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control text-right" autocomplete="off" name="price" id="price" placeholder="20..." value="0">
-                                        <div class="input-group-addon">лв.</div>
+                                        <div class="input-group-addon">
+                                            <span class="input-group-text">лв.</span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-6 form-group">
+                                <div class="col-6 input-group">
                                     <label for="deposit">Депосит</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control text-right" id="deposit" autocomplete="off" name="deposit" placeholder="10..." value="0">
@@ -197,7 +199,7 @@
                                                             @if($order->statusId === 2 || $order->statusId === 5)
                                                                 <form action="{{ route('order.changeStatus') }}" method="post" class="col-4">
                                                                 {{ csrf_field() }}
-                                                                    <input type="hidden" name="orderId" value="{{ $order->id }}">
+                                                                <input type="hidden" name="orderId" value="{{ $order->id }}">
                                                                 <input type="hidden" name="productId" value="{{ $product->id }}">
                                                                 <input type="hidden" name="status" value="3">
                                                                 <button type="submit" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="top" title="Приключи"><i class="material-icons">done</i></button>
@@ -207,7 +209,7 @@
                                                             @if($order->statusId === 3)
                                                                 <form action="{{ route('order.changeStatus') }}" method="post" class="col-3">
                                                                 {{ csrf_field() }}
-                                                                    <input type="hidden" name="orderId" value="{{ $order->id }}">
+                                                                <input type="hidden" name="orderId" value="{{ $order->id }}">
                                                                 <input type="hidden" name="productId" value="{{ $product->id }}">
                                                                 <input type="hidden" name="status" value="4">
                                                                 <button type="submit" class="btn btn-sm btn-info"><i class="material-icons" data-toggle="tooltip" data-placement="top" title="Взета">exit_to_app</i></button>
