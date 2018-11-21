@@ -7,8 +7,9 @@
                     <h5>{{ product.brand.title }} {{ product.model_brand.title }}</h5>
                     <small>{{ product.serial }}</small>
                 </div>
-                <div v-show="showOrder" class="flex-fill text-center">
-                    <span class="badge p-2" :class="statusClass">{{ activeOrder.status.status }}</span><br>
+                <div v-if="showOrder" class="flex-fill text-center">
+                    <span class="badge p-2" :class="statusClass">{{ activeOrder.status.status }}</span>
+                    <br>
                     <small class="text-warning"><strong><i class="fas fa-exclamation"></i> {{ activeOrder.problem }}</strong></small>
                 </div>
                 <div class="flex-fill text-right">
@@ -19,11 +20,11 @@
             <div class="card-body">
                 <div class="card border border-success text-white bg-dark">
                     <div class="card-header">
-                        <button v-show="showAddBtn" @click="showOrder = false" class="btn btn-sm btn-outline-light mr-1"><i class="fas fa-plus"></i></button>
+                        <button v-if="showAddBtn" @click="showOrder = false" class="btn btn-sm btn-outline-light mr-1"><i class="fas fa-plus"></i></button>
                         <button v-for="order in reverceOrder" :key="order.id" class="btn btn-sm mr-1" @click="chageOrder(order.id)" :class="order.id == activeOrder.id ? 'btn-warning' : 'btn-outline-secondary'">#{{ order.id }}</button>
                     </div>
                     <div class="card-body">
-                        <div v-show="!showOrder" class="card border border-success bg-dark">
+                        <div v-if="!showOrder" class="card border border-success bg-dark">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-6 form-group">
@@ -72,7 +73,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card border border-muted bg-dark" v-show="showOrder">
+                        <div class="card border border-muted bg-dark" v-if="showOrder">
                             <div class="card-header">
                                 <table>
                                     <tbody>
@@ -102,17 +103,22 @@
                                 <p class="text-right" id="btnMenu">
                                     <button v-show="activeOrder.status.id != 4" @click="showAddNote = true, showAddRepair = false, showNotes = false, showRepairsList = false" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip" data-placement="top" title="Добави бележка"><i class="fas fa-plus"></i></button>
                                     <button :disabled="disabledNoteView" :class="disabledNoteView ? 'btn-outline-secondary' : 'btn-danger'" class="btn btn-sm" @click="showAddNote = false, showAddRepair = false, showNotes = true, showRepairsList = false">{{ notes.length }} Бележки</button>
-                                    <button :disabled="disabledNoteView" v-show="showNotes" :class="disabledNoteView ? 'btn-outline-secondary' : 'btn-success'" class="btn btn-sm" @click="showAddNote = false, showAddRepair = false, showNotes = false, showRepairsList = true">{{ repairs.length }} Ремонти</button>
                                     <strong v-show="activeOrder.status.id != 4"> | </strong>
                                     <button v-show="activeOrder.status.id != 4" @click="setStatus(activeOrder.id, 5)" class="btn btn-sm btn-outline-warning"><i class="fas fa-puzzle-piece" data-toggle="tooltip" data-placement="top" title="За части"></i></button>
                                     <button v-show="activeOrder.status.id != 4" @click="showRepairsList = false, showAddNote = false, showNotes = false, showAddRepair=true, newRepair.price = activeOrder.price" class="btn btn-sm btn-outline-success" data-toggle="tooltip" data-placement="top" title="Добави ремонт"><i class="fas fa-wrench"></i></button>
-                                    <button v-show="activeOrder.status.id != 4" class="btn btn-sm btn-success" @click="setStatus(activeOrder.id, 3), addNewTask()"><i class="fas fa-thumbs-up" data-toggle="tooltip" data-placement="top" title="Приклучи поръчката"></i></button>
-                                    <button v-show="activeOrder.status.id != 4" class="btn btn-sm btn-outline-info"><i class="fas fa-people-carry" data-toggle="tooltip" data-placement="top" title="Върни на клиемта"></i></button>
+                                    <button v-show="activeOrder.status.id != 4" @click="setStatus(activeOrder.id, 3), addNewTask()" class="btn btn-sm btn-success"><i class="fas fa-thumbs-up" data-toggle="tooltip" data-placement="top" title="Приклучи поръчката"></i></button>
+                                    <button v-show="activeOrder.status.id != 4" @click="setStatus(activeOrder.id, 4)" class="btn btn-sm btn-outline-info"><i class="fas fa-people-carry" data-toggle="tooltip" data-placement="top" title="Върни на клиемта"></i></button>
                                 </p>
                             </div>
                             <div class="card-body">
 
-                                <div class="col-12" v-show="showAddNote">
+                                <div class="col-12" v-if="showAddNote">
+                                    <div class="col-12 mb-4">
+                                        <button type="button" @click="showAddNote = false, showAddRepair = false, showNotes = false, showRepairsList = true" class="close" aria-label="Close">
+                                            <span class="text-white" aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <h5 class="title">Добавяне на бележка</h5>
                                     <div class="form-group">
                                         <label for="note">Бележка</label>
                                         <textarea name="note" v-model="note" class="form-control" id="note" rows="5" required></textarea>
@@ -122,7 +128,13 @@
                                     </div>
                                 </div>
 
-                                <table class="w-100" v-show="showNotes">
+                                <table class="w-100" v-if="showNotes">
+                                    <div class="col-12 mb-4">
+                                        <button type="button" @click="showAddNote = false, showAddRepair = false, showNotes = false, showRepairsList = true" class="close" aria-label="Close">
+                                            <span class="text-white" aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <h5 class="title">Бележки</h5>
                                     <tbody>
                                         <tr v-for="note in this.notes" :key="note.id">
                                             <td class="border border-secondary p-3">
@@ -133,7 +145,13 @@
                                     </tbody>
                                 </table>
 
-                                <div v-show="showAddRepair">
+                                <div v-if="showAddRepair">
+                                    <div class="col-12 mb-4">
+                                        <button type="button" @click="showAddNote = false, showAddRepair = false, showNotes = false, showRepairsList = true" class="close" aria-label="Close">
+                                            <span class="text-white" aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <h5 class="title">Добавяне на ремонт</h5>
                                     <div class="col-12 form-group">
                                         <label for="repair">Ремонт</label>
                                         <input type="text" v-model="newRepair.repair" class="form-control" autocomplete="off" name="repair" id="repair" placeholder="Ремонт..." required>
@@ -154,7 +172,8 @@
                                     </div>
                                 </div>
 
-                                <table class="w-100" v-show="showRepairsList">
+                                <table class="w-100" v-if="showRepairsList">
+                                    <h5 class="title">Ремонти</h5>
                                     <tbody>
                                         <tr v-for="repair in reverseRepair" :key="repair.id">
                                             <td class="border border-secondary p-3">
@@ -186,7 +205,6 @@ import Axios from 'axios';
                 statusClass: null,
                 newOrder: [],
                 activeOrder: [],
-                isActiveOrder: null,
                 repairs: [],
                 newRepair: [],
                 notes: [{
@@ -200,7 +218,7 @@ import Axios from 'axios';
                 showAddRepair: false,
                 showAddNote: false,
                 showNotes: false,
-                disabledNoteView: true
+                disabledNoteView: true,
             }
         },
         mounted() {
@@ -232,15 +250,17 @@ import Axios from 'axios';
             getNotes() {
                 Axios.get(`/notes/${this.activeOrder.id}/order`)
                 .then(res => {
+                    //console.log(res.data)
                     if(res.data.length) {
                         this.notes = res.data
                         this.disabledNoteView = false
                     } else {
-                        this.notes = [{
-                            length: 0
-                        }]
+                       this.notes.length = 0
+                       this.disabledNoteView = true
                     }
+                    console.log(this.notes.length)
                 })
+                .catch(err => console.log(err))
             },
             saveNote() {
                 Axios({
@@ -270,9 +290,9 @@ import Axios from 'axios';
                     }
                 })
                 .then(res => {
-                    //console.log(res.data)
-                    this.newRepair = []
-                    this.getProduct()
+                    this.newRepair = [];
+                    this.showAddRepair = false;
+                    this.getProduct();
                 })
             },
             setStatus(id, status){
@@ -316,7 +336,7 @@ import Axios from 'axios';
                 .then(res => {
                     //console.log(res.data)
                     this.activeOrder = res.data
-                    this.product.orders.push(res.data)
+                    //this.product.orders.push(res.data)
                     this.newOrder = []
                     this.getProduct()
                 })
@@ -327,8 +347,9 @@ import Axios from 'axios';
                         this.showOrder = true;
                         this.activeOrder = order
                         this.getRepirs(this.activeOrder.id);
-                        this.getNotes()
                         this.setStatusClass(this.activeOrder.statusId)
+                        this.getNotes()
+                        this.showNotes = false
                     }
                 });
             },
@@ -353,35 +374,35 @@ import Axios from 'axios';
                 Axios.get(`/product/show/${productId}`)
                 .then((res) => {
                     if(res.data) {
-                        this.product = res.data
-                        this.showProduct = true
+                        this.product = res.data;
+                        this.showProduct = true;
 
                         if(this.product.orders.length) {
-                            this.lastStatusFnc()
-                            this.setStatusClass(this.product.orders[this.product.orders.length - 1].status.id)
-
-                            this.activeOrder = this.product.orders[this.product.orders.length - 1]
+                            this.lastStatusFnc();
+                            this.setStatusClass(this.product.orders[this.product.orders.length - 1].statusId);
+                            this.activeOrder = this.product.orders[this.product.orders.length - 1];
                             this.showOrder = true;
                             this.getRepirs(this.activeOrder.id);
-                            this.getNotes()
-                            $('[data-toggle="tooltip"]').tooltip()
+                            this.getNotes();
                         }
-
-                        //console.log(this.product)
                     } else {
-                        this.showProduct = false
-                        console.log('nqma product')
+                        this.showProduct = false;
+                        console.log('nqma product');
                     }
-                    
-                    this.$refs.topProgress.done()
+                   // $('[data-toggle="tooltip"]').tooltip()
+                    this.$refs.topProgress.done();
                 })
             },
             getRepirs(orderId) {
                 Axios.get(`/repair/${orderId}`)
                 .then((res) => {
-                   // console.log(res.data)
-                    this.repairs = res.data
-                    this.showRepairsList = true
+                    if(res.data.length) {
+                        this.repairs = res.data;
+                        this.showRepairsList = true
+                    } else {
+                        this.repairs = []
+                        this.showRepairsList = false
+                    }
                 })
             }
         }

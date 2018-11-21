@@ -11591,6 +11591,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -11602,7 +11621,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             statusClass: null,
             newOrder: [],
             activeOrder: [],
-            isActiveOrder: null,
             repairs: [],
             newRepair: [],
             notes: [{
@@ -11652,14 +11670,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this2 = this;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/notes/' + this.activeOrder.id + '/order').then(function (res) {
+                //console.log(res.data)
                 if (res.data.length) {
                     _this2.notes = res.data;
                     _this2.disabledNoteView = false;
                 } else {
-                    _this2.notes = [{
-                        length: 0
-                    }];
+                    _this2.notes.length = 0;
+                    _this2.disabledNoteView = true;
                 }
+                console.log(_this2.notes.length);
+            }).catch(function (err) {
+                return console.log(err);
             });
         },
         saveNote: function saveNote() {
@@ -11692,8 +11713,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     price: this.newRepair.price
                 }
             }).then(function (res) {
-                //console.log(res.data)
                 _this4.newRepair = [];
+                _this4.showAddRepair = false;
                 _this4.getProduct();
             });
         },
@@ -11740,7 +11761,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).then(function (res) {
                 //console.log(res.data)
                 _this6.activeOrder = res.data;
-                _this6.product.orders.push(res.data);
+                //this.product.orders.push(res.data)
                 _this6.newOrder = [];
                 _this6.getProduct();
             });
@@ -11753,8 +11774,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this7.showOrder = true;
                     _this7.activeOrder = order;
                     _this7.getRepirs(_this7.activeOrder.id);
-                    _this7.getNotes();
                     _this7.setStatusClass(_this7.activeOrder.statusId);
+                    _this7.getNotes();
+                    _this7.showNotes = false;
                 }
             });
         },
@@ -11790,21 +11812,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
                     if (_this8.product.orders.length) {
                         _this8.lastStatusFnc();
-                        _this8.setStatusClass(_this8.product.orders[_this8.product.orders.length - 1].status.id);
-
+                        _this8.setStatusClass(_this8.product.orders[_this8.product.orders.length - 1].statusId);
                         _this8.activeOrder = _this8.product.orders[_this8.product.orders.length - 1];
                         _this8.showOrder = true;
                         _this8.getRepirs(_this8.activeOrder.id);
                         _this8.getNotes();
-                        $('[data-toggle="tooltip"]').tooltip();
                     }
-
-                    //console.log(this.product)
                 } else {
                     _this8.showProduct = false;
                     console.log('nqma product');
                 }
-
+                // $('[data-toggle="tooltip"]').tooltip()
                 _this8.$refs.topProgress.done();
             });
         },
@@ -11812,9 +11830,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this9 = this;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/repair/' + orderId).then(function (res) {
-                // console.log(res.data)
-                _this9.repairs = res.data;
-                _this9.showRepairsList = true;
+                if (res.data.length) {
+                    _this9.repairs = res.data;
+                    _this9.showRepairsList = true;
+                } else {
+                    _this9.repairs = [];
+                    _this9.showRepairsList = false;
+                }
             });
         }
     }
@@ -23328,7 +23350,7 @@ exports.push([module.i, "/* Add support for fixed layout table */\ntable.b-table
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(9)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 213 */
@@ -52863,22 +52885,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('div', {
     staticClass: "flex-fill text-left"
-  }, [_c('h5', [_vm._v(_vm._s(_vm.product.brand.title) + " " + _vm._s(_vm.product.model_brand.title))]), _vm._v(" "), _c('small', [_vm._v(_vm._s(_vm.product.serial))])]), _vm._v(" "), _c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.showOrder),
-      expression: "showOrder"
-    }],
+  }, [_c('h5', [_vm._v(_vm._s(_vm.product.brand.title) + " " + _vm._s(_vm.product.model_brand.title))]), _vm._v(" "), _c('small', [_vm._v(_vm._s(_vm.product.serial))])]), _vm._v(" "), (_vm.showOrder) ? _c('div', {
     staticClass: "flex-fill text-center"
   }, [_c('span', {
     staticClass: "badge p-2",
     class: _vm.statusClass
-  }, [_vm._v(_vm._s(_vm.activeOrder.status.status))]), _c('br'), _vm._v(" "), _c('small', {
+  }, [_vm._v(_vm._s(_vm.activeOrder.status.status))]), _vm._v(" "), _c('br'), _vm._v(" "), _c('small', {
     staticClass: "text-warning"
   }, [_c('strong', [_c('i', {
     staticClass: "fas fa-exclamation"
-  }), _vm._v(" " + _vm._s(_vm.activeOrder.problem))])])]), _vm._v(" "), _c('div', {
+  }), _vm._v(" " + _vm._s(_vm.activeOrder.problem))])])]) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "flex-fill text-right"
   }, [_c('h5', [_vm._v(_vm._s(_vm.product.client.name))]), _vm._v(" "), _c('small', [_vm._v(_vm._s(_vm.product.client.phone))])])]), _vm._v(" "), _c('div', {
     staticClass: "card-body"
@@ -52886,13 +52902,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "card border border-success text-white bg-dark"
   }, [_c('div', {
     staticClass: "card-header"
-  }, [_c('button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.showAddBtn),
-      expression: "showAddBtn"
-    }],
+  }, [(_vm.showAddBtn) ? _c('button', {
     staticClass: "btn btn-sm btn-outline-light mr-1",
     on: {
       "click": function($event) {
@@ -52901,7 +52911,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "fas fa-plus"
-  })]), _vm._v(" "), _vm._l((_vm.reverceOrder), function(order) {
+  })]) : _vm._e(), _vm._v(" "), _vm._l((_vm.reverceOrder), function(order) {
     return _c('button', {
       key: order.id,
       staticClass: "btn btn-sm mr-1",
@@ -52914,13 +52924,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_vm._v("#" + _vm._s(order.id))])
   })], 2), _vm._v(" "), _c('div', {
     staticClass: "card-body"
-  }, [_c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (!_vm.showOrder),
-      expression: "!showOrder"
-    }],
+  }, [(!_vm.showOrder) ? _c('div', {
     staticClass: "card border border-success bg-dark"
   }, [_c('div', {
     staticClass: "card-body"
@@ -53141,13 +53145,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "fas fa-save"
-  })])])])])]), _vm._v(" "), _c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.showOrder),
-      expression: "showOrder"
-    }],
+  })])])])])]) : _vm._e(), _vm._v(" "), (_vm.showOrder) ? _c('div', {
     staticClass: "card border border-muted bg-dark"
   }, [_c('div', {
     staticClass: "card-header"
@@ -53189,24 +53187,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.showAddNote = false, _vm.showAddRepair = false, _vm.showNotes = true, _vm.showRepairsList = false
       }
     }
-  }, [_vm._v(_vm._s(_vm.notes.length) + " Бележки")]), _vm._v(" "), _c('button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.showNotes),
-      expression: "showNotes"
-    }],
-    staticClass: "btn btn-sm",
-    class: _vm.disabledNoteView ? 'btn-outline-secondary' : 'btn-success',
-    attrs: {
-      "disabled": _vm.disabledNoteView
-    },
-    on: {
-      "click": function($event) {
-        _vm.showAddNote = false, _vm.showAddRepair = false, _vm.showNotes = false, _vm.showRepairsList = true
-      }
-    }
-  }, [_vm._v(_vm._s(_vm.repairs.length) + " Ремонти")]), _vm._v(" "), _c('strong', {
+  }, [_vm._v(_vm._s(_vm.notes.length) + " Бележки")]), _vm._v(" "), _c('strong', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -53280,7 +53261,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (_vm.activeOrder.status.id != 4),
       expression: "activeOrder.status.id != 4"
     }],
-    staticClass: "btn btn-sm btn-outline-info"
+    staticClass: "btn btn-sm btn-outline-info",
+    on: {
+      "click": function($event) {
+        _vm.setStatus(_vm.activeOrder.id, 4)
+      }
+    }
   }, [_c('i', {
     staticClass: "fas fa-people-carry",
     attrs: {
@@ -53290,15 +53276,29 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })])])]), _vm._v(" "), _c('div', {
     staticClass: "card-body"
-  }, [_c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.showAddNote),
-      expression: "showAddNote"
-    }],
+  }, [(_vm.showAddNote) ? _c('div', {
     staticClass: "col-12"
   }, [_c('div', {
+    staticClass: "col-12 mb-4"
+  }, [_c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button",
+      "aria-label": "Close"
+    },
+    on: {
+      "click": function($event) {
+        _vm.showAddNote = false, _vm.showAddRepair = false, _vm.showNotes = false, _vm.showRepairsList = true
+      }
+    }
+  }, [_c('span', {
+    staticClass: "text-white",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }, [_vm._v("×")])])]), _vm._v(" "), _c('h5', {
+    staticClass: "title"
+  }, [_vm._v("Добавяне на бележка")]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -53338,15 +53338,29 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "fas fa-save"
-  })])])]), _vm._v(" "), _c('table', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.showNotes),
-      expression: "showNotes"
-    }],
+  })])])]) : _vm._e(), _vm._v(" "), (_vm.showNotes) ? _c('table', {
     staticClass: "w-100"
-  }, [_c('tbody', _vm._l((this.notes), function(note) {
+  }, [_c('div', {
+    staticClass: "col-12 mb-4"
+  }, [_c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button",
+      "aria-label": "Close"
+    },
+    on: {
+      "click": function($event) {
+        _vm.showAddNote = false, _vm.showAddRepair = false, _vm.showNotes = false, _vm.showRepairsList = true
+      }
+    }
+  }, [_c('span', {
+    staticClass: "text-white",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }, [_vm._v("×")])])]), _vm._v(" "), _c('h5', {
+    staticClass: "title"
+  }, [_vm._v("Бележки")]), _vm._v(" "), _c('tbody', _vm._l((this.notes), function(note) {
     return _c('tr', {
       key: note.id
     }, [_c('td', {
@@ -53354,14 +53368,27 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_c('p', [_vm._v(_vm._s(note.note))]), _vm._v(" "), _c('small', {
       staticClass: "float-right"
     }, [_vm._v(_vm._s(note.user.name) + " | " + _vm._s(note.created_at))])])])
-  }))]), _vm._v(" "), _c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.showAddRepair),
-      expression: "showAddRepair"
-    }]
-  }, [_c('div', {
+  }))]) : _vm._e(), _vm._v(" "), (_vm.showAddRepair) ? _c('div', [_c('div', {
+    staticClass: "col-12 mb-4"
+  }, [_c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button",
+      "aria-label": "Close"
+    },
+    on: {
+      "click": function($event) {
+        _vm.showAddNote = false, _vm.showAddRepair = false, _vm.showNotes = false, _vm.showRepairsList = true
+      }
+    }
+  }, [_c('span', {
+    staticClass: "text-white",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }, [_vm._v("×")])])]), _vm._v(" "), _c('h5', {
+    staticClass: "title"
+  }, [_vm._v("Добавяне на ремонт")]), _vm._v(" "), _c('div', {
     staticClass: "col-12 form-group"
   }, [_c('label', {
     attrs: {
@@ -53465,15 +53492,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "fas fa-save"
-  })])])]), _vm._v(" "), _c('table', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.showRepairsList),
-      expression: "showRepairsList"
-    }],
+  })])])]) : _vm._e(), _vm._v(" "), (_vm.showRepairsList) ? _c('table', {
     staticClass: "w-100"
-  }, [_c('tbody', _vm._l((_vm.reverseRepair), function(repair) {
+  }, [_c('h5', {
+    staticClass: "title"
+  }, [_vm._v("Ремонти")]), _vm._v(" "), _c('tbody', _vm._l((_vm.reverseRepair), function(repair) {
     return _c('tr', {
       key: repair.id
     }, [_c('td', {
@@ -53481,7 +53504,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_c('p', [_vm._v(_vm._s(repair.repair))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(repair.description))]), _vm._v(" "), _c('small', {
       staticClass: "float-right"
     }, [_vm._v(_vm._s(repair.user.name) + " | " + _vm._s(repair.created_at))])])])
-  }))])])])])])])]) : _vm._e()], 1)
+  }))]) : _vm._e()])]) : _vm._e()])])])]) : _vm._e()], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "input-group-addon"
