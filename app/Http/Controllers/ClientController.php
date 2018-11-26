@@ -71,6 +71,44 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         //
+        if($request->email) {
+            $this->validate($request, [
+                'email' => 'sometimes|nullable|email'
+            ]);
+
+            $client = Client::where('email', '=', $request->email)->first();
+            //return $client;
+            if(count($client)) {
+                return [$client, 'email'];
+            }
+        }
+
+        if($request->idNumber) {
+            $this->validate($request, [
+                'idNumber' => 'numeric'
+            ]);
+            $client = Client::where('idNumber', '=', $request->idNumber)->first();
+            //return $client;
+            if(count($client)) {
+                return [$client, 'idNumber'];
+            }
+        } else {
+            $request->idNumber = 0;
+        }
+
+        if($request->phone) {
+            $this->validate($request, [
+                'phone' => 'required|numeric'
+            ]);
+                
+            $client = Client::where('phone', '=', $request->phone)->first();
+            //return $client;
+            if(count($client)) {
+                return [$client, 'phone'];
+            }
+        }
+        
+
         $this->validate($request, [
            'name' => 'required|max:255',
             'email' => 'sometimes|nullable|email|unique:clients',
@@ -85,7 +123,8 @@ class ClientController extends Controller
         $client->phone = $request->phone;
         $client->save();
 
-        return redirect()->route('client.show', ['id' => $client->id]);
+        //return redirect()->route('client.show', ['id' => $client->id]);
+        return $client;
     }
 
     /**
@@ -133,8 +172,8 @@ class ClientController extends Controller
                 'serial' => $products[$i]->serial
             ];
         }
-
-        return view('client.show', compact('client', 'types', 'finalProducts'));
+        return $client;
+        //return view('client.show', compact('client', 'types', 'finalProducts'));
     }
 
     /**
@@ -180,7 +219,7 @@ class ClientController extends Controller
             ];
         }
 
-        return [$client, $finalProducts];
+        return [$client, $finalProducts, $types];
     }
 
     /**

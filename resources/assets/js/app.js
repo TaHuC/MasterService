@@ -46,8 +46,8 @@ Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csr
 
 let routes = [
     { path: '/search/:search', name: 'search', component: require('./components/Results')},
-    { path: '/clients/:client', component: require('./components/routes/Clients')},
-    { path: '/products/:product', component: require('./components/routes/Product')},
+    { path: '/clients/:client', name: 'client', component: require('./components/routes/Clients')},
+    { path: '/products/:product', name: 'viewProduct', component: require('./components/routes/Product')},
 ]
 
 const router = new VueRouter({
@@ -70,10 +70,18 @@ const app = new Vue({
         }
     },
     methods: {
+        addNewClient() {
+            router.push({ name: 'client', params: {'client': 'addCl'}});
+            Mservice.$emit('addNewClient')
+        },
         searchit() {
+            if(this.search) {
             router.push({ name: 'search', params: { search: this.search } })
             Mservice.$emit('searchit')
             //this.isSearch = true;
+            } else {
+                return
+            }
         }
     }
 });

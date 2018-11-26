@@ -39,7 +39,7 @@
             <input class="form-control form-control-dark" type="text" @keyup.enter="searchit" v-model="search"  placeholder="Search" aria-label="Search">
           <div class="input-group-append" id="button-addon4">
               <button class="btn btn-outline-light" style="border-radius: 0%;" @click="searchit" type="button"><i class="fa fa-search"></i></button>
-              <button class="btn btn-outline-light" style="border-radius: 0%;" type="button"><i class="fa fa-plus"></i></button>
+              <button class="btn btn-outline-light" style="border-radius: 0%;" @click="addNewClient" type="button"><i class="fa fa-plus"></i></button>
           </div>
         </div>
       <ul class="navbar-nav px-3"></ul>

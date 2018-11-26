@@ -64,15 +64,15 @@ class ModelController extends Controller
     {
         //Valideite data
         $this->validate($request, [
-            'brand' => 'required|numeric',
+            'brandId' => 'required|numeric',
         ]);
 
         $modelBrand = new ModelBrand();
-        $modelBrand->brandId = $request->brand;
+        $modelBrand->brandId = $request->brandId;
         $modelBrand->title = $request->model;
         $modelBrand->save();
 
-        return $modelBrand->id;
+        return $modelBrand;
     }
 
     /**
