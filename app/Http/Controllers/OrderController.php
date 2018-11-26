@@ -82,7 +82,6 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
         //return $request->all();
         $order = new Order();
         $this->validate($request, [

@@ -31,7 +31,6 @@
                     </div>
                     <div class="card-footer">
                         <span class="float-left p-2 badge" :class="statusClass"><i class="fas fa-eye"></i> {{ order.status.status }}</span>
-                        <a href="#" v-if="order.status.id != 4" class="btn btn-outline-success btn-sm float-right">Взета</a>
                         <div class="d-flex justify-content-end">
                             <p v-show="order.deposit" class="mr-1">Деп: <strong>{{ order.deposit }}лв.</strong></p> 
                             <p v-show="order.deposit" class="mr-1">Цена: <strong>{{ order.price }}лв.</strong></p>

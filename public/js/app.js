@@ -11038,7 +11038,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
@@ -11992,6 +11991,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -12060,7 +12060,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this2.notes.length = 0;
                     _this2.disabledNoteView = true;
                 }
-                console.log(_this2.notes.length);
+                //console.log(this.notes.length)
             }).catch(function (err) {
                 return console.log(err);
             });
@@ -12092,7 +12092,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     repair: this.newRepair.repair,
                     orderId: id,
                     description: this.newRepair.description,
-                    price: this.newRepair.price
+                    price: this.newRepair.price ? this.newRepair.price : 0
                 }
             }).then(function (res) {
                 _this4.newRepair = [];
@@ -12137,8 +12137,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     now: this.newOrder.now,
                     password: this.newOrder.password,
                     description: this.newOrder.description,
-                    deposit: this.newOrder.deposit,
-                    price: this.newOrder.price
+                    deposit: this.newOrder.deposit ? this.newOrder.deposit : 0,
+                    price: this.newOrder.price ? this.newOrder.price : 0
                 }
             }).then(function (res) {
                 //console.log(res.data)
@@ -23732,7 +23732,7 @@ exports.push([module.i, "/* Add support for fixed layout table */\ntable.b-table
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(9)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 213 */
@@ -23753,7 +23753,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(9)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 216 */
@@ -53278,7 +53278,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "fas fa-exclamation"
   }), _vm._v(" " + _vm._s(_vm.activeOrder.problem))])])]) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "flex-fill text-right"
-  }, [_c('h5', [_vm._v(_vm._s(_vm.product.client.name))]), _vm._v(" "), _c('small', [_vm._v(_vm._s(_vm.product.client.phone))])])]), _vm._v(" "), _c('div', {
+  }, [_c('h5', [_vm._v(_vm._s(_vm.product.client.name))]), _vm._v(" "), _c('small', [_vm._v(_vm._s(_vm.product.client.phone))]), _c('br'), _vm._v(" "), _c('router-link', {
+    staticClass: "btn btn-sm btn-outline-success",
+    attrs: {
+      "to": {
+        name: 'client',
+        params: {
+          client: _vm.product.client.id
+        }
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fas fa-eye"
+  })])], 1)]), _vm._v(" "), _c('div', {
     staticClass: "card-body"
   }, [_c('div', {
     staticClass: "card border border-success text-white bg-dark"
@@ -53531,7 +53543,21 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "card border border-muted bg-dark"
   }, [_c('div', {
     staticClass: "card-header"
-  }, [_c('table', [_c('tbody', [_c('tr', [_vm._m(2), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.activeOrder.now))])]), _vm._v(" "), _c('tr', [_vm._m(3), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.activeOrder.description))])]), _vm._v(" "), _c('tr', [_vm._m(4), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.activeOrder.password))])]), _vm._v(" "), _c('tr', [_vm._m(5), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.activeOrder.user.name) + " - " + _vm._s(_vm.activeOrder.created_at))])])])]), _vm._v(" "), _c('p', {
+  }, [_c('table', [_c('tbody', [_c('tr', [_vm._m(2), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.activeOrder.now))])]), _vm._v(" "), _c('tr', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.activeOrder.description),
+      expression: "activeOrder.description"
+    }]
+  }, [_vm._m(3), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.activeOrder.description))])]), _vm._v(" "), _c('tr', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.activeOrder.password),
+      expression: "activeOrder.password"
+    }]
+  }, [_vm._m(4), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.activeOrder.password))])]), _vm._v(" "), _c('tr', [_vm._m(5), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.activeOrder.user.name) + " - " + _vm._s(_vm.activeOrder.created_at))])])])]), _vm._v(" "), _c('p', {
     staticClass: "text-right"
   }, [_c('small', [_vm._v("Деп: " + _vm._s(_vm.activeOrder.deposit))]), _vm._v(" "), _c('small', [_vm._v("Цена: " + _vm._s(_vm.activeOrder.price))]), _vm._v(" "), _c('small', [_vm._v("Тотал: " + _vm._s(_vm.activeOrder.price - _vm.activeOrder.deposit))])]), _vm._v(" "), _c('p', {
     staticClass: "text-right",
@@ -54627,12 +54653,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     class: _vm.statusClass
   }, [_c('i', {
     staticClass: "fas fa-eye"
-  }), _vm._v(" " + _vm._s(_vm.order.status.status))]), _vm._v(" "), (_vm.order.status.id != 4) ? _c('a', {
-    staticClass: "btn btn-outline-success btn-sm float-right",
-    attrs: {
-      "href": "#"
-    }
-  }, [_vm._v("Взета")]) : _vm._e(), _vm._v(" "), _c('div', {
+  }), _vm._v(" " + _vm._s(_vm.order.status.status))]), _vm._v(" "), _c('div', {
     staticClass: "d-flex justify-content-end"
   }, [_c('p', {
     directives: [{

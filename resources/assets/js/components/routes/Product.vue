@@ -14,7 +14,8 @@
                 </div>
                 <div class="flex-fill text-right">
                     <h5>{{ product.client.name }}</h5>
-                    <small>{{ product.client.phone }}</small>
+                    <small>{{ product.client.phone }}</small><br>
+                    <router-link :to="{name: 'client', params: {client: product.client.id}}" class="btn btn-sm btn-outline-success"><i class="fas fa-eye"></i></router-link>
                 </div>
             </div>
             <div class="card-body">
@@ -81,11 +82,11 @@
                                             <td><i class="fas fa-braille text-warning"></i></td>
                                             <td>{{ activeOrder.now }}</td>
                                         </tr>
-                                        <tr>
+                                        <tr v-show="activeOrder.description">
                                             <td><i class="fas fa-info text-info"></i></td>
                                             <td>{{ activeOrder.description }}</td>
                                         </tr>
-                                        <tr>
+                                        <tr v-show="activeOrder.password">
                                             <td><i class="fas fa-key text-danger"></i></td>
                                             <td>{{ activeOrder.password }}</td>
                                         </tr>
@@ -258,7 +259,7 @@ import Axios from 'axios';
                        this.notes.length = 0
                        this.disabledNoteView = true
                     }
-                    console.log(this.notes.length)
+                    //console.log(this.notes.length)
                 })
                 .catch(err => console.log(err))
             },
@@ -286,7 +287,7 @@ import Axios from 'axios';
                         repair: this.newRepair.repair,
                         orderId: id,
                         description: this.newRepair.description,
-                        price: this.newRepair.price
+                        price: this.newRepair.price ? this.newRepair.price : 0
                     }
                 })
                 .then(res => {
@@ -329,8 +330,8 @@ import Axios from 'axios';
                         now: this.newOrder.now,
                         password: this.newOrder.password,
                         description: this.newOrder.description,
-                        deposit: this.newOrder.deposit,
-                        price: this.newOrder.price,
+                        deposit: this.newOrder.deposit ? this.newOrder.deposit : 0,
+                        price: this.newOrder.price ? this.newOrder.price : 0,
                     }
                 })
                 .then(res => {
