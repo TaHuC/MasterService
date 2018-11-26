@@ -58,8 +58,8 @@
             <div  class="card-body">
                 <div class="" v-if="showOldClientDev">
                     <h4>Това устройство е на клиент {{ oldClientDev.client.name }}</h4>
-                    <router-link :to="`/clients/${oldClientDev.client.id}`" class="btn btn-link">Отвори</router-link>
-                    <button class="btn btn-link" @click="moveNewClient()">Премести на този клиент</button>
+                    <router-link :to="{name: 'client', params: {client: oldClientDev.client.id}}" class="btn btn-link">Отвори</router-link>
+                    <button class="btn btn-link" @click="moveNewClient(oldClientDev.product.id)">Премести на този клиент</button>
                 </div>
                 <div v-if="!showDevices && !showOldClientDev">
                     <button @click="showDevices = true, newDevice = [], showAddDevForm = false" class="close">&times;</button>
@@ -128,7 +128,6 @@ import Axios from 'axios';
 import { setTimeout } from 'timers';
 import { isNumber } from 'util';
 import { equal } from 'assert';
-import Autocomplete from 'vuejs-auto-complete'
 
     export default {
         name: 'Clients',
@@ -173,12 +172,51 @@ import Autocomplete from 'vuejs-auto-complete'
         created() {
             Mservice.$on('addNewClient', this.addNewClient)
         },
+        watch: {
+            "$route.params.client": function(client) {
+                this.getClient()
+            }
+        },
         methods: {
+            clearFunc() {
+                this.client = ''
+                this.products = []
+                this.newClient = []
+                this.oldClient = []
+                this.types = []
+                this.newDevice = []
+                this.brands = []
+                this.models = []
+                this.selectBrand = null
+                this.selectModel = null
+                this.newBrand = null
+                this.newModel = null
+                this.oldClientDev = []
+                this.showOldClientDev = false
+                this.showAddBrand = true
+                this.showAddBrandBtn = false
+                this.showAddModel = false
+                this.showAddModelBtn = false
+                this.showAddDevForm = false
+                this.showClient = false
+                this.showNoClient = false
+                this.showNewClient = false
+                this.showOldClient = false
+                this.showDevices = true
+            },
             moveNewClient(id) {
                 Axios({
                     method: 'put',
-                    url: `/product/${id}`
+                    url: `/product/${id}`,
+                    data: {
+                        newOwner: true,
+                        clientId: this.client.id
+                    }
                 })
+                .then(res => {
+                    this.$router.push({name: 'viewProduct', params: {product: res.data}})
+                })
+                .catch(err => console.log(err.response))
             },
             checkSerial() {
                 this.$refs.topProgress.start()
@@ -189,12 +227,15 @@ import Autocomplete from 'vuejs-auto-complete'
                         Axios.get(`/client/${res.data.clientId}`)
                         .then(res => {
                             this.oldClientDev.client = res.data
+                            this.showOldClientDev = true
+                            this.$refs.topProgress.done()
                         })
-                        this.showOldClientDev = true
+                        
                     } else {
                         this.showOldClientDev = false
+                        this.$refs.topProgress.done()
                     }
-                    this.$refs.topProgress.done()
+                    
                 })
             },
             saveNewDevice() {
@@ -244,7 +285,7 @@ import Autocomplete from 'vuejs-auto-complete'
                     }
                 })
                 .then(res => {
-                    console.log(res.data)
+                   // console.log(res.data)
                     this.newDevice.brandId = res.data.id
                     this.selectBrand = res.data.title
                     this.showAddBrand = false
@@ -359,6 +400,7 @@ import Autocomplete from 'vuejs-auto-complete'
                 this.showClient = false
             },
             getClient() {
+                this.clearFunc()
                 //console.log(this.$route.params.client)
                 if(this.$route.params.client == 'addCl') {
                     return
