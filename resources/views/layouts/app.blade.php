@@ -176,27 +176,10 @@
                 <div class="col-md-9 col-sm float-left">
                   <router-view></router-view>
                 </div>
-
+                @if (!Auth::guest())
                 <div class="col-md-3 col-sm float-right">
 
-                  <div class="card bg-dark text-white border border-danger float-right mb-2">
-                    <div class="card-body">
-                      <h6 class="card-title text-center">За части</h6>
-                      <a href="#" class="badge badge-warning">11554</a>
-                      <a href="#" class="badge badge-warning">1155</a>
-                      <a href="#" class="badge badge-warning">115</a>
-                      <a href="#" class="badge badge-warning">1155</a>
-                      <a href="#" class="badge badge-warning">1155</a>
-                      <a href="#" class="badge badge-warning">1155</a>
-                      <a href="#" class="badge badge-warning">1155</a>
-                      <a href="#" class="badge badge-warning">15</a>
-                      <a href="#" class="badge badge-warning">115</a>
-                      <a href="#" class="badge badge-warning">15</a>
-                      <a href="#" class="badge badge-warning">1155</a>
-                      <a href="#" class="badge badge-warning">1155</a>
-                      <a href="#" class="badge badge-warning">1155</a>
-                    </div>
-                  </div>
+                  <forParts></forParts>
 
                   <div class="card bg-dark text-white border border-danger float-right mb-2" style="width: 100%;">
                     <div class="card-header">Задачи</div>
@@ -206,7 +189,7 @@
                   </div>
 
                 </div>
-                  @if (!Auth::guest())
+                  
                   <tasks></tasks>
                 @endif
               </div>

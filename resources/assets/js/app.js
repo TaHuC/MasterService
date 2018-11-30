@@ -13,6 +13,7 @@ import BootstrapVue from 'bootstrap-vue'
 import VueRouter from 'vue-router'
 
 import vueTopprogress from 'vue-top-progress'
+import Axios from 'axios';
 
 // import Cliens from './components/routes/Clients'
 
@@ -41,6 +42,7 @@ Vue.component('tasks', require('./components/Task'));
 // Vue.component('search', require('./components/Search'));
 Vue.component('navi', require('./components/Nav'));
 Vue.component('results', require('./components/Results'));
+Vue.component('forparts', require('./components/wigets/forParts'));
 
 Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 

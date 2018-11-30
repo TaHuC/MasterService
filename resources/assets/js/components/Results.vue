@@ -39,6 +39,13 @@
                     </div>
                 </div>
 
+                <div class="card border-light mb-3 text-dark" v-if="showProducts" >
+                    <div class="card-header"><i class="fas fa-cubes"></i> Устройства</div>
+                    <div class="card-body">
+                        <router-link  v-for="product in products" :to="'/products/'+product.id" :key="product.id" class="badge badge-dark text-uppercase p-2 mr-2 mb-1">{{ product.serial }}</router-link>
+                    </div>
+                </div>
+
                 <div class="card border-light mb-3 text-dark" v-if="showClients" >
                     <div class="card-header"><i class="fas fa-users"></i> Клиенти</div>
                     <div class="card-body">
@@ -61,6 +68,8 @@ import { vueTopprogress } from 'vue-top-progress'
             return {
                 order: null,
                 showOrder: false,
+                products: [],
+                showProducts: false,
                 clients: null,
                 showClients: false,
                 paginateData: null,
@@ -129,6 +138,20 @@ import { vueTopprogress } from 'vue-top-progress'
                         this.order = null
                     }
                 })
+
+                Axios.get(`/product/search/${search}`)
+                .then(res => {
+                    //console.log(res.data)
+                    if(res.data.length) {
+                        this.showProducts = true
+                        this.products = res.data
+                    } else {
+                        this.showProducts = false
+                        this.products = []
+                    }
+                })
+                .catch(err => console.log(err.response))
+
                 Axios.get(`/clients/search?search=${search}`).then((result) => {
                     if(result.data.total != 0) {
                         this.showClients = true

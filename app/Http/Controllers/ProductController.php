@@ -200,8 +200,6 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         //
-
-        
         if($request->newOwner) {
             $product = Product::find($id);
             $product->clientId = $request->clientId;
@@ -233,7 +231,7 @@ class ProductController extends Controller
     {
         //return $request->search;
         $search = $request->search;
-        $products = Product::where('name', 'like', '%'.$search.'%')->orWhere('phone', 'like', '%'.$search.'%')->paginate(10);
+        $products = Product::where('serial', 'like', '%'.$search.'%')->get();
 
         return $products;
     }

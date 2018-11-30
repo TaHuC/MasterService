@@ -52,16 +52,21 @@ class OrderController extends Controller
      */
     public function paramsOrder(Request $request) {
 
-        if($request->status === 'last'){
-            $orders = Order::limit($request->limit)
-                ->orderBy('id', 'desc')
-                ->get();
-            return $orders;
-        } else {
-            $orders = Order::where('statusId', '=', 3)
-                ->get();
-            return $orders;
-        }
+        // if($request->status === 'last'){
+        //     $orders = Order::limit($request->limit)
+        //         ->orderBy('id', 'desc')
+        //         ->get();
+        //     return $orders;
+        // } else {
+        //     $orders = Order::where('statusId', '=', 3)
+        //         ->get();
+        //     return $orders;
+        // }
+
+        $orders = Order::where($request->first, $request->second)
+        ->orderBy('id', 'desc')
+        ->get();
+        return $orders;
     }
 
     /**
