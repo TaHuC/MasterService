@@ -54593,12 +54593,12 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('vue-topprogress', {
     ref: "topProgress"
-  }), _vm._v(" "), (!_vm.showClients && !_vm.showOrder) ? _c('div', {
+  }), _vm._v(" "), (!_vm.showClients && !_vm.showOrder && !_vm.showProducts) ? _c('div', {
     staticClass: "card border text-white border-secondary",
     staticStyle: {
       "background-color": "#212529"
     }
-  }, [_vm._m(0)]) : _vm._e(), _vm._v(" "), (_vm.showOrder || _vm.showClients) ? _c('div', {
+  }, [_vm._m(0)]) : _vm._e(), _vm._v(" "), (_vm.showOrder || _vm.showClients || _vm.showProducts) ? _c('div', {
     staticClass: "card border text-white border-danger",
     staticStyle: {
       "background-color": "#212529"
@@ -71495,13 +71495,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         this.getPartsOrder();
     },
+    watch: function watch() {
+        getPartsOrder();
+    },
 
     methods: {
         getPartsOrder: function getPartsOrder() {
             var _this = this;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/order/params/statusId&5').then(function (res) {
-                console.log(res.data);
+                //console.log(res.data)
                 _this.forParts = res.data;
             }).catch(function (err) {
                 return console.log(err.response);
@@ -71515,7 +71518,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(9)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 261 */

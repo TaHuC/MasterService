@@ -1,12 +1,12 @@
 <template>
     <div>
         <vue-topprogress ref="topProgress"></vue-topprogress>
-        <div v-if="!showClients && !showOrder" class="card border text-white border-secondary" style="background-color: #212529;">
+        <div v-if="!showClients && !showOrder && !showProducts" class="card border text-white border-secondary" style="background-color: #212529;">
             <div class="card-body">
                 <h5><i class="far fa-frown"></i> Няма намерени резултати</h5>
             </div>
         </div>
-        <div v-if="showOrder || showClients" class="card border text-white border-danger" style="background-color: #212529;">
+        <div v-if="showOrder || showClients || showProducts" class="card border text-white border-danger" style="background-color: #212529;">
             <div class="card-body">
                 <h6><i class="fas fa-search"></i> Резултати</h6>
                 <div class="card border-success mb-3 bg-dark text-white" v-if="showOrder" >

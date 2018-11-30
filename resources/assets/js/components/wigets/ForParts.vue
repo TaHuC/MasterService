@@ -20,11 +20,14 @@ export default {
     created() {
         this.getPartsOrder()
     },
+    watch() {
+        getPartsOrder();
+    },
     methods: {
         getPartsOrder() {
             Axios.get(`/order/params/statusId&5`)
             .then(res => {
-                console.log(res.data)
+                //console.log(res.data)
                 this.forParts = res.data
             })
             .catch(err => console.log(err.response))
