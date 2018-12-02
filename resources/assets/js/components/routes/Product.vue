@@ -10,11 +10,11 @@
                 <div v-if="showOrder" class="flex-fill text-center">
                     <span class="badge p-2" :class="statusClass">{{ activeOrder.status.status }}</span>
                     <br>
-                    <small class="text-warning"><strong><i class="fas fa-exclamation"></i> {{ activeOrder.problem }}</strong></small>
+                    <h6 class="text-warning"><strong><i class="fas fa-exclamation"></i> {{ activeOrder.problem }}</strong></h6>
                 </div>
                 <div class="flex-fill text-right">
                     <h5>{{ product.client.name }}</h5>
-                    <small>{{ product.client.phone }}</small><br>
+                    <small><strong>{{ product.client.phone }}</strong></small><br>
                     <router-link :to="{name: 'client', params: {client: product.client.id}}" class="btn btn-sm btn-outline-success"><i class="fas fa-eye"></i></router-link>
                 </div>
             </div>
@@ -92,15 +92,15 @@
                                         </tr>
                                         <tr>
                                             <td><i class="fas fa-user text-primary"></i></td>
-                                            <td>{{ activeOrder.user.name }} - {{ activeOrder.created_at }}</td>
+                                            <td><strong>{{ activeOrder.user.name }} |</strong> {{ activeOrder.created_at }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
-                                <p class="text-right">
-                                    <small>Деп: {{ activeOrder.deposit }}</small>
-                                    <small>Цена: {{ activeOrder.price }}</small>
-                                    <small>Тотал: {{ activeOrder.price - activeOrder.deposit }}</small>
-                                </p>
+                                <h5 class="text-right">
+                                    Деп <span class="badge badge-secondary"><strong>{{ activeOrder.deposit }}</strong></span> |
+                                    Цена <span class="badge badge-secondary"><strong>{{ activeOrder.price }}</strong></span> |
+                                    Тотал <span class="badge badge-secondary"><strong>{{ activeOrder.price - activeOrder.deposit }}</strong></span>
+                                </h5>
                                 <p class="text-right" id="btnMenu">
                                     <button v-show="activeOrder.status.id != 4" @click="showAddNote = true, showAddRepair = false, showNotes = false, showRepairsList = false" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip" data-placement="top" title="Добави бележка"><i class="fas fa-plus"></i></button>
                                     <button :disabled="disabledNoteView" :class="disabledNoteView ? 'btn-outline-secondary' : 'btn-danger'" class="btn btn-sm" @click="showAddNote = false, showAddRepair = false, showNotes = true, showRepairsList = false">{{ notes.length }} Бележки</button>
@@ -224,6 +224,11 @@ import Axios from 'axios';
         },
         mounted() {
             this.getProduct()
+        },
+        watch: {
+            '$route.params.product': function() {
+                this.getProduct()
+            }
         },
         computed: {
             reverceOrder: function() {

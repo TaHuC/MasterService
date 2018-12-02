@@ -229,7 +229,6 @@ class ProductController extends Controller
      */
     public function search(Request $request)
     {
-        //return $request->search;
         $search = $request->search;
         $products = Product::where('serial', 'like', '%'.$search.'%')->get();
 

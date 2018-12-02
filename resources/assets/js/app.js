@@ -7,6 +7,7 @@
 
 require('./bootstrap');
 require('animate.css');
+require("vue-awesome-notifications/dist/styles/style.css")
 import axios from 'axios';
 import Resource from 'vue-resource';
 import BootstrapVue from 'bootstrap-vue'
@@ -14,6 +15,7 @@ import VueRouter from 'vue-router'
 
 import vueTopprogress from 'vue-top-progress'
 import Axios from 'axios';
+import VueAWN from "vue-awesome-notifications"
 
 // import Cliens from './components/routes/Clients'
 
@@ -37,6 +39,7 @@ Vue.use(Resource)
 Vue.use(BootstrapVue)
 Vue.use(VueRouter)
 Vue.use(vueTopprogress)
+Vue.use(VueAWN)
 
 Vue.component('tasks', require('./components/Task'));
 // Vue.component('search', require('./components/Search'));
@@ -87,3 +90,4 @@ const app = new Vue({
         }
     }
 });
+

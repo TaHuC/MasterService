@@ -182,9 +182,69 @@
                   <forParts></forParts>
 
                   <div class="card bg-dark text-white border border-danger float-right mb-2" style="width: 100%;">
-                    <div class="card-header">Задачи</div>
-                    <div class="card-body">
-                      <h2 class="text-center">7</h2>
+                    <div class="card-header">Задачи <span class="badge badge-light">5</span></div>
+                    <div class="card-body" style="max-height: 500px; overflow-y: auto">
+
+                      <table class="table table-hover table-dark">
+                        <tbody>
+                          <tr>
+                            <td>
+                                <h5>Test task</h5>
+                                <small >Стоян Бакъров</small>
+                            </td>
+                            <td class="text-right" style="max-width: 15px;">
+                              <button class="btn btn-sm btn-outline-light">
+                                <i class="fas fa-times"></i>
+                              </button>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                                <h5>Test task</h5>
+                                <small >Стоян Бакъров</small>
+                            </td>
+                            <td class="text-right" style="max-width: 15px;">
+                              <button class="btn btn-sm btn-outline-light">
+                                <i class="fas fa-times"></i>
+                              </button>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                                <h5>Test task</h5>
+                                <small >Стоян Бакъров</small>
+                            </td>
+                            <td class="text-right" style="max-width: 15px;">
+                              <button class="btn btn-sm btn-outline-light">
+                                <i class="fas fa-times"></i>
+                              </button>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                                <h5>Test task</h5>
+                                <small >Стоян Бакъров</small>
+                            </td>
+                            <td class="text-right" style="max-width: 15px;">
+                              <button class="btn btn-sm btn-outline-light">
+                                <i class="fas fa-times"></i>
+                              </button>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                                <h5>Test task</h5>
+                                <small >Стоян Бакъров</small>
+                            </td>
+                            <td class="text-right" style="max-width: 15px;">
+                              <button class="btn btn-sm btn-outline-light">
+                                <i class="fas fa-times"></i>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
                     </div>
                   </div>
 
