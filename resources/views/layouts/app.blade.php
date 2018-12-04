@@ -161,7 +161,7 @@
           </div>
         </nav>
         @endif
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 pt-48">
+        <main role="main" class="col-md-10 ml-sm-auto col-lg-10 px-4 pt-48">
             <div class="row">
                 @if ($errors->any())
                 <div class="alert alert-danger">
@@ -173,84 +173,18 @@
                 </div>
                 @endif
 
-                <div class="col-md-9 col-sm float-left">
+                <div class="col-md-8 col-lg-9 col-sm float-left">
                   <router-view></router-view>
                 </div>
                 @if (!Auth::guest())
-                <div class="col-md-3 col-sm float-right">
+                <div class="col-md-4 col-lg-3 col-sm float-right">
 
                   <forParts></forParts>
 
-                  <div class="card bg-dark text-white border border-danger float-right mb-2" style="width: 100%;">
-                    <div class="card-header">Задачи <span class="badge badge-light">5</span></div>
-                    <div class="card-body" style="max-height: 500px; overflow-y: auto">
-
-                      <table class="table table-hover table-dark">
-                        <tbody>
-                          <tr>
-                            <td>
-                                <h5>Test task</h5>
-                                <small >Стоян Бакъров</small>
-                            </td>
-                            <td class="text-right" style="max-width: 15px;">
-                              <button class="btn btn-sm btn-outline-light">
-                                <i class="fas fa-times"></i>
-                              </button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                                <h5>Test task</h5>
-                                <small >Стоян Бакъров</small>
-                            </td>
-                            <td class="text-right" style="max-width: 15px;">
-                              <button class="btn btn-sm btn-outline-light">
-                                <i class="fas fa-times"></i>
-                              </button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                                <h5>Test task</h5>
-                                <small >Стоян Бакъров</small>
-                            </td>
-                            <td class="text-right" style="max-width: 15px;">
-                              <button class="btn btn-sm btn-outline-light">
-                                <i class="fas fa-times"></i>
-                              </button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                                <h5>Test task</h5>
-                                <small >Стоян Бакъров</small>
-                            </td>
-                            <td class="text-right" style="max-width: 15px;">
-                              <button class="btn btn-sm btn-outline-light">
-                                <i class="fas fa-times"></i>
-                              </button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                                <h5>Test task</h5>
-                                <small >Стоян Бакъров</small>
-                            </td>
-                            <td class="text-right" style="max-width: 15px;">
-                              <button class="btn btn-sm btn-outline-light">
-                                <i class="fas fa-times"></i>
-                              </button>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-
-                    </div>
-                  </div>
-
+                  <tasks></tasks>
                 </div>
                   
-                  <tasks></tasks>
+                  
                 @endif
               </div>
                 @yield('content')

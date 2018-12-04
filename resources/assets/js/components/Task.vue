@@ -1,90 +1,90 @@
 <template>
-<div class="row">
-    <div id="floating-taskList" v-if="showTasksLs">
-        <div class="card border-dark mb-3" style="width: 100%; height: 100%;">
-            <div class="card-header d-flex" >
-                <div class="col-6 text-left">
-                    Задачи
-                    <button class="btn btn-sm btn-link" @click="hideTaskList">
-                        <i class="fas fa-chevron-circle-down"></i>
-                    </button>
-                </div>
-                <div class="col-6 text-right">
-                    <button v-show="showActive == true" @click="getCompletedTask" class="btn btn-link text-primary btn-sm">
-                        <small>Актив.</small>
-                    </button>
-                    <button v-show="showActive == false" @click="getAllTasks" class="btn btn-link text-primary btn-sm">
-                        <small>Прикл.</small>
-                    </button>
-                    <button v-show="!showAdd" @click="showAdd=true" class="btn btn-link text-success btn-sm">
-                        <i class="fas fa-plus-square"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="card-body" v-if="showAdd">
-                <div class="form-group col-12">
-                    <input type="text" class="form-control-sm" v-model="task.title" placeholder="Enter task">
-                </div>
-                <div class="form-group col-12">
-                    <textarea class="form-control-sm" v-model="task.description" placeholder="description"></textarea>
-                </div>
-                <div class="col-12 text-right">
-                    <button @click="addNewTask" class="btn btn-outline-primary btn-sm">save</button>
-                    <button class="btn btn-outline-warning btn-sm" @click="showAdd=false">close</button>
-                </div>
-            </div>
-            <ul class="list-group list-group-flush bg-dark" id="tolltipsEnable" v-else style="overflow-y: auto; disablay: inline-block;">
-                <li class="list-group-item" v-for="(task, index) in tasks" :key="index" v-b-tooltip.html :title="task.completed ? `<small>`+ task.user.name + ` на: ` +  task.updated_at +  ` Информация: ` + task.description +`</small>` : `<small>`+task.user.name + ` на: ` +  task.created_at +  ` Информация: ` + task.description + `</small>` ">
-                    <input type="checkbox" :disabled="task.completed ? true : false" :checked="task.completed" class="" @click="complatedTask(task.id)" >
-                    <label class="form-check-label" :class="task.completed ? 'completedClass' : 'text-danger'">{{task.title}}</label>
-                    <button type="button" class="close" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </li>
-            </ul>
+<div class="card bg-dark text-white border border-danger float-right mb-2" style="width: 100%;">
+    <div class="card-header">
+        Задачи
+        <div class="text-right w-100">
+            <button class="btn btn-sm btn-outline-warning" @click="showActive = false, showAdd = true, showHistory = false" :disabled="showAdd ? true : false"><i class="fas fa-plus"></i></button>
+            <button class="btn btn-sm btn-outline-info" @click="showActive = true, showAdd = false, showHistory = false" :disabled="showActive ? true : false"><i class="fas fa-check"></i> <span class="badge badge-light">{{ countTask }}</span></button>
+            <button class="btn btn-sm btn-outline-info"><i class="fas fa-user"></i> <span class="badge badge-light">5</span></button>
+            <button class="btn btn-sm btn-outline-danger" @click="getCompletedTask" :disabled="showHistory ? true : false"><i class="fas fa-history"></i></button>
         </div>
     </div>
-    <div v-else id="floating-buttonList">
-        <button class="btn" v-bind:class="countTask ? 'btn-warning' : 'btn-outline-primary'" @click="showTaskList">
-            <strong v-if="countTask">{{ this.countTask }}</strong>
-            <i v-else class="fas fa-chevron-circle-up"></i>
-        </button>
+    <div class="card-body" style="max-height: 500px; overflow-y: auto">
+
+        <div class="row">
+            <div class="w-100" v-if="showAdd">
+                <div class="form-group">
+                    <label for="title">Задача</label>
+                    <input type="text" id="title" class="form-control" v-model="task.title">
+                </div>
+                <div class="form-group">
+                    <label for="description">Доп. информация</label>
+                    <textarea name="" id="description" class="form-control" v-model="task.description" ></textarea>
+                </div>
+                <div class="form-group text-right">
+                    <button @click="addNewTask" class="btn btn-sm btn-outline-success"><i class="fas fa-save"></i></button>
+                </div>
+            </div>
+
+            <table class="table table-hover table-dark" v-if="showActive">
+                <tbody id="tolltipsEnable">
+                    <tr v-for="(task, index) in tasks" :key="task.id">
+                        <td>
+                            <h5>{{ task.title }}</h5>
+                            <p>{{ task.description }}</p>
+                            <small>{{ task.user.name }}</small>
+                        </td>
+                        <td class="text-right" style="max-width: 45px;">
+                            <button @click="complatedTask(task.id, index)" class="btn btn-sm btn-outline-light">
+                            <i class="fas fa-check"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table table-hover table-dark" v-if="showHistory">
+                <tbody id="tolltipsEnable">
+                    <tr v-for="(task) in compTask" :key="task.id">
+                        <td>
+                            <h5>{{ task.title }}</h5>
+                            <p>{{ task.description }}</p>
+                            <small>{{ task.user.name }}</small>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
     </div>
 </div>
 </template>
 
 <script>
     import axios from 'axios';
+    import { setInterval } from 'timers';
 
     export default {
         name: "tasks",
         data() {
             return {
                 tasks: '',
-                countTask: '',
+                countTask: 0,
                 showAdd: false,
                 showTasksLs: false,
+                showHistory: false,
                 task: {
                     title: '',
                     description: ''
                 },
+                compTask: '',
                 showActive: true,
             }
         },
-        beforeMount() {
-            this.getAllTasks();
-            setInterval(() => {
-                this.checkRealService();
-            }, 10000);
+        created() {
+            this.getAllTasks()
         },
         methods: {
-            makeService() {
-                axios.post('/api/realTimeService', { realTimeServiceId: true })
-                    .then((result) => {
-                      //console.log(result);  
-                    })
-                    .catch(err => console.log(err));
-            },
             getAllTasks() {
                 this.showActive = true;
                 axios.get('/api/tasks')
@@ -92,8 +92,23 @@
                         // console.log(results.data)
                         this.tasks = results.data;
                         this.countTask = results.data.length;
+                        this.task.title = '';
+                        this.task.description = '';
                     })
                     .catch(err => console.log(err));
+
+                    setInterval(() => {
+                        axios.get('/api/tasks')
+                        .then(res => {
+                            if(this.countTask != res.data.length) {
+                                this.tasks = res.data;
+                                this.countTask = res.data.length;
+                                this.task.title = '';
+                                this.task.description = '';
+                            }
+                        })
+                    }, 3000)
+
             },
             addNewTask() {
                 axios({
@@ -104,84 +119,37 @@
                 })
                 .then(result => {
                     //console.log(result.data);
-                    this.makeService();
                     this.getAllTasks();
                     this.showAdd = false;
-                    this.task.title = '';
-                    this.task.description = '';
+                    this.showActive = true
 
                 })
                 .catch(err => console.log(err))
             },
-            complatedTask(id) {
+            complatedTask(id, index) {
                 axios.put(`/api/tasks/${id}`)
                 .then(result => {
-                    this.makeService();
+
                 })
                 .catch(err => console.log(err));
-                this.getAllTasks();
-                $('#element').tooltip('enable')
+                this.countTask--
+                this.countComplTask++
+                this.tasks.splice(index, 1)
             },
             getCompletedTask() {
                 this.showActive = false;
+                this.showHistory = true
+                this.showAdd = false
+
                 axios.get('/api/tasks/filter/completed')
                     .then(results => {
-                        this.tasks = results.data
+                        this.compTask = results.data
                     })
                     .catch(err => console.log(err))
             },
-            showTaskList() {
-                this.showTasksLs = true;
-                this.getAllTasks();
-            },
-            hideTaskList() {
-                this.showTasksLs = false;
-            },
-            checkRealService() {
-                axios.get(`/api/realTimeService/task/1`)
-                .then(result => {
-                    if(result.data) {
-                        this.getAllTasks();
-                        // this.showTasksLs = true;
-                        axios.delete('/api/realTimeService/' + result.data)
-                        .then(result => {
-                            //console.log(result);
-                        })
-                        .catch(err => console.log(err));
-                    }
-                })
-                .catch(err => console.log(err));
-            }
         }
     }
 </script>
 
 <style>
-    #floating-taskList {
-        font-family: sans-serif;
-        opacity: 0.9;
-        width: 300px;
-        height: 100%;
-        max-height: 250px;
-        z-index: 100;
-        position: fixed;
-        bottom: 30px;
-        right: 5px;
-    }
-
-    #floating-buttonList {
-        font-family: sans-serif;
-        opacity: 0.9;
-        width: 50px;
-        height: 50px;
-        z-index: 100;
-        position: fixed;
-        bottom: 15px;
-        right: 2px;
-    }
-
-    .completedClass {
-        text-decoration: line-through;
-        color: silver;
-    }
 </style>

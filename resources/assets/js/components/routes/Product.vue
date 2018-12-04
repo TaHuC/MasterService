@@ -281,6 +281,7 @@ import Axios from 'axios';
                     this.getProduct()
                     this.showRepairsList = true
                     this.showAddNote = false
+                    this.note = ''
                 })
             },
             saveRepair(id) {
