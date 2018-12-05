@@ -12564,6 +12564,55 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 //import {vueTopprogress} from 'vue-top-progress'
@@ -12599,7 +12648,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             showNoClient: false,
             showNewClient: false,
             showOldClient: false,
-            showDevices: true
+            showDevices: true,
+            showEditClient: false
             //isLoading: true
         };
     },
@@ -12646,9 +12696,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.showNewClient = false;
             this.showOldClient = false;
             this.showDevices = true;
+            this.showEditClient = false;
+        },
+        editClient: function editClient(id) {
+            var _this = this;
+
+            console.log(id);
+            __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+                method: 'put',
+                url: '/client/' + id,
+                data: {
+                    name: this.client.name,
+                    phone: this.client.phone,
+                    email: this.client.email,
+                    idNumber: this.client.idNumber
+                }
+            }).then(function (res) {
+                _this.showClient = true;
+                _this.showEditClient = false;
+                _this.showDevices = true;
+            }).catch(function (err) {
+                return console.log(err.response);
+            });
         },
         moveNewClient: function moveNewClient(id) {
-            var _this = this;
+            var _this2 = this;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default()({
                 method: 'put',
@@ -12658,31 +12730,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     clientId: this.client.id
                 }
             }).then(function (res) {
-                _this.$router.push({ name: 'viewProduct', params: { product: res.data } });
+                _this2.$router.push({ name: 'viewProduct', params: { product: res.data } });
             }).catch(function (err) {
                 return console.log(err.response);
             });
         },
         checkSerial: function checkSerial() {
-            var _this2 = this;
+            var _this3 = this;
 
             this.$refs.topProgress.start();
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/product/serial/' + this.newDevice.serial).then(function (res) {
-                _this2.oldClientDev.product = res.data;
+                _this3.oldClientDev.product = res.data;
                 if (res.data) {
                     __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/client/' + res.data.clientId).then(function (res) {
-                        _this2.oldClientDev.client = res.data;
-                        _this2.showOldClientDev = true;
-                        _this2.$refs.topProgress.done();
+                        _this3.oldClientDev.client = res.data;
+                        _this3.showOldClientDev = true;
+                        _this3.$refs.topProgress.done();
                     });
                 } else {
-                    _this2.showOldClientDev = false;
-                    _this2.$refs.topProgress.done();
+                    _this3.showOldClientDev = false;
+                    _this3.$refs.topProgress.done();
                 }
             });
         },
         saveNewDevice: function saveNewDevice() {
-            var _this3 = this;
+            var _this4 = this;
 
             this.$refs.topProgress.start();
             if (!this.newDevice.serial) {
@@ -12703,8 +12775,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     comment: this.newDevice.comment
                 }
             }).then(function (res) {
-                _this3.$refs.topProgress.done();
-                _this3.$router.push({ name: 'viewProduct', params: { 'product': res.data } });
+                _this4.$refs.topProgress.done();
+                _this4.$router.push({ name: 'viewProduct', params: { 'product': res.data } });
             }).catch(function (err) {
                 return console.log(err.response);
             });
@@ -12721,7 +12793,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.showAddModel = false;
         },
         saveBrand: function saveBrand() {
-            var _this4 = this;
+            var _this5 = this;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default()({
                 method: 'post',
@@ -12732,16 +12804,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }).then(function (res) {
                 // console.log(res.data)
-                _this4.newDevice.brandId = res.data.id;
-                _this4.selectBrand = res.data.title;
-                _this4.showAddBrand = false;
-                _this4.showAddModel = true;
+                _this5.newDevice.brandId = res.data.id;
+                _this5.selectBrand = res.data.title;
+                _this5.showAddBrand = false;
+                _this5.showAddModel = true;
             }).catch(function (err) {
                 return console.log(err.response);
             });
         },
         saveModel: function saveModel() {
-            var _this5 = this;
+            var _this6 = this;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default()({
                 method: 'post',
@@ -12751,29 +12823,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     brandId: this.newDevice.brandId
                 }
             }).then(function (res) {
-                _this5.newDevice.modelId = res.data.id;
-                _this5.selectModel = res.data.title;
-                _this5.showAddModel = false;
+                _this6.newDevice.modelId = res.data.id;
+                _this6.selectModel = res.data.title;
+                _this6.showAddModel = false;
             }).catch(function (err) {
                 return console.log(err.response);
             });
         },
         getBrand: function getBrand() {
-            var _this6 = this;
+            var _this7 = this;
 
             if (this.newBrand) {
                 //console.log(this.newBrand)
                 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/brand/select/' + this.newBrand + '/' + this.newDevice.typeId).then(function (res) {
                     //console.log(res.data)
                     res.data.forEach(function (result) {
-                        if (result.title.toLowerCase() != _this6.newBrand.toLowerCase()) {
-                            _this6.showAddBrandBtn = true;
+                        if (result.title.toLowerCase() != _this7.newBrand.toLowerCase()) {
+                            _this7.showAddBrandBtn = true;
                         } else {
-                            _this6.showAddBrandBtn = false;
+                            _this7.showAddBrandBtn = false;
                         }
                     });
 
-                    _this6.brands = res.data;
+                    _this7.brands = res.data;
                 }).catch(function (err) {
                     return console.log(err.response);
                 });
@@ -12783,23 +12855,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         getModel: function getModel() {
-            var _this7 = this;
+            var _this8 = this;
 
             if (this.newModel) {
                 //console.log(this.newBrand)
                 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/model/select/' + this.newModel + '/' + this.newDevice.brandId).then(function (res) {
                     if (!res.data.lenght) {
-                        _this7.showAddModelBtn = true;
+                        _this8.showAddModelBtn = true;
                     }
                     res.data.forEach(function (result) {
-                        if (result.title.toLowerCase() != _this7.newModel.toLowerCase()) {
-                            _this7.showAddModelBtn = true;
+                        if (result.title.toLowerCase() != _this8.newModel.toLowerCase()) {
+                            _this8.showAddModelBtn = true;
                         } else {
-                            _this7.showAddModelBtn = false;
+                            _this8.showAddModelBtn = false;
                         }
                     });
 
-                    _this7.models = res.data;
+                    _this8.models = res.data;
                 }).catch(function (err) {
                     return console.log(err);
                 });
@@ -12809,7 +12881,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         saveUser: function saveUser() {
-            var _this8 = this;
+            var _this9 = this;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default()({
                 method: 'post',
@@ -12823,27 +12895,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).then(function (res) {
                 //console.log(res.data)
                 if (res.data[1]) {
-                    _this8.oldClient = res.data[0];
+                    _this9.oldClient = res.data[0];
                     switch (res.data[1]) {
                         case 'phone':
-                            _this8.oldClient.found = _this8.oldClient.phone;
+                            _this9.oldClient.found = _this9.oldClient.phone;
                             break;
                         case 'email':
-                            _this8.oldClient.found = _this8.oldClient.email;
+                            _this9.oldClient.found = _this9.oldClient.email;
                             break;
                         case 'idNumber':
-                            _this8.oldClient.found = _this8.oldClient.idNumber;
+                            _this9.oldClient.found = _this9.oldClient.idNumber;
                             break;
                     }
-                    _this8.showOldClient = true;
+                    _this9.showOldClient = true;
                 } else {
 
-                    _this8.showOldClient = false;
-                    _this8.$router.push('/clients/' + res.data.id);
-                    _this8.newClient = [];
-                    _this8.showNoClient = false;
-                    _this8.showNewClient = false;
-                    _this8.getClient();
+                    _this9.showOldClient = false;
+                    _this9.$router.push('/clients/' + res.data.id);
+                    _this9.newClient = [];
+                    _this9.showNoClient = false;
+                    _this9.showNewClient = false;
+                    _this9.getClient();
                 }
             }).catch(function (err) {
                 return console.log(err.response);
@@ -12854,7 +12926,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.showClient = false;
         },
         getClient: function getClient() {
-            var _this9 = this;
+            var _this10 = this;
 
             this.clearFunc();
             //console.log(this.$route.params.client)
@@ -12868,26 +12940,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/client/show/' + clientId).then(function (res) {
                 if (res.data) {
                     //console.log(res.data[1])
-                    _this9.client = res.data[0];
-                    _this9.products = res.data[1];
-                    _this9.types = res.data[2];
-                    _this9.showClient = true;
+                    _this10.client = res.data[0];
+                    _this10.products = res.data[1];
+                    _this10.types = res.data[2];
+                    _this10.showClient = true;
                     //this.isLoading = false
 
 
-                    _this9.$refs.topProgress.done();
+                    _this10.$refs.topProgress.done();
                 } else {
                     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_timers__["setTimeout"])(function () {
-                        _this9.$refs.topProgress.done();
-                        _this9.showNoClient = true;
+                        _this10.$refs.topProgress.done();
+                        _this10.showNoClient = true;
                     }, 3000);
                 }
             }).catch(function (err) {
                 console.log(err.response);
                 if (err.response.status == 500) {
                     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_timers__["setTimeout"])(function () {
-                        _this9.$refs.topProgress.done();
-                        _this9.showNoClient = true;
+                        _this10.$refs.topProgress.done();
+                        _this10.showNoClient = true;
                     }, 3000);
                 }
             });
@@ -24958,7 +25030,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(7)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 220 */
@@ -55563,6 +55635,179 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "to": "oldClient.id"
     }
+  }, [_vm._v("Отвори")])], 1)]) : _vm._e()]), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.showEditClient),
+      expression: "showEditClient"
+    }],
+    staticClass: "card border text-white border-danger",
+    staticStyle: {
+      "background-color": "#212529"
+    }
+  }, [_vm._m(2), _vm._v(" "), _c('div', {
+    staticClass: "card-body"
+  }, [_c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button",
+      "aria-label": "Close"
+    },
+    on: {
+      "click": function($event) {
+        _vm.showEditClient = false, _vm.showClient = true, _vm.showDevices = true
+      }
+    }
+  }, [_c('span', {
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }, [_vm._v("×")])]), _vm._v(" "), _c('br'), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "active",
+    attrs: {
+      "for": "phone"
+    }
+  }, [_vm._v("Телефонен номер")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.client.phone),
+      expression: "client.phone"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "id": "phone",
+      "type": "text",
+      "autocomplete": "off",
+      "name": "phone",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.client.phone)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.$set(_vm.client, "phone", $event.target.value)
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "active",
+    attrs: {
+      "for": "idNumber"
+    }
+  }, [_vm._v("ЕГН")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.client.idNumber),
+      expression: "client.idNumber"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "id": "idNumber",
+      "type": "text",
+      "autocomplete": "off",
+      "name": "idNumber"
+    },
+    domProps: {
+      "value": (_vm.client.idNumber)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.$set(_vm.client, "idNumber", $event.target.value)
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "active",
+    attrs: {
+      "for": "email"
+    }
+  }, [_vm._v("Е-поща")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.client.email),
+      expression: "client.email"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "id": "email",
+      "type": "email",
+      "autocomplete": "off",
+      "name": "email"
+    },
+    domProps: {
+      "value": (_vm.client.email)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.$set(_vm.client, "email", $event.target.value)
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "active",
+    attrs: {
+      "for": "name"
+    }
+  }, [_vm._v("Имена Клиента")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.client.name),
+      expression: "client.name"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "id": "name",
+      "type": "text",
+      "autocomplete": "off",
+      "name": "name",
+      "required": "",
+      "autofocus": ""
+    },
+    domProps: {
+      "value": (_vm.client.name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.$set(_vm.client, "name", $event.target.value)
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group text-right"
+  }, [_c('button', {
+    staticClass: "btn btn-success",
+    on: {
+      "click": function($event) {
+        _vm.editClient(_vm.client.id)
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fas fa-save"
+  })])])]), _vm._v(" "), (_vm.showOldClient) ? _c('div', {
+    staticClass: "card m-3"
+  }, [_c('div', {
+    staticClass: "card-header text-dark"
+  }, [_c('h5', {
+    staticClass: "text-left"
+  }, [_vm._v("Този " + _vm._s(_vm.oldClient.found) + " е на клиент " + _vm._s(_vm.oldClient.name))]), _vm._v(" "), _c('router-link', {
+    staticClass: "btn btn-link",
+    attrs: {
+      "to": "oldClient.id"
+    }
   }, [_vm._v("Отвори")])], 1)]) : _vm._e()]), _vm._v(" "), (_vm.showClient) ? _c('div', {
     staticClass: "card border text-white border-danger",
     staticStyle: {
@@ -55604,6 +55849,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('i', {
     staticClass: "fas fa-envelope"
   }), _vm._v(" " + _vm._s(_vm.client.email))]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-outline-info float-right mr-1 ml-1",
+    on: {
+      "click": function($event) {
+        _vm.showEditClient = true, _vm.showDevices = false, _vm.showClient = false
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fas fa-edit"
+  })]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-outline-danger float-right",
     on: {
       "click": function($event) {
@@ -55631,7 +55885,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.moveNewClient(_vm.oldClientDev.product.id)
       }
     }
-  }, [_vm._v("Премести на този клиент")])], 1) : _vm._e(), _vm._v(" "), (!_vm.showDevices && !_vm.showOldClientDev) ? _c('div', [_c('button', {
+  }, [_vm._v("Премести на този клиент")])], 1) : _vm._e(), _vm._v(" "), (!_vm.showDevices && !_vm.showOldClientDev && !_vm.showEditClient) ? _c('div', [_c('button', {
     staticClass: "close",
     on: {
       "click": function($event) {
@@ -55885,7 +56139,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "fas fa-save"
   })])])])], 2) : _vm._e(), _vm._v(" "), (_vm.showDevices && !_vm.showOldClientDev) ? _c('table', {
     staticClass: "table table-dark table-sm"
-  }, [_vm._m(2), _vm._v(" "), _c('tbody', _vm._l((_vm.products), function(product) {
+  }, [_vm._m(3), _vm._v(" "), _c('tbody', _vm._l((_vm.products), function(product) {
     return _c('tr', {
       key: product.id
     }, [_c('td', [_vm._v(_vm._s(product.brand) + " " + _vm._s(product.model))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(product.serial))]), _vm._v(" "), _c('td', {
@@ -55909,6 +56163,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "background-color": "#394c57"
     }
   }, [_c('h5', [_vm._v("Добавяне на клиент")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "card-header",
+    staticStyle: {
+      "background-color": "#394c57"
+    }
+  }, [_c('h5', [_vm._v("Редактиране на клиент")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('th', [_c('i', {
     staticClass: "fas fa-boxes"

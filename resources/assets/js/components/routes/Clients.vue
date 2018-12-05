@@ -7,6 +7,7 @@
             </div>
         </div>
 
+        <!-- Add Client -->
         <div class="card border text-white border-danger" v-show="showNewClient" style="background-color: #212529">
             <div class="card-header" style="background-color: #394c57;">
                 <h5>Добавяне на клиент</h5>
@@ -46,6 +47,53 @@
                 </div>
             </div>
         </div>
+        <!-- Add Client end -->
+
+        <!-- Edit Client -->
+        <div class="card border text-white border-danger" v-show="showEditClient" style="background-color: #212529">
+            <div class="card-header" style="background-color: #394c57;">
+                <h5>Редактиране на клиент</h5>
+            </div>
+            <div class="card-body">
+                <button type="button" @click="showEditClient = false, showClient = true, showDevices = true" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <br>
+                <div class="form-group">
+                    <label for="phone" class="active">Телефонен номер</label>
+                    <input id="phone" type="text" autocomplete="off" class="form-control" v-model="client.phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="idNumber" class="active">ЕГН</label>
+                    <input id="idNumber" type="text" autocomplete="off" class="form-control" v-model="client.idNumber" name="idNumber">
+                    
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="active">Е-поща</label>
+                    <input id="email" type="email" autocomplete="off" class="form-control" v-model="client.email" name="email">
+                        
+                </div>
+
+                <div class="form-group">
+                    <label for="name" class="active">Имена Клиента</label>
+                    <input id="name" type="text" autocomplete="off" class="form-control" v-model="client.name" name="name" required autofocus>
+                    
+                </div>
+                <div class="form-group text-right">
+                    <button class="btn btn-success" @click="editClient(client.id)"><i class="fas fa-save"></i></button>
+                </div>
+            </div>
+
+            <div class="card m-3" v-if="showOldClient">
+                <div class="card-header text-dark">
+                    <h5 class="text-left">Този {{ oldClient.found }} е на клиент {{ oldClient.name }}</h5>
+                    <router-link to="oldClient.id" class="btn btn-link" >Отвори</router-link>
+                </div>
+            </div>
+        </div>
+        <!-- Edit Client end -->
 
         <div v-if="showClient" class="card border text-white border-danger" style="background-color: #212529;">
             <div class="card-header" style="background-color: #394c57;">
@@ -53,6 +101,7 @@
                 <small class="mr-2" v-show="client.idNumber != 0"><i class="fas fa-id-card"></i> {{ client.idNumber }}</small>
                 <small class="mr-2" v-show="client.phone"><i class="fas fa-phone"></i> {{ client.phone }}</small>
                 <small class="mr-2" v-show="client.email" ><i class="fas fa-envelope"></i> {{ client.email }}</small>
+                <button class="btn btn-outline-info float-right mr-1 ml-1" @click="showEditClient = true, showDevices = false, showClient = false"><i class="fas fa-edit"></i></button>
                 <button class="btn btn-outline-danger float-right" @click="showDevices = false"><i class="fas fa-plus"></i></button>
             </div>
             <div  class="card-body">
@@ -61,7 +110,7 @@
                     <router-link :to="{name: 'client', params: {client: oldClientDev.client.id}}" class="btn btn-link">Отвори</router-link>
                     <button class="btn btn-link" @click="moveNewClient(oldClientDev.product.id)">Премести на този клиент</button>
                 </div>
-                <div v-if="!showDevices && !showOldClientDev">
+                <div v-if="!showDevices && !showOldClientDev && !showEditClient">
                     <button @click="showDevices = true, newDevice = [], showAddDevForm = false" class="close">&times;</button>
                     <h4>Добавяне на ново утройство</h4>
                     <button class="btn mr-3" v-for="type in types" :key="type.id" @click="showAddDevForm = true, newDevice.typeId = type.id" :class="type.id == newDevice.typeId ? 'btn-warning' : 'btn-outline-light'">{{ type.title }}</button>
@@ -157,7 +206,8 @@ import { equal } from 'assert';
                 showNoClient: false,
                 showNewClient: false,
                 showOldClient: false,
-                showDevices: true
+                showDevices: true,
+                showEditClient: false
                 //isLoading: true
             }
         },
@@ -203,6 +253,26 @@ import { equal } from 'assert';
                 this.showNewClient = false
                 this.showOldClient = false
                 this.showDevices = true
+                this.showEditClient = false
+            },
+            editClient(id) {
+                console.log(id)
+                Axios({
+                    method: 'put',
+                    url: `/client/${id}`,
+                    data: {
+                        name: this.client.name,
+                        phone: this.client.phone,
+                        email: this.client.email,
+                        idNumber: this.client.idNumber,
+                    }
+                })
+                .then(res => {
+                    this.showClient = true
+                    this.showEditClient = false
+                    this.showDevices = true
+                })
+                .catch(err => console.log(err.response))
             },
             moveNewClient(id) {
                 Axios({

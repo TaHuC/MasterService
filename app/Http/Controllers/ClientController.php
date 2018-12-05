@@ -263,7 +263,8 @@ class ClientController extends Controller
         $client->phone = $request->phone;
         $client->save();
 
-        return redirect()->route('client.show', ['id' => $client->id]);
+        //return redirect()->route('client.show', ['id' => $client->id]);
+        return $client;
     }
 
     /**
