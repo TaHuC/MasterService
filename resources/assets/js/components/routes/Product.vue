@@ -102,11 +102,14 @@
                                     Тотал <span class="badge badge-secondary"><strong>{{ activeOrder.price - activeOrder.deposit }}</strong></span>
                                 </h5>
                                 <p class="text-right" id="btnMenu">
-                                    <button v-show="activeOrder.status.id != 4" @click="showAddNote = true, showAddRepair = false, showNotes = false, showRepairsList = false" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip" data-placement="top" title="Добави бележка"><i class="fas fa-plus"></i></button>
-                                    <button :disabled="disabledNoteView" :class="disabledNoteView ? 'btn-outline-secondary' : 'btn-danger'" class="btn btn-sm" @click="showAddNote = false, showAddRepair = false, showNotes = true, showRepairsList = false">{{ notes.length }} Бележки</button>
+                                    <button v-show="activeOrder.status.id != 4" v-if="instantaneous[0].answer_user_id && instantaneous.length" @click="showInstantlyAdd = true, showInstantly = false, showAddNote = false, showAddRepair = false, showNotes = false, showRepairsList = false" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip" data-placement="top" title="Добави задача"><i class="fas fa-plus"></i></button>
+                                    <button :disabled="disabledNoteView" :class="disabledInstantlyView ? 'btn-outline-secondary' : 'btn-danger'" class="btn btn-sm" @click="showAddNote = false, showAddRepair = false, showNotes = false, showRepairsList = false, showInstantlyAdd = false, showInstantly = true">{{ instantaneous.length }} Задача</button>
+                                    <strong v-show="activeOrder.status.id != 4"> | </strong>
+                                    <button v-show="activeOrder.status.id != 4" @click="showInstantlyAdd = false, showInstantly = false, showAddNote = true, showAddRepair = false, showNotes = false, showRepairsList = false" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip" data-placement="top" title="Добави бележка"><i class="fas fa-plus"></i></button>
+                                    <button :disabled="disabledNoteView" :class="disabledNoteView ? 'btn-outline-secondary' : 'btn-danger'" class="btn btn-sm" @click="showInstantlyAdd = false, showInstantly = false, showAddNote = false, showAddRepair = false, showNotes = true, showRepairsList = false">{{ notes.length }} Бележки</button>
                                     <strong v-show="activeOrder.status.id != 4"> | </strong>
                                     <button v-show="activeOrder.status.id != 4" @click="setStatus(activeOrder.id, 5)" class="btn btn-sm btn-outline-warning"><i class="fas fa-puzzle-piece" data-toggle="tooltip" data-placement="top" title="За части"></i></button>
-                                    <button v-show="activeOrder.status.id != 4" @click="showRepairsList = false, showAddNote = false, showNotes = false, showAddRepair=true, newRepair.price = activeOrder.price" class="btn btn-sm btn-outline-success" data-toggle="tooltip" data-placement="top" title="Добави ремонт"><i class="fas fa-wrench"></i></button>
+                                    <button v-show="activeOrder.status.id != 4" @click="showInstantlyAdd = false, showInstantly = false, showRepairsList = false, showAddNote = false, showNotes = false, showAddRepair=true, newRepair.price = activeOrder.price" class="btn btn-sm btn-outline-success" data-toggle="tooltip" data-placement="top" title="Добави ремонт"><i class="fas fa-wrench"></i></button>
                                     <button v-show="activeOrder.status.id != 4" @click="setStatus(activeOrder.id, 3), addNewTask()" class="btn btn-sm btn-success"><i class="fas fa-thumbs-up" data-toggle="tooltip" data-placement="top" title="Приклучи поръчката"></i></button>
                                     <button v-show="activeOrder.status.id != 4" @click="setStatus(activeOrder.id, 4)" class="btn btn-sm btn-outline-info"><i class="fas fa-people-carry" data-toggle="tooltip" data-placement="top" title="Върни на клиемта"></i></button>
                                 </p>
@@ -126,6 +129,26 @@
                                     </div>
                                     <div class="form-group text-right">
                                         <button class="btn btn-success" @click="saveNote()"><i class="fas fa-save"></i></button>
+                                    </div>
+                                </div>
+
+                                <div class="col-12" v-if="showInstantlyAdd">
+                                    <div class="col-12 mb-4">
+                                        <button type="button" @click="showInstantlyAdd = false, newInstantly = [], showAddNote = false, showAddRepair = false, showNotes = false, showRepairsList = true" class="close" aria-label="Close">
+                                            <span class="text-white" aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <h5 class="title">Добавяне на задача към поръчката</h5>
+                                    <div class="form-group">
+                                        <label for="quest">Задача</label>
+                                        <input type="text" v-model="newInstantly.quest" required id="quest" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="description">Информация</label>
+                                        <textarea name="note" v-model="newInstantly.description" class="form-control" id="description" rows="5"></textarea>
+                                    </div>
+                                    <div class="form-group text-right">
+                                        <button :disabled="newInstantly.quest ? false : true" class="btn btn-success" @click="addNewInstantly()"><i class="fas fa-save"></i></button>
                                     </div>
                                 </div>
 
@@ -173,7 +196,50 @@
                                     </div>
                                 </div>
 
-                                <table class="w-100" v-if="showRepairsList">
+                                <div class="w-100" v-if="showInstantly && instantaneous.length">
+                                    <button type="button" @click="showInstantly = false, showRepairsList = true" class="close" aria-label="Close">
+                                        <span class="text-white" aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h5 class="mb-2"><strong class="text-danger">Внимание това са задачи!!!</strong> </h5>
+                                    <table class="table">
+                                    <thead>
+                                        <th>Задача</th>
+                                        <th>Решение</th>
+                                        
+                                    </thead>
+                                    <tbody>
+                                        <tr class="" v-for="instantly in instantaneous" :key="instantly.id">
+                                            <td>
+                                                <p>{{ instantly.quest }}</p>
+                                                <p>{{ instantly.description }}</p>
+                                                <small>{{ instantly.user.name }} | {{ instantly.created_at }}</small>
+                                            </td>
+                                            <td>
+                                                
+                                                <div v-if="!instantly.answer_user_id" class="w-100">
+                                                    <div class="form-group">
+                                                        <input type="text" placeholder="Решение..." class="form-control form-control-sm" v-model="newAnswer.answer">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control form-control-sm" placeholder="Допълнителна информация..." v-model="newAnswer.answerDescription">
+                                                    </div>
+                                                    <div class="form-btn-group text-right">
+                                                        <button @click="addAnswer(instantly.id)" class="btn btn-sm btn-outline-success"><i class="fas fa-plus"></i></button>
+                                                    </div>
+                                                </div>
+                                                <div class="w-100 text-warning" v-else>
+                                                    <p>{{ instantly.answer }}</p>
+                                                    <p>{{ instantly.answerDescription }}</p>
+                                                    <small>{{ instantly.answer_user.name }} | {{ instantly.updated_at }}</small>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                </div>
+                                
+
+                                <table class="w-100" v-if="showRepairsList && repairs.length">
                                     <h5 class="title">Ремонти</h5>
                                     <tbody>
                                         <tr v-for="repair in reverseRepair" :key="repair.id">
@@ -185,7 +251,6 @@
                                         </tr>
                                     </tbody>
                                 </table>
-
                             </div>
                         </div>
                     </div>
@@ -208,10 +273,15 @@ import Axios from 'axios';
                 activeOrder: [],
                 repairs: [],
                 newRepair: [],
+                newInstantly: [],
                 notes: [{
                     length: 0
                 }],
+                newAnswer: [],
+                instantaneous: [],
                 note: '',
+                showInstantly: false,
+                showInstantlyAdd: false,
                 showProduct: false,
                 showAddBtn: false,
                 showOrder: false,
@@ -220,6 +290,7 @@ import Axios from 'axios';
                 showAddNote: false,
                 showNotes: false,
                 disabledNoteView: true,
+                disabledInstantlyView: true,
             }
         },
         mounted() {
@@ -239,6 +310,56 @@ import Axios from 'axios';
             }
         },
         methods: {
+            addAnswer(id) {
+                Axios({
+                    method: 'PUT',
+                    url: `/api/instantly/${id}`,
+                    data: {
+                        answer: this.newAnswer.answer,
+                        answerDescription: this.newAnswer.answerDescription
+                    }
+                })
+                .then(res => {
+                    this.getInstantaneous()
+                    this.showInstantly = false
+                    this.showRepairsList = true
+                })
+                .catch(err => console.log(err.response))
+            },
+            addNewInstantly() {
+                Axios({
+                    method: 'POST',
+                    url: '/api/instantly',
+                    data: {
+                        quest: this.newInstantly.quest,
+                        description: this.newInstantly.description,
+                        order_id: this.activeOrder.id
+                    }
+                })
+                .then(res => {
+                    this.showInstantlyAdd = false
+                    this.newInstantly = []
+                    this.getInstantaneous()
+                })
+                .catch(err => console.log(err.response))
+            },
+            getInstantaneous() {
+                Axios({
+                    method: 'get',
+                    url: `/api/instantly/${this.activeOrder.id}`,
+                })
+                .then(res => {
+                    console.log(res.data)
+                    if(res.data.length != 0) {
+                        this.instantaneous = res.data
+                        this.showInstantly = true
+                        this.showRepairsList = false
+                    } else {
+                        this.instantaneous = []
+                    }
+                })
+                .catch(err => console.log(err.response))
+            },
             addNewTask() {
                 axios({
                     method: 'POST',
@@ -391,6 +512,7 @@ import Axios from 'axios';
                             this.showOrder = true;
                             this.getRepirs(this.activeOrder.id);
                             this.getNotes();
+                            this.getInstantaneous();
                         }
                     } else {
                         this.showProduct = false;

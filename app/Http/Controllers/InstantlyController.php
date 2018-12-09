@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\User;
-use App\RealTimeUserCheck;
 
-class RealTimeUserCheckController extends Controller
+use App\Instantly;
+use App\User;
+
+
+class InstantlyController extends Controller
 {
 
-     /**
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -28,28 +30,6 @@ class RealTimeUserCheckController extends Controller
     public function index()
     {
         //
-        $usersId = User::select('id')->get();
-        
-        return $usersId[1]['id'];
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $serviceId
-     * @param  $service
-     */
-    public function checkService($service, $serviceId)
-    {
-        
-        if($service == 'task') {
-            $checkId = RealTimeUserCheck::where('userId', Auth::user()->id)
-            ->where('realTimeServiceId', $serviceId)
-            ->select('id')
-            ->first();
-        }
-
-        return $checkId['id'];
     }
 
     /**
@@ -71,18 +51,14 @@ class RealTimeUserCheckController extends Controller
     public function store(Request $request)
     {
         //
-        $usersId = User::select('id')->get();
-        $makeService = new RealTimeUserCheck();
+        $instantly = new Instantly();
+        $instantly->order_id = $request->order_id;
+        $instantly->quest = $request->quest;
+        $instantly->description = $request->description;
+        $instantly->user_id = Auth::user()->id;
+        $instantly->save();
 
-        for($i = 0; $i < count($usersId); $i++) {
-            if($usersId[$i]['id'] != Auth::user()->id){
-                $makeService->userId = $usersId[$i]['id'];
-                $makeService->realTimeServiceId = $request->realTimeServiceId;
-                $makeService->save();
-            } 
-        }
-
-        return 'ok';
+        return $instantly;
     }
 
     /**
@@ -94,6 +70,8 @@ class RealTimeUserCheckController extends Controller
     public function show($id)
     {
         //
+        $instantly = Instantly::where('order_id', $id)->orderBy('id', 'desc')->with('user', 'order', 'answerUser')->get();
+        return $instantly;
     }
 
     /**
@@ -117,7 +95,13 @@ class RealTimeUserCheckController extends Controller
     public function update(Request $request, $id)
     {
         //
-        
+        $instantly = Instantly::find($id);
+        $instantly->answer = $request->answer;
+        $instantly->answer_user_id = Auth::user()->id;
+        $instantly->answerDescription = $request->answerDescription;
+        $instantly->save();
+
+        return $instantly;
     }
 
     /**
@@ -129,8 +113,5 @@ class RealTimeUserCheckController extends Controller
     public function destroy($id)
     {
         //
-        $checkService = RealTimeUserCheck::destroy($id);
-
-        return 'ok';
     }
 }

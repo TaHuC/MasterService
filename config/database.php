@@ -48,10 +48,10 @@ return [
             'password' => env('DB_PASSWORD', 'root'),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8',
-            'collation' => 'utf8_unicode_ci',
+            'collation' => 'utf8_general_ci',
             'prefix' => '',
             'strict' => true,
-            'engine' => null,
+            'engine' => 'InnoDB',
         ],
 
         'pgsql' => [

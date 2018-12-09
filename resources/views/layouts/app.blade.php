@@ -179,6 +179,7 @@
                 @if (!Auth::guest())
                 <div class="col-md-4 col-lg-3 col-sm float-right">
 
+                  <instantly></instantly>
                   <forParts></forParts>
 
                   <tasks></tasks>

@@ -10649,6 +10649,7 @@ Vue.component('tasks', __webpack_require__(237));
 Vue.component('navi', __webpack_require__(236));
 Vue.component('results', __webpack_require__(41));
 Vue.component('forparts', __webpack_require__(240));
+Vue.component('instantly', __webpack_require__(268));
 
 Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
@@ -13172,6 +13173,71 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -13185,10 +13251,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             activeOrder: [],
             repairs: [],
             newRepair: [],
+            newInstantly: [],
             notes: [{
                 length: 0
             }],
+            newAnswer: [],
+            instantaneous: [],
             note: '',
+            showInstantly: false,
+            showInstantlyAdd: false,
             showProduct: false,
             showAddBtn: false,
             showOrder: false,
@@ -13196,7 +13267,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             showAddRepair: false,
             showAddNote: false,
             showNotes: false,
-            disabledNoteView: true
+            disabledNoteView: true,
+            disabledInstantlyView: true
         };
     },
     mounted: function mounted() {
@@ -13217,8 +13289,64 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     methods: {
-        addNewTask: function addNewTask() {
+        addAnswer: function addAnswer(id) {
             var _this = this;
+
+            __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+                method: 'PUT',
+                url: '/api/instantly/' + id,
+                data: {
+                    answer: this.newAnswer.answer,
+                    answerDescription: this.newAnswer.answerDescription
+                }
+            }).then(function (res) {
+                _this.getInstantaneous();
+                _this.showInstantly = false;
+                _this.showRepairsList = true;
+            }).catch(function (err) {
+                return console.log(err.response);
+            });
+        },
+        addNewInstantly: function addNewInstantly() {
+            var _this2 = this;
+
+            __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+                method: 'POST',
+                url: '/api/instantly',
+                data: {
+                    quest: this.newInstantly.quest,
+                    description: this.newInstantly.description,
+                    order_id: this.activeOrder.id
+                }
+            }).then(function (res) {
+                _this2.showInstantlyAdd = false;
+                _this2.newInstantly = [];
+                _this2.getInstantaneous();
+            }).catch(function (err) {
+                return console.log(err.response);
+            });
+        },
+        getInstantaneous: function getInstantaneous() {
+            var _this3 = this;
+
+            __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+                method: 'get',
+                url: '/api/instantly/' + this.activeOrder.id
+            }).then(function (res) {
+                console.log(res.data);
+                if (res.data.length != 0) {
+                    _this3.instantaneous = res.data;
+                    _this3.showInstantly = true;
+                    _this3.showRepairsList = false;
+                } else {
+                    _this3.instantaneous = [];
+                }
+            }).catch(function (err) {
+                return console.log(err.response);
+            });
+        },
+        addNewTask: function addNewTask() {
+            var _this4 = this;
 
             axios({
                 method: 'POST',
@@ -13228,22 +13356,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     description: 'Готов'
                 }
             }).then(function (result) {
-                _this.getProduct();
+                _this4.getProduct();
             }).catch(function (err) {
                 return console.log(err);
             });
         },
         getNotes: function getNotes() {
-            var _this2 = this;
+            var _this5 = this;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/notes/' + this.activeOrder.id + '/order').then(function (res) {
                 //console.log(res.data)
                 if (res.data.length) {
-                    _this2.notes = res.data;
-                    _this2.disabledNoteView = false;
+                    _this5.notes = res.data;
+                    _this5.disabledNoteView = false;
                 } else {
-                    _this2.notes.length = 0;
-                    _this2.disabledNoteView = true;
+                    _this5.notes.length = 0;
+                    _this5.disabledNoteView = true;
                 }
                 //console.log(this.notes.length)
             }).catch(function (err) {
@@ -13251,7 +13379,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         saveNote: function saveNote() {
-            var _this3 = this;
+            var _this6 = this;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default()({
                 method: 'post',
@@ -13261,14 +13389,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     orderId: this.activeOrder.id
                 }
             }).then(function (res) {
-                _this3.getProduct();
-                _this3.showRepairsList = true;
-                _this3.showAddNote = false;
-                _this3.note = '';
+                _this6.getProduct();
+                _this6.showRepairsList = true;
+                _this6.showAddNote = false;
+                _this6.note = '';
             });
         },
         saveRepair: function saveRepair(id) {
-            var _this4 = this;
+            var _this7 = this;
 
             // this.newRepair.orderId = id
             __WEBPACK_IMPORTED_MODULE_0_axios___default()({
@@ -13281,13 +13409,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     price: this.newRepair.price ? this.newRepair.price : 0
                 }
             }).then(function (res) {
-                _this4.newRepair = [];
-                _this4.showAddRepair = false;
-                _this4.getProduct();
+                _this7.newRepair = [];
+                _this7.showAddRepair = false;
+                _this7.getProduct();
             });
         },
         setStatus: function setStatus(id, status) {
-            var _this5 = this;
+            var _this8 = this;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default()({
                 method: 'post',
@@ -13298,7 +13426,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     status: status
                 }
             }).then(function (res) {
-                _this5.getProduct();
+                _this8.getProduct();
             });
         },
         lastStatusFnc: function lastStatusFnc() {
@@ -13309,7 +13437,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         saveNewOrder: function saveNewOrder() {
-            var _this6 = this;
+            var _this9 = this;
 
             //console.log(this.newOrder)
             this.newOrder.productId = this.product.id;
@@ -13328,23 +13456,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }).then(function (res) {
                 //console.log(res.data)
-                _this6.activeOrder = res.data;
+                _this9.activeOrder = res.data;
                 //this.product.orders.push(res.data)
-                _this6.newOrder = [];
-                _this6.getProduct();
+                _this9.newOrder = [];
+                _this9.getProduct();
             });
         },
         chageOrder: function chageOrder(id) {
-            var _this7 = this;
+            var _this10 = this;
 
             this.product.orders.forEach(function (order) {
                 if (order.id == id) {
-                    _this7.showOrder = true;
-                    _this7.activeOrder = order;
-                    _this7.getRepirs(_this7.activeOrder.id);
-                    _this7.setStatusClass(_this7.activeOrder.statusId);
-                    _this7.getNotes();
-                    _this7.showNotes = false;
+                    _this10.showOrder = true;
+                    _this10.activeOrder = order;
+                    _this10.getRepirs(_this10.activeOrder.id);
+                    _this10.setStatusClass(_this10.activeOrder.statusId);
+                    _this10.getNotes();
+                    _this10.showNotes = false;
                 }
             });
         },
@@ -13368,42 +13496,43 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         getProduct: function getProduct() {
-            var _this8 = this;
+            var _this11 = this;
 
             var productId = this.$route.params.product;
             this.$refs.topProgress.start();
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/product/show/' + productId).then(function (res) {
                 if (res.data) {
-                    _this8.product = res.data;
-                    _this8.showProduct = true;
+                    _this11.product = res.data;
+                    _this11.showProduct = true;
 
-                    if (_this8.product.orders.length) {
-                        _this8.lastStatusFnc();
-                        _this8.setStatusClass(_this8.product.orders[_this8.product.orders.length - 1].statusId);
-                        _this8.activeOrder = _this8.product.orders[_this8.product.orders.length - 1];
-                        _this8.showOrder = true;
-                        _this8.getRepirs(_this8.activeOrder.id);
-                        _this8.getNotes();
+                    if (_this11.product.orders.length) {
+                        _this11.lastStatusFnc();
+                        _this11.setStatusClass(_this11.product.orders[_this11.product.orders.length - 1].statusId);
+                        _this11.activeOrder = _this11.product.orders[_this11.product.orders.length - 1];
+                        _this11.showOrder = true;
+                        _this11.getRepirs(_this11.activeOrder.id);
+                        _this11.getNotes();
+                        _this11.getInstantaneous();
                     }
                 } else {
-                    _this8.showProduct = false;
+                    _this11.showProduct = false;
                     console.log('nqma product');
                 }
                 // $('[data-toggle="tooltip"]').tooltip()
-                _this8.$refs.topProgress.done();
+                _this11.$refs.topProgress.done();
             });
         },
         getRepirs: function getRepirs(orderId) {
-            var _this9 = this;
+            var _this12 = this;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/repair/' + orderId).then(function (res) {
                 if (res.data.length) {
-                    _this9.repairs = res.data;
-                    _this9.showRepairsList = true;
+                    _this12.repairs = res.data;
+                    _this12.showRepairsList = true;
                 } else {
-                    _this9.repairs = [];
-                    _this9.showRepairsList = false;
+                    _this12.repairs = [];
+                    _this12.showRepairsList = false;
                 }
             });
         }
@@ -25009,7 +25138,7 @@ exports.push([module.i, "@keyframes awn-fade-in{0%{opacity:0}to{opacity:1}}@keyf
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(7)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 217 */
@@ -54964,7 +55093,45 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "btnMenu"
     }
-  }, [_c('button', {
+  }, [(_vm.instantaneous[0].answer_user_id && _vm.instantaneous.length) ? _c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.activeOrder.status.id != 4),
+      expression: "activeOrder.status.id != 4"
+    }],
+    staticClass: "btn btn-sm btn-outline-secondary",
+    attrs: {
+      "data-toggle": "tooltip",
+      "data-placement": "top",
+      "title": "Добави задача"
+    },
+    on: {
+      "click": function($event) {
+        _vm.showInstantlyAdd = true, _vm.showInstantly = false, _vm.showAddNote = false, _vm.showAddRepair = false, _vm.showNotes = false, _vm.showRepairsList = false
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fas fa-plus"
+  })]) : _vm._e(), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-sm",
+    class: _vm.disabledInstantlyView ? 'btn-outline-secondary' : 'btn-danger',
+    attrs: {
+      "disabled": _vm.disabledNoteView
+    },
+    on: {
+      "click": function($event) {
+        _vm.showAddNote = false, _vm.showAddRepair = false, _vm.showNotes = false, _vm.showRepairsList = false, _vm.showInstantlyAdd = false, _vm.showInstantly = true
+      }
+    }
+  }, [_vm._v(_vm._s(_vm.instantaneous.length) + " Задача")]), _vm._v(" "), _c('strong', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.activeOrder.status.id != 4),
+      expression: "activeOrder.status.id != 4"
+    }]
+  }, [_vm._v(" | ")]), _vm._v(" "), _c('button', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -54979,7 +55146,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "click": function($event) {
-        _vm.showAddNote = true, _vm.showAddRepair = false, _vm.showNotes = false, _vm.showRepairsList = false
+        _vm.showInstantlyAdd = false, _vm.showInstantly = false, _vm.showAddNote = true, _vm.showAddRepair = false, _vm.showNotes = false, _vm.showRepairsList = false
       }
     }
   }, [_c('i', {
@@ -54992,7 +55159,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "click": function($event) {
-        _vm.showAddNote = false, _vm.showAddRepair = false, _vm.showNotes = true, _vm.showRepairsList = false
+        _vm.showInstantlyAdd = false, _vm.showInstantly = false, _vm.showAddNote = false, _vm.showAddRepair = false, _vm.showNotes = true, _vm.showRepairsList = false
       }
     }
   }, [_vm._v(_vm._s(_vm.notes.length) + " Бележки")]), _vm._v(" "), _c('strong', {
@@ -55037,7 +55204,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "click": function($event) {
-        _vm.showRepairsList = false, _vm.showAddNote = false, _vm.showNotes = false, _vm.showAddRepair = true, _vm.newRepair.price = _vm.activeOrder.price
+        _vm.showInstantlyAdd = false, _vm.showInstantly = false, _vm.showRepairsList = false, _vm.showAddNote = false, _vm.showNotes = false, _vm.showAddRepair = true, _vm.newRepair.price = _vm.activeOrder.price
       }
     }
   }, [_c('i', {
@@ -55142,6 +55309,98 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": function($event) {
         _vm.saveNote()
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fas fa-save"
+  })])])]) : _vm._e(), _vm._v(" "), (_vm.showInstantlyAdd) ? _c('div', {
+    staticClass: "col-12"
+  }, [_c('div', {
+    staticClass: "col-12 mb-4"
+  }, [_c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button",
+      "aria-label": "Close"
+    },
+    on: {
+      "click": function($event) {
+        _vm.showInstantlyAdd = false, _vm.newInstantly = [], _vm.showAddNote = false, _vm.showAddRepair = false, _vm.showNotes = false, _vm.showRepairsList = true
+      }
+    }
+  }, [_c('span', {
+    staticClass: "text-white",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }, [_vm._v("×")])])]), _vm._v(" "), _c('h5', {
+    staticClass: "title"
+  }, [_vm._v("Добавяне на задача към поръчката")]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "quest"
+    }
+  }, [_vm._v("Задача")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.newInstantly.quest),
+      expression: "newInstantly.quest"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "required": "",
+      "id": "quest"
+    },
+    domProps: {
+      "value": (_vm.newInstantly.quest)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.$set(_vm.newInstantly, "quest", $event.target.value)
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "description"
+    }
+  }, [_vm._v("Информация")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.newInstantly.description),
+      expression: "newInstantly.description"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "name": "note",
+      "id": "description",
+      "rows": "5"
+    },
+    domProps: {
+      "value": (_vm.newInstantly.description)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.$set(_vm.newInstantly, "description", $event.target.value)
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group text-right"
+  }, [_c('button', {
+    staticClass: "btn btn-success",
+    attrs: {
+      "disabled": _vm.newInstantly.quest ? false : true
+    },
+    on: {
+      "click": function($event) {
+        _vm.addNewInstantly()
       }
     }
   }, [_c('i', {
@@ -55300,7 +55559,92 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "fas fa-save"
-  })])])]) : _vm._e(), _vm._v(" "), (_vm.showRepairsList) ? _c('table', {
+  })])])]) : _vm._e(), _vm._v(" "), (_vm.showInstantly && _vm.instantaneous.length) ? _c('div', {
+    staticClass: "w-100"
+  }, [_c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button",
+      "aria-label": "Close"
+    },
+    on: {
+      "click": function($event) {
+        _vm.showInstantly = false, _vm.showRepairsList = true
+      }
+    }
+  }, [_c('span', {
+    staticClass: "text-white",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }, [_vm._v("×")])]), _vm._v(" "), _vm._m(6), _vm._v(" "), _c('table', {
+    staticClass: "table"
+  }, [_vm._m(7), _vm._v(" "), _c('tbody', _vm._l((_vm.instantaneous), function(instantly) {
+    return _c('tr', {
+      key: instantly.id
+    }, [_c('td', [_c('p', [_vm._v(_vm._s(instantly.quest))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(instantly.description))]), _vm._v(" "), _c('small', [_vm._v(_vm._s(instantly.user.name) + " | " + _vm._s(instantly.created_at))])]), _vm._v(" "), _c('td', [(!instantly.answer_user_id) ? _c('div', {
+      staticClass: "w-100"
+    }, [_c('div', {
+      staticClass: "form-group"
+    }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (_vm.newAnswer.answer),
+        expression: "newAnswer.answer"
+      }],
+      staticClass: "form-control form-control-sm",
+      attrs: {
+        "type": "text",
+        "placeholder": "Решение..."
+      },
+      domProps: {
+        "value": (_vm.newAnswer.answer)
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          _vm.$set(_vm.newAnswer, "answer", $event.target.value)
+        }
+      }
+    })]), _vm._v(" "), _c('div', {
+      staticClass: "form-group"
+    }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (_vm.newAnswer.answerDescription),
+        expression: "newAnswer.answerDescription"
+      }],
+      staticClass: "form-control form-control-sm",
+      attrs: {
+        "type": "text",
+        "placeholder": "Допълнителна информация..."
+      },
+      domProps: {
+        "value": (_vm.newAnswer.answerDescription)
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          _vm.$set(_vm.newAnswer, "answerDescription", $event.target.value)
+        }
+      }
+    })]), _vm._v(" "), _c('div', {
+      staticClass: "form-btn-group text-right"
+    }, [_c('button', {
+      staticClass: "btn btn-sm btn-outline-success",
+      on: {
+        "click": function($event) {
+          _vm.addAnswer(instantly.id)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fas fa-plus"
+    })])])]) : _c('div', {
+      staticClass: "w-100 text-warning"
+    }, [_c('p', [_vm._v(_vm._s(instantly.answer))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(instantly.answerDescription))]), _vm._v(" "), _c('small', [_vm._v(_vm._s(instantly.answer_user.name) + " | " + _vm._s(instantly.updated_at))])])])])
+  }))])]) : _vm._e(), _vm._v(" "), (_vm.showRepairsList && _vm.repairs.length) ? _c('table', {
     staticClass: "w-100"
   }, [_c('h5', {
     staticClass: "title"
@@ -55341,6 +55685,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('td', [_c('i', {
     staticClass: "fas fa-user text-primary"
   })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('h5', {
+    staticClass: "mb-2"
+  }, [_c('strong', {
+    staticClass: "text-danger"
+  }, [_vm._v("Внимание това са задачи!!!")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('th', [_vm._v("Задача")]), _vm._v(" "), _c('th', [_vm._v("Решение")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -71928,6 +72280,124 @@ module.exports = function(module) {
 __webpack_require__(79);
 module.exports = __webpack_require__(80);
 
+
+/***/ }),
+/* 260 */,
+/* 261 */,
+/* 262 */,
+/* 263 */,
+/* 264 */,
+/* 265 */,
+/* 266 */
+/***/ (function(module, exports) {
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/***/ }),
+/* 267 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(7)();
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+/***/ }),
+/* 268 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(270)
+
+var Component = __webpack_require__(18)(
+  /* script */
+  __webpack_require__(266),
+  /* template */
+  __webpack_require__(269),
+  /* scopeId */
+  "data-v-2f201bae",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Applications/MAMP/htdocs/MasterService/resources/assets/js/components/wigets/instantly.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] instantly.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2f201bae", Component.options)
+  } else {
+    hotAPI.reload("data-v-2f201bae", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 269 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "card bg-dark text-white border border-danger float-right mb-2 w-100"
+  }, [_c('div', {
+    staticClass: "card-header"
+  }, [_c('h6', {
+    staticClass: "card-title"
+  }, [_vm._v("За решения")])]), _vm._v(" "), _c('div', {
+    staticClass: "card-body"
+  })])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-2f201bae", module.exports)
+  }
+}
+
+/***/ }),
+/* 270 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(267);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(19)("6c7642ad", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-2f201bae\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./instantly.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-2f201bae\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./instantly.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);

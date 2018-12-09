@@ -28,6 +28,7 @@ Route::get('/client/show/{id}', 'ClientController@getClient');
 Route::get('/clients', 'ClientController@allClients');
 Route::get('/clients/search', 'ClientController@search')->name('client.search');
 //Route::resource('/search', 'SearchController');
+Route::resource('/api/instantly', 'InstantlyController');
 Route::resource('/product', 'ProductController');
 Route::get('/product/search/{search}', 'ProductController@search')->name('product.search');
 Route::get('/product/show/{id}', 'ProductController@getProduct');
@@ -46,11 +47,6 @@ Route::get('/settings', 'SettingsController@index')->name('settings');
 Route::put('/settings', 'SettingsController@update')->name('settings.update');
 Route::resource('/api/tasks', 'TaskController');
 Route::get('/api/tasks/filter/{filter}', 'TaskController@index')->name('tasks.completed');
-Route::post('/api/realTimeService', 'RealTimeUserCheckController@store');
-Route::get('/api/realTimeService/{service}/{serviceId}', 'RealTimeUserCheckController@checkService');
-Route::get('/api/realTimeService', 'RealTimeUserCheckController@index');
-
-Route::delete('/api/realTimeService/{id}', 'RealTimeUserCheckController@destroy');
 
 Route::get('{path}', 'HomeController@index')->where('path', '([A-z\d-\/_.]+)?');
 

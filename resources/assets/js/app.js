@@ -46,6 +46,7 @@ Vue.component('tasks', require('./components/Task'));
 Vue.component('navi', require('./components/Nav'));
 Vue.component('results', require('./components/Results'));
 Vue.component('forparts', require('./components/wigets/forParts'));
+Vue.component('instantly', require('./components/wigets/instantly'));
 
 Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
