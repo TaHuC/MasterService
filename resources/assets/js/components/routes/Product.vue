@@ -102,7 +102,7 @@
                                     Тотал <span class="badge badge-secondary"><strong>{{ activeOrder.price - activeOrder.deposit }}</strong></span>
                                 </h5>
                                 <p class="text-right" id="btnMenu">
-                                    <button v-show="activeOrder.status.id != 4" v-if="instantaneous[0].answer_user_id && instantaneous.length" @click="showInstantlyAdd = true, showInstantly = false, showAddNote = false, showAddRepair = false, showNotes = false, showRepairsList = false" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip" data-placement="top" title="Добави задача"><i class="fas fa-plus"></i></button>
+                                    <button v-show="activeOrder.status.id != 4" :disabled="disbaledInstantly" @click="showInstantlyAdd = true, showInstantly = false, showAddNote = false, showAddRepair = false, showNotes = false, showRepairsList = false" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip" data-placement="top" title="Добави задача"><i class="fas fa-plus"></i></button>
                                     <button :disabled="disabledNoteView" :class="disabledInstantlyView ? 'btn-outline-secondary' : 'btn-danger'" class="btn btn-sm" @click="showAddNote = false, showAddRepair = false, showNotes = false, showRepairsList = false, showInstantlyAdd = false, showInstantly = true">{{ instantaneous.length }} Задача</button>
                                     <strong v-show="activeOrder.status.id != 4"> | </strong>
                                     <button v-show="activeOrder.status.id != 4" @click="showInstantlyAdd = false, showInstantly = false, showAddNote = true, showAddRepair = false, showNotes = false, showRepairsList = false" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip" data-placement="top" title="Добави бележка"><i class="fas fa-plus"></i></button>
@@ -278,8 +278,13 @@ import Axios from 'axios';
                     length: 0
                 }],
                 newAnswer: [],
-                instantaneous: [],
+                instantaneous: [
+                    {
+                        answer_user_id: null
+                    }
+                ],
                 note: '',
+                disbaledInstantly: false,
                 showInstantly: false,
                 showInstantlyAdd: false,
                 showProduct: false,
@@ -339,6 +344,7 @@ import Axios from 'axios';
                 .then(res => {
                     this.showInstantlyAdd = false
                     this.newInstantly = []
+                    this.disbaledInstantly = true
                     this.getInstantaneous()
                 })
                 .catch(err => console.log(err.response))
@@ -349,11 +355,16 @@ import Axios from 'axios';
                     url: `/api/instantly/${this.activeOrder.id}`,
                 })
                 .then(res => {
-                    console.log(res.data)
+                    //console.log(res.data)
                     if(res.data.length != 0) {
                         this.instantaneous = res.data
                         this.showInstantly = true
                         this.showRepairsList = false
+                        if(res.data[0].answer_user_id) {
+                            this.disbaledInstantly = false
+                        } else {
+                            this.disbaledInstantly = true
+                        }
                     } else {
                         this.instantaneous = []
                     }
