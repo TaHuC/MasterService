@@ -29,6 +29,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function user_settings() 
+    {
+        return $this->belongsTo(UserSettings::class, 'id', 'user_id');
+    }
+
     public function product()
     {
         return $this->hasMany(Product::class);

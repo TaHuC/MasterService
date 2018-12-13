@@ -30,6 +30,8 @@ class InstantlyController extends Controller
     public function index()
     {
         //
+        $instantaneous = Instantly::with('user', 'order')->where('answer', null)->get();
+        return $instantaneous;
     }
 
     /**

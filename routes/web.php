@@ -41,6 +41,7 @@ Route::get('/order/productId/{id}', 'OrderController@getProductId');
 Route::resource('/repair', 'RepairController');
 Route::resource('/status', 'StatusController');
 Route::resource('/users', 'UsersController');
+Route::resource('/api/usersettings', 'UserSettingsController');
 Route::resource('/notes', 'NoteController');
 Route::get('/notes/{id}/{param}', 'NoteController@showNotes');
 Route::get('/settings', 'SettingsController@index')->name('settings');
@@ -48,5 +49,5 @@ Route::put('/settings', 'SettingsController@update')->name('settings.update');
 Route::resource('/api/tasks', 'TaskController');
 Route::get('/api/tasks/filter/{filter}', 'TaskController@index')->name('tasks.completed');
 
-Route::get('{path}', 'HomeController@index')->where('path', '([A-z\d-\/_.]+)?');
+//Route::get('{path}', 'HomeController@index')->where('path', '([A-z\d-\/_.]+)?');
 

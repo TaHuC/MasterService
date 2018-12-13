@@ -56,7 +56,7 @@
                 <div class="card-body">
                     <h5 class="card-title text-uppercase text-danger text-center">{{ Auth::user()->name }}</h5>
                     <div class="mx-auto" style="width: 100px;">
-                        <a class="btn btn-link text-white-50 btn-sm" href="{{ route('settings') }}"><i class="fa fa-cogs"></i></a>
+                        <a class="btn btn-link text-white-50 btn-sm" href="/usersettings"><i class="fa fa-cogs"></i></a>
                         <a class="btn btn-link text-white-50 btn-sm" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">
@@ -86,7 +86,6 @@
                 </div>
             </div>  
             
-
             <ul class="nav flex-column">
               <li class="nav-item">
                 <a class="nav-link active" href="#">

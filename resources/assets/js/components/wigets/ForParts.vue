@@ -28,7 +28,7 @@ export default {
                 setTimeout(function() {
                     this.getPartsOrder()
                     this.newProduct = false
-                    console.log(this.newProduct)
+                    //console.log(this.newProduct)
                 }, 10000)
             }
         }

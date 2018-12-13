@@ -328,6 +328,7 @@ import Axios from 'axios';
                     this.getInstantaneous()
                     this.showInstantly = false
                     this.showRepairsList = true
+                    this.newAnswer = []
                 })
                 .catch(err => console.log(err.response))
             },

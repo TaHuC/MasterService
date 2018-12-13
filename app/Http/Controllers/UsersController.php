@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\User;
+use App\UserSettings;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
@@ -26,6 +28,7 @@ class UsersController extends Controller
     public function index()
     {
         //
+        return [Auth::user(), Auth::user()->user_settings];
     }
 
     /**

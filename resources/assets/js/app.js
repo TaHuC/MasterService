@@ -8,13 +8,14 @@
 require('./bootstrap');
 require('animate.css');
 require("vue-awesome-notifications/dist/styles/style.css")
+
 import axios from 'axios';
 import Resource from 'vue-resource';
 import BootstrapVue from 'bootstrap-vue'
 import VueRouter from 'vue-router'
 
 import vueTopprogress from 'vue-top-progress'
-import Axios from 'axios';
+//import Axios from 'axios';
 import VueAWN from "vue-awesome-notifications"
 
 // import Cliens from './components/routes/Clients'
@@ -39,7 +40,9 @@ Vue.use(Resource)
 Vue.use(BootstrapVue)
 Vue.use(VueRouter)
 Vue.use(vueTopprogress)
-Vue.use(VueAWN)
+Vue.use(VueAWN, {
+    labels: { alert: 'Решения', info: 'Решения'}
+})
 
 Vue.component('tasks', require('./components/Task'));
 // Vue.component('search', require('./components/Search'));
@@ -54,6 +57,7 @@ let routes = [
     { path: '/search/:search', name: 'search', component: require('./components/Results')},
     { path: '/clients/:client', name: 'client', component: require('./components/routes/Clients')},
     { path: '/products/:product', name: 'viewProduct', component: require('./components/routes/Product')},
+    { path: '/usersettings', name:'userSettings', component: require('./components/UserSettings')}
 ]
 
 const router = new VueRouter({
@@ -66,7 +70,9 @@ const app = new Vue({
     router,
     data: {
         search: '',
-        isSearch: false
+        isSearch: false,
+        user: null,
+        firstUserSetting: false
     },
     created() {
         if(this.$route.params.search) {
@@ -74,8 +80,35 @@ const app = new Vue({
         } else {
             this.search = ''
         }
+        this.getUserInfo()
     },
     methods: {
+      getUserInfo() {
+           axios.get('/users')
+                .then(res => {
+                    //console.log(res.data)
+                    if (res.data[1] != null) {
+                        this.user =  res.data[0]
+                    } else {
+                       this.createUserSettings() 
+                    }
+                })
+                .catch(err => console.log(err.response))
+        },
+        createUserSettings() {
+            axios({
+                method: 'POST',
+                url: '/api/usersettings',
+                data: {
+                    'color': '#00000'
+                }
+            })
+            .then(res => {
+                this.getUserInfo()
+                router.push({name: 'userSettings'})
+            })
+            .catch(err => console.log(err.response))
+        },
         addNewClient() {
             router.push({ name: 'client', params: {'client': 'addCl'}});
             Mservice.$emit('addNewClient')
