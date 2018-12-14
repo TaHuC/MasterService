@@ -53,6 +53,7 @@
             },
             saveSettings(id) 
             {
+                id  = Number(id)
                 axios({
                     method: 'PUT',
                     url: `/api/usersettings/${id}`,
@@ -67,6 +68,6 @@
     }
 </script>
 
-<style scoped lang="">
+<style scoped>
     
 </style>

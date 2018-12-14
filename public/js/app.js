@@ -12531,6 +12531,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         saveSettings: function saveSettings(id) {
             var _this2 = this;
 
+            id = Number(id);
             __WEBPACK_IMPORTED_MODULE_0_axios___default()({
                 method: 'PUT',
                 url: '/api/usersettings/' + id,
@@ -13777,12 +13778,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             instantaneous: [],
             oldCount: 0,
-            color: '#cccccc'
+            color: []
         };
     },
     created: function created() {
         this.getInstantaneos();
-        this.getUserColor();
+        //this.getUserColor()
     },
 
     methods: {
@@ -13805,12 +13806,41 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 url: '/api/instantly'
             }).then(function (res) {
                 _this2.oldCount = res.data.length;
+                var colorObj = {};
+
+                var _loop = function _loop(i) {
+                    axios.get('/api/usersettings/' + res.data[i].user_id).then(function (resColor) {
+                        res.data[i].userColor = resColor.data.user_color;
+                    }).catch(function (err) {
+                        return console.log(err.response);
+                    });
+                };
+
+                for (var i = 0; i < res.data.length; i++) {
+                    _loop(i);
+                }
                 _this2.instantaneous = res.data;
+
                 setInterval(function () {
                     axios.get('/api/instantly').then(function (res) {
                         if (_this2.oldCount != res.data.length) {
+                            _this2.color = [];
+                            colorObj = {};
+
+                            var _loop2 = function _loop2(i) {
+                                axios.get('/api/usersettings/' + res.data[i].user_id).then(function (resColor) {
+                                    res.data[i].userColor = resColor.data.user_color;
+                                }).catch(function (err) {
+                                    return console.log(err.response);
+                                });
+                            };
+
+                            for (var i = 0; i < res.data.length; i++) {
+                                _loop2(i);
+                            }
                             _this2.oldCount = res.data.length;
                             _this2.instantaneous = res.data;
+
                             if (_this2.oldCount < res.data.length) {
                                 _this2.$awn.info("Излезнало решение");
                             } else {
@@ -25356,7 +25386,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(6)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 221 */
@@ -25370,7 +25400,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(6)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 223 */
@@ -56084,12 +56114,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "card-body"
   }, [_c('h6', {
     staticClass: "card-title"
-  }, [_vm._v("За решения")]), _vm._v(" "), _vm._l((_vm.instantaneous), function(instantly) {
+  }, [_vm._v("За решения")]), _vm._v(" "), _vm._l((_vm.instantaneous), function(instantly, index) {
     return _c('router-link', {
-      key: instantly.id,
+      key: index,
       staticClass: "badge mr-1 text-white",
       style: ({
-        'background-color': _vm.color
+        backgroundColor: instantly.userColor
       }),
       attrs: {
         "to": {

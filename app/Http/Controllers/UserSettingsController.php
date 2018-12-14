@@ -48,12 +48,16 @@ class UserSettingsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\UserSettings  $userSetings
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(UserSetings $userSettings)
+    public function show($id)
     {
-        //
+        //return $id;
+        $userSettings = UserSettings::where('user_id', $id)->get();
+
+        return $userSettings[0];
+
     }
 
     /**

@@ -49,5 +49,5 @@ Route::put('/settings', 'SettingsController@update')->name('settings.update');
 Route::resource('/api/tasks', 'TaskController');
 Route::get('/api/tasks/filter/{filter}', 'TaskController@index')->name('tasks.completed');
 
-//Route::get('{path}', 'HomeController@index')->where('path', '([A-z\d-\/_.]+)?');
+Route::get('{path}', 'HomeController@index')->where('path', '([A-z\d-\/_.]+)?');
 
