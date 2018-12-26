@@ -10644,17 +10644,44 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_2_bootstrap_vue__["a" /* default */]);
 Vue.use(__WEBPACK_IMPORTED_MODULE_3_vue_router__["a" /* default */]);
 Vue.use(__WEBPACK_IMPORTED_MODULE_4_vue_top_progress___default.a);
 Vue.use(__WEBPACK_IMPORTED_MODULE_5_vue_awesome_notifications___default.a, {
-    labels: { alert: 'Решения', info: 'Решения' }
+    labels: {
+        alert: 'Решения',
+        info: 'Решения',
+        confirm: 'Решения'
+    },
+    modal: {
+        'okLabel': 'Не ми напомняй',
+        'cancelLabel': 'Отложи за 30мин.'
+    }
 });
 
 Vue.component('tasks', __webpack_require__(241));
-// Vue.component('search', require('./components/Search'));
 Vue.component('navi', __webpack_require__(240));
 Vue.component('results', __webpack_require__(41));
 Vue.component('forparts', __webpack_require__(245));
 Vue.component('instantly', __webpack_require__(246));
 
 Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+// axios.interceptors.request.use(function (config) {
+//     this.$refs.topProgress.start()
+// }, function (err) {
+//     console.log(err.response)
+// })
+
+// axios.interceptors.response.use(function () {
+//     this.$refs.topProgress.done()
+// }, function (err) {
+//     console.log(err.response)
+// })
+
+// $(document).ajaxComplete(function (event, request, settings) {
+//     console.log(2)
+//     this.$refs.topProgress.done()
+// })
+// $(document).ajaxStart(function () {
+//     this.$refs.topProgress.start()
+// })
 
 var routes = [{ path: '/search/:search', name: 'search', component: __webpack_require__(41) }, { path: '/clients/:client', name: 'client', component: __webpack_require__(243) }, { path: '/products/:product', name: 'viewProduct', component: __webpack_require__(244) }, { path: '/usersettings', name: 'userSettings', component: __webpack_require__(242) }];
 
@@ -13358,6 +13385,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -13412,8 +13440,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     methods: {
-        addAnswer: function addAnswer(id) {
+        disableNotify: function disableNotify(id) {
             var _this = this;
+
+            __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+                method: 'PUT',
+                url: '/api/instantly/' + id,
+                data: {
+                    active: 0
+                }
+            }).then(function (res) {
+                //return console.log(res.data)
+                _this.getInstantaneous();
+                _this.showInstantly = false;
+                _this.showRepairsList = true;
+            }).catch(function (err) {
+                return console.log(err.response);
+            });
+        },
+        addAnswer: function addAnswer(id) {
+            var _this2 = this;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default()({
                 method: 'PUT',
@@ -13423,16 +13469,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     answerDescription: this.newAnswer.answerDescription
                 }
             }).then(function (res) {
-                _this.getInstantaneous();
-                _this.showInstantly = false;
-                _this.showRepairsList = true;
-                _this.newAnswer = [];
+                _this2.getInstantaneous();
+                _this2.showInstantly = false;
+                _this2.showRepairsList = true;
+                _this2.newAnswer = [];
             }).catch(function (err) {
                 return console.log(err.response);
             });
         },
         addNewInstantly: function addNewInstantly() {
-            var _this2 = this;
+            var _this3 = this;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default()({
                 method: 'POST',
@@ -13443,16 +13489,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     order_id: this.activeOrder.id
                 }
             }).then(function (res) {
-                _this2.showInstantlyAdd = false;
-                _this2.newInstantly = [];
-                _this2.disbaledInstantly = true;
-                _this2.getInstantaneous();
+                _this3.showInstantlyAdd = false;
+                _this3.newInstantly = [];
+                _this3.disbaledInstantly = true;
+                _this3.getInstantaneous();
             }).catch(function (err) {
                 return console.log(err.response);
             });
         },
         getInstantaneous: function getInstantaneous() {
-            var _this3 = this;
+            var _this4 = this;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default()({
                 method: 'get',
@@ -13460,23 +13506,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).then(function (res) {
                 //console.log(res.data)
                 if (res.data.length != 0) {
-                    _this3.instantaneous = res.data;
-                    _this3.showInstantly = true;
-                    _this3.showRepairsList = false;
+                    _this4.instantaneous = res.data;
+                    _this4.showInstantly = true;
+                    _this4.showRepairsList = false;
                     if (res.data[0].answer_user_id) {
-                        _this3.disbaledInstantly = false;
+                        _this4.disbaledInstantly = false;
                     } else {
-                        _this3.disbaledInstantly = true;
+                        _this4.disbaledInstantly = true;
                     }
                 } else {
-                    _this3.instantaneous = [];
+                    _this4.instantaneous = [];
                 }
             }).catch(function (err) {
                 return console.log(err.response);
             });
         },
         addNewTask: function addNewTask() {
-            var _this4 = this;
+            var _this5 = this;
 
             axios({
                 method: 'POST',
@@ -13486,22 +13532,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     description: 'Готов'
                 }
             }).then(function (result) {
-                _this4.getProduct();
+                _this5.getProduct();
             }).catch(function (err) {
                 return console.log(err);
             });
         },
         getNotes: function getNotes() {
-            var _this5 = this;
+            var _this6 = this;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/notes/' + this.activeOrder.id + '/order').then(function (res) {
                 //console.log(res.data)
                 if (res.data.length) {
-                    _this5.notes = res.data;
-                    _this5.disabledNoteView = false;
+                    _this6.notes = res.data;
+                    _this6.disabledNoteView = false;
                 } else {
-                    _this5.notes.length = 0;
-                    _this5.disabledNoteView = true;
+                    _this6.notes.length = 0;
+                    _this6.disabledNoteView = true;
                 }
                 //console.log(this.notes.length)
             }).catch(function (err) {
@@ -13509,7 +13555,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         saveNote: function saveNote() {
-            var _this6 = this;
+            var _this7 = this;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default()({
                 method: 'post',
@@ -13519,14 +13565,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     orderId: this.activeOrder.id
                 }
             }).then(function (res) {
-                _this6.getProduct();
-                _this6.showRepairsList = true;
-                _this6.showAddNote = false;
-                _this6.note = '';
+                _this7.getProduct();
+                _this7.showRepairsList = true;
+                _this7.showAddNote = false;
+                _this7.note = '';
             });
         },
         saveRepair: function saveRepair(id) {
-            var _this7 = this;
+            var _this8 = this;
 
             // this.newRepair.orderId = id
             __WEBPACK_IMPORTED_MODULE_0_axios___default()({
@@ -13539,13 +13585,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     price: this.newRepair.price ? this.newRepair.price : 0
                 }
             }).then(function (res) {
-                _this7.newRepair = [];
-                _this7.showAddRepair = false;
-                _this7.getProduct();
+                _this8.newRepair = [];
+                _this8.showAddRepair = false;
+                _this8.getProduct();
             });
         },
         setStatus: function setStatus(id, status) {
-            var _this8 = this;
+            var _this9 = this;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default()({
                 method: 'post',
@@ -13556,7 +13602,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     status: status
                 }
             }).then(function (res) {
-                _this8.getProduct();
+                _this9.getProduct();
             });
         },
         lastStatusFnc: function lastStatusFnc() {
@@ -13567,7 +13613,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         saveNewOrder: function saveNewOrder() {
-            var _this9 = this;
+            var _this10 = this;
 
             //console.log(this.newOrder)
             this.newOrder.productId = this.product.id;
@@ -13586,23 +13632,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }).then(function (res) {
                 //console.log(res.data)
-                _this9.activeOrder = res.data;
+                _this10.activeOrder = res.data;
                 //this.product.orders.push(res.data)
-                _this9.newOrder = [];
-                _this9.getProduct();
+                _this10.newOrder = [];
+                _this10.getProduct();
             });
         },
         chageOrder: function chageOrder(id) {
-            var _this10 = this;
+            var _this11 = this;
 
             this.product.orders.forEach(function (order) {
                 if (order.id == id) {
-                    _this10.showOrder = true;
-                    _this10.activeOrder = order;
-                    _this10.getRepirs(_this10.activeOrder.id);
-                    _this10.setStatusClass(_this10.activeOrder.statusId);
-                    _this10.getNotes();
-                    _this10.showNotes = false;
+                    _this11.showOrder = true;
+                    _this11.activeOrder = order;
+                    _this11.getRepirs(_this11.activeOrder.id);
+                    _this11.setStatusClass(_this11.activeOrder.statusId);
+                    _this11.getNotes();
+                    _this11.showNotes = false;
                 }
             });
         },
@@ -13626,43 +13672,43 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         getProduct: function getProduct() {
-            var _this11 = this;
+            var _this12 = this;
 
             var productId = this.$route.params.product;
             this.$refs.topProgress.start();
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/product/show/' + productId).then(function (res) {
                 if (res.data) {
-                    _this11.product = res.data;
-                    _this11.showProduct = true;
+                    _this12.product = res.data;
+                    _this12.showProduct = true;
 
-                    if (_this11.product.orders.length) {
-                        _this11.lastStatusFnc();
-                        _this11.setStatusClass(_this11.product.orders[_this11.product.orders.length - 1].statusId);
-                        _this11.activeOrder = _this11.product.orders[_this11.product.orders.length - 1];
-                        _this11.showOrder = true;
-                        _this11.getRepirs(_this11.activeOrder.id);
-                        _this11.getNotes();
-                        _this11.getInstantaneous();
+                    if (_this12.product.orders.length) {
+                        _this12.lastStatusFnc();
+                        _this12.setStatusClass(_this12.product.orders[_this12.product.orders.length - 1].statusId);
+                        _this12.activeOrder = _this12.product.orders[_this12.product.orders.length - 1];
+                        _this12.showOrder = true;
+                        _this12.getRepirs(_this12.activeOrder.id);
+                        _this12.getNotes();
+                        _this12.getInstantaneous();
                     }
                 } else {
-                    _this11.showProduct = false;
+                    _this12.showProduct = false;
                     console.log('nqma product');
                 }
                 // $('[data-toggle="tooltip"]').tooltip()
-                _this11.$refs.topProgress.done();
+                _this12.$refs.topProgress.done();
             });
         },
         getRepirs: function getRepirs(orderId) {
-            var _this12 = this;
+            var _this13 = this;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/repair/' + orderId).then(function (res) {
                 if (res.data.length) {
-                    _this12.repairs = res.data;
-                    _this12.showRepairsList = true;
+                    _this13.repairs = res.data;
+                    _this13.showRepairsList = true;
                 } else {
-                    _this12.repairs = [];
-                    _this12.showRepairsList = false;
+                    _this13.repairs = [];
+                    _this13.showRepairsList = false;
                 }
             });
         }
@@ -13759,6 +13805,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -13770,46 +13826,74 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
-//import axios from 'axios'
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'instantly',
     data: function data() {
         return {
+            instantlyId: 0,
             instantaneous: [],
+            instantaneousOut: [],
             oldCount: 0,
-            color: []
+            color: [],
+            active: true
         };
     },
     created: function created() {
         this.getInstantaneos();
+        this.getInstantlyOut();
         //this.getUserColor()
     },
 
     methods: {
-        getUserColor: function getUserColor() {
+        getInstantlyOut: function getInstantlyOut() {
             var _this = this;
 
+            var count = 0;
+
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/instantly/out').then(function (res) {
+                _this.instantaneousOut = res.data;
+                for (var i = 0; i < res.data.length; i++) {
+                    _this.$awn.info(res.data[i].answer_user.name + ' \u0435 \u0434\u0430\u043B \u0440\u0435\u0448\u0435\u043D\u0438\u0435 \u043D\u0430 \u0442\u0432\u043E\u044F\u0442\u0430 \u0437\u0430\u0434\u0430\u0447\u0430 \u0441 N: ' + res.data[i].order_id);
+                }
+            }).catch(function (err) {
+                return console.log(err.response);
+            });
+
             setInterval(function () {
-                axios.get('/users').then(function (res) {
-                    _this.color = res.data[1].user_color;
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/instantly/out').then(function (res) {
+                    if (_this.instantaneousOut.length != res.data.length) {
+                        _this.instantaneousOut = res.data;
+                    }
+                }).catch(function (err) {
+                    return console.log(err.response);
+                });
+            }, 1000);
+        },
+        getUserColor: function getUserColor() {
+            var _this2 = this;
+
+            setInterval(function () {
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/users').then(function (res) {
+                    _this2.color = res.data[1].user_color;
                 }).catch(function (err) {
                     return console.log(err.response);
                 });
             }, 1000);
         },
         getInstantaneos: function getInstantaneos() {
-            var _this2 = this;
+            var _this3 = this;
 
-            axios({
+            __WEBPACK_IMPORTED_MODULE_0_axios___default()({
                 method: 'GET',
                 url: '/api/instantly'
             }).then(function (res) {
-                _this2.oldCount = res.data.length;
+                _this3.oldCount = res.data.length;
                 var colorObj = {};
 
                 var _loop = function _loop(i) {
-                    axios.get('/api/usersettings/' + res.data[i].user_id).then(function (resColor) {
+                    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/usersettings/' + res.data[i].user_id).then(function (resColor) {
                         res.data[i].userColor = resColor.data.user_color;
                     }).catch(function (err) {
                         return console.log(err.response);
@@ -13819,16 +13903,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 for (var i = 0; i < res.data.length; i++) {
                     _loop(i);
                 }
-                _this2.instantaneous = res.data;
+                _this3.instantaneous = res.data;
 
                 setInterval(function () {
-                    axios.get('/api/instantly').then(function (res) {
-                        if (_this2.oldCount != res.data.length) {
-                            _this2.color = [];
+                    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/instantly').then(function (res) {
+                        if (_this3.oldCount != res.data.length) {
+                            _this3.color = [];
                             colorObj = {};
 
                             var _loop2 = function _loop2(i) {
-                                axios.get('/api/usersettings/' + res.data[i].user_id).then(function (resColor) {
+                                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/usersettings/' + res.data[i].user_id).then(function (resColor) {
                                     res.data[i].userColor = resColor.data.user_color;
                                 }).catch(function (err) {
                                     return console.log(err.response);
@@ -13838,14 +13922,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                             for (var i = 0; i < res.data.length; i++) {
                                 _loop2(i);
                             }
-                            _this2.oldCount = res.data.length;
-                            _this2.instantaneous = res.data;
-
-                            if (_this2.oldCount < res.data.length) {
-                                _this2.$awn.info("Излезнало решение");
+                            if (_this3.oldCount < res.data.length) {
+                                _this3.$awn.info("<strong>Има нова задача за решение</strong>");
                             } else {
-                                _this2.$awn.alert("Нови решения");
+                                _this3.$awn.alert("Нови решения");
                             }
+                            _this3.oldCount = res.data.length;
+                            _this3.instantaneous = res.data;
+
                             //console.log(this.instantaneous)
                         }
                     });
@@ -25372,7 +25456,7 @@ exports.push([module.i, "@keyframes awn-fade-in{0%{opacity:0}to{opacity:1}}@keyf
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(6)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 219 */
@@ -25386,7 +25470,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(6)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 221 */
@@ -55968,7 +56052,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "fas fa-plus"
     })])])]) : _c('div', {
       staticClass: "w-100 text-warning"
-    }, [_c('p', [_vm._v(_vm._s(instantly.answer))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(instantly.answerDescription))]), _vm._v(" "), _c('small', [_vm._v(_vm._s(instantly.answer_user.name) + " | " + _vm._s(instantly.updated_at))])])])])
+    }, [_c('p', [_vm._v(_vm._s(instantly.answer))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(instantly.answerDescription))]), _vm._v(" "), _c('small', [_vm._v(_vm._s(instantly.answer_user.name) + " | " + _vm._s(instantly.updated_at))]), _vm._v(" "), (instantly.active) ? _c('button', {
+      staticClass: "btn btn-sm btn-outline-primary float-right",
+      on: {
+        "click": function($event) {
+          _vm.disableNotify(instantly.id)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fas fa-check"
+    })]) : _vm._e()])])])
   }))])]) : _vm._e(), _vm._v(" "), (_vm.showRepairsList && _vm.repairs.length) ? _c('table', {
     staticClass: "w-100"
   }, [_c('h5', {
@@ -56111,10 +56204,34 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('div', {
     staticClass: "card bg-dark text-white border border-danger float-right mb-2 w-100"
   }, [_c('div', {
-    staticClass: "card-body"
+    staticClass: "card-body fadeIn"
+  }, [_c('div', {
+    staticClass: "d-flex"
   }, [_c('h6', {
-    staticClass: "card-title"
-  }, [_vm._v("За решения")]), _vm._v(" "), _vm._l((_vm.instantaneous), function(instantly, index) {
+    staticClass: "card-title text-left mr-1",
+    class: _vm.active ? '' : 'text-muted',
+    staticStyle: {
+      "cursor": "pointer"
+    },
+    on: {
+      "click": function($event) {
+        _vm.active = true
+      }
+    }
+  }, [_vm._v("Задачи")]), _vm._v(" "), _c('h6', {
+    staticClass: "card-title text-left ",
+    class: _vm.active ? 'text-muted' : '',
+    staticStyle: {
+      "cursor": "pointer"
+    },
+    on: {
+      "click": function($event) {
+        _vm.active = false
+      }
+    }
+  }, [_vm._v("Решения " + _vm._s(_vm.instantaneousOut.length))])]), _vm._v(" "), (_vm.active) ? _c('div', {
+    staticClass: "d-flex"
+  }, _vm._l((_vm.instantaneous), function(instantly, index) {
     return _c('router-link', {
       key: index,
       staticClass: "badge mr-1 text-white",
@@ -56130,7 +56247,22 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }, [_vm._v(_vm._s(instantly.order_id))])
-  })], 2)])
+  })) : _vm._e(), _vm._v(" "), (!_vm.active) ? _c('div', {
+    staticClass: "d-flex"
+  }, _vm._l((_vm.instantaneousOut), function(instantly, index) {
+    return _c('router-link', {
+      key: index,
+      staticClass: "badge mr-1 text-white",
+      attrs: {
+        "to": {
+          name: 'viewProduct',
+          params: {
+            product: instantly.order.productId
+          }
+        }
+      }
+    }, [_vm._v(_vm._s(instantly.order_id))])
+  })) : _vm._e()])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

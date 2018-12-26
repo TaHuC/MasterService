@@ -28,6 +28,7 @@ Route::get('/client/show/{id}', 'ClientController@getClient');
 Route::get('/clients', 'ClientController@allClients');
 Route::get('/clients/search', 'ClientController@search')->name('client.search');
 //Route::resource('/search', 'SearchController');
+Route::get('/api/instantly/out', 'InstantlyController@instantlyOut')->name('instantly.out');
 Route::resource('/api/instantly', 'InstantlyController');
 Route::resource('/product', 'ProductController');
 Route::get('/product/search/{search}', 'ProductController@search')->name('product.search');

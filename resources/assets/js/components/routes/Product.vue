@@ -231,6 +231,7 @@
                                                     <p>{{ instantly.answer }}</p>
                                                     <p>{{ instantly.answerDescription }}</p>
                                                     <small>{{ instantly.answer_user.name }} | {{ instantly.updated_at }}</small>
+                                                    <button v-if="instantly.active" @click="disableNotify(instantly.id)" class="btn btn-sm btn-outline-primary float-right"><i class="fas fa-check"></i></button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -315,6 +316,22 @@ import Axios from 'axios';
             }
         },
         methods: {
+            disableNotify(id) {
+                Axios({
+                    method: 'PUT',
+                    url: `/api/instantly/${id}`,
+                    data: {
+                        active: 0
+                    }
+                })
+                .then(res => {
+                    //return console.log(res.data)
+                    this.getInstantaneous()
+                    this.showInstantly = false
+                    this.showRepairsList = true
+                })
+                .catch(err => console.log(err.response))
+            },
             addAnswer(id) {
                 Axios({
                     method: 'PUT',

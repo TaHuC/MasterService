@@ -178,6 +178,7 @@
                 @if (!Auth::guest())
                 <div class="col-md-4 col-lg-3 col-sm float-right">
 
+                  <vue-topprogress ref="topProgress"></vue-topprogress>
                   <instantly></instantly>
                   <forParts></forParts>
 

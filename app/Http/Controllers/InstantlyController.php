@@ -35,6 +35,23 @@ class InstantlyController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function instantlyOut()
+    {
+        //
+        $instantaneous = Instantly::where([
+            ['user_id', '=', Auth::user()->id],
+            ['active', '=', 1]
+        ])
+        ->with('answerUser', 'order')
+        ->get();
+        return $instantaneous;
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -97,11 +114,18 @@ class InstantlyController extends Controller
     public function update(Request $request, $id)
     {
         //
+        //return print($request->active);
         $instantly = Instantly::find($id);
-        $instantly->answer = $request->answer;
-        $instantly->answer_user_id = Auth::user()->id;
-        $instantly->answerDescription = $request->answerDescription;
-        $instantly->save();
+        if(!$request->answer) {
+            $instantly->active = 0;
+            $instantly->save();
+        } else {
+            $instantly->answer = $request->answer;
+            $instantly->answer_user_id = Auth::user()->id;
+            $instantly->answerDescription = $request->answerDescription;
+            $instantly->active = 1;
+            $instantly->save();
+        }
 
         return $instantly;
     }

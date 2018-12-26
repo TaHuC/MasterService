@@ -41,17 +41,44 @@ Vue.use(BootstrapVue)
 Vue.use(VueRouter)
 Vue.use(vueTopprogress)
 Vue.use(VueAWN, {
-    labels: { alert: 'Решения', info: 'Решения'}
+    labels: { 
+        alert: 'Решения',
+        info: 'Решения',
+        confirm: 'Решения'
+    },
+    modal: {
+        'okLabel': 'Не ми напомняй',
+        'cancelLabel': 'Отложи за 30мин.'
+    }
 })
 
 Vue.component('tasks', require('./components/Task'));
-// Vue.component('search', require('./components/Search'));
 Vue.component('navi', require('./components/Nav'));
 Vue.component('results', require('./components/Results'));
 Vue.component('forparts', require('./components/wigets/forParts'));
 Vue.component('instantly', require('./components/wigets/instantly'));
 
 Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+// axios.interceptors.request.use(function (config) {
+//     this.$refs.topProgress.start()
+// }, function (err) {
+//     console.log(err.response)
+// })
+
+// axios.interceptors.response.use(function () {
+//     this.$refs.topProgress.done()
+// }, function (err) {
+//     console.log(err.response)
+// })
+
+// $(document).ajaxComplete(function (event, request, settings) {
+//     console.log(2)
+//     this.$refs.topProgress.done()
+// })
+// $(document).ajaxStart(function () {
+//     this.$refs.topProgress.start()
+// })
 
 let routes = [
     { path: '/search/:search', name: 'search', component: require('./components/Results')},
