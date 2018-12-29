@@ -110,7 +110,7 @@
                                     <strong v-show="activeOrder.status.id != 4"> | </strong>
                                     <button v-show="activeOrder.status.id != 4" @click="setStatus(activeOrder.id, 5)" class="btn btn-sm btn-outline-warning"><i class="fas fa-puzzle-piece" data-toggle="tooltip" data-placement="top" title="За части"></i></button>
                                     <button v-show="activeOrder.status.id != 4" @click="showInstantlyAdd = false, showInstantly = false, showRepairsList = false, showAddNote = false, showNotes = false, showAddRepair=true, newRepair.price = activeOrder.price" class="btn btn-sm btn-outline-success" data-toggle="tooltip" data-placement="top" title="Добави ремонт"><i class="fas fa-wrench"></i></button>
-                                    <button v-show="activeOrder.status.id != 4" @click="setStatus(activeOrder.id, 3), addNewTask()" class="btn btn-sm btn-success"><i class="fas fa-thumbs-up" data-toggle="tooltip" data-placement="top" title="Приклучи поръчката"></i></button>
+                                    <button v-show="activeOrder.status.id != 4" @click="setStatus(activeOrder.id, 3), addNewTask()" class="btn btn-sm btn-success" :disabled="activeOrder.statusId == 3 ? true : false"><i class="fas fa-thumbs-up" data-toggle="tooltip" data-placement="top" title="Приклучи поръчката"></i></button>
                                     <button v-show="activeOrder.status.id != 4" @click="setStatus(activeOrder.id, 4)" class="btn btn-sm btn-outline-info"><i class="fas fa-people-carry" data-toggle="tooltip" data-placement="top" title="Върни на клиемта"></i></button>
                                 </p>
                             </div>

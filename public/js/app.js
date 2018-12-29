@@ -55626,6 +55626,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       expression: "activeOrder.status.id != 4"
     }],
     staticClass: "btn btn-sm btn-success",
+    attrs: {
+      "disabled": _vm.activeOrder.statusId == 3 ? true : false
+    },
     on: {
       "click": function($event) {
         _vm.setStatus(_vm.activeOrder.id, 3), _vm.addNewTask()
