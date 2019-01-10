@@ -89,7 +89,7 @@
             <div class="card m-3" v-if="showOldClient">
                 <div class="card-header text-dark">
                     <h5 class="text-left">Този {{ oldClient.found }} е на клиент {{ oldClient.name }}</h5>
-                    <router-link to="oldClient.id" class="btn btn-link" >Отвори</router-link>
+                    <router-link :to="{name: 'client', params: {client: oldClient.id}}" class="btn btn-link" >Отвори</router-link>
                 </div>
             </div>
         </div>
@@ -441,6 +441,7 @@ import { equal } from 'assert';
                     //console.log(res.data)
                     if(res.data[1]) {
                         this.oldClient = res.data[0]
+
                         switch(res.data[1]) {
                             case 'phone':
                             this.oldClient.found = this.oldClient.phone
