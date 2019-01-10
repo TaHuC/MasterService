@@ -45,7 +45,7 @@
 
             <table class="table table-hover table-dark" v-if="showHistory">
                 <tbody id="tolltipsEnable">
-                    <tr v-for="(task) in compTask" :key="task.id">
+                    <tr v-for="task in compTask" :key="task.id">
                         <td>
                             <h5>{{ task.title }}</h5>
                             <p>{{ task.description }}</p>

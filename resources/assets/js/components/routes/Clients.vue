@@ -43,7 +43,7 @@
             <div class="card m-3" v-if="showOldClient">
                 <div class="card-header text-dark">
                     <h5 class="text-left">Този {{ oldClient.found }} е на клиент {{ oldClient.name }}</h5>
-                    <router-link to="oldClient.id" class="btn btn-link" >Отвори</router-link>
+                    <router-link :to="{name: 'client', params: {client: oldClient.id}}" class="btn btn-link" >Отвори</router-link>
                 </div>
             </div>
         </div>
