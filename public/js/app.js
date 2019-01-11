@@ -10663,26 +10663,6 @@ Vue.component('instantly', __webpack_require__(246));
 
 Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-// axios.interceptors.request.use(function (config) {
-//     this.$refs.topProgress.start()
-// }, function (err) {
-//     console.log(err.response)
-// })
-
-// axios.interceptors.response.use(function () {
-//     this.$refs.topProgress.done()
-// }, function (err) {
-//     console.log(err.response)
-// })
-
-// $(document).ajaxComplete(function (event, request, settings) {
-//     console.log(2)
-//     this.$refs.topProgress.done()
-// })
-// $(document).ajaxStart(function () {
-//     this.$refs.topProgress.start()
-// })
-
 var routes = [{ path: '/search/:search', name: 'search', component: __webpack_require__(41) }, { path: '/clients/:client', name: 'client', component: __webpack_require__(243) }, { path: '/products/:product', name: 'viewProduct', component: __webpack_require__(244) }, { path: '/usersettings', name: 'userSettings', component: __webpack_require__(242) }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_3_vue_router__["a" /* default */]({
@@ -12398,6 +12378,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -12408,12 +12409,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             tasks: '',
             countTask: 0,
+            countPersonalTask: 0,
             showAdd: false,
             showTasksLs: false,
             showHistory: false,
+            showPerosnal: false,
             task: {
                 title: '',
-                description: ''
+                description: '',
+                personal: 0
             },
             compTask: '',
             showActive: true
@@ -12429,22 +12433,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.showActive = true;
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/tasks').then(function (results) {
-                // console.log(results.data)
                 _this.tasks = results.data;
-                _this.countTask = results.data.length;
+                _this.countTask = res.data.filter(function (data) {
+                    return data.personal != true;
+                }).length;
+                _this.countPersonalTask = res.data.filter(function (data) {
+                    return data.personal == true;
+                }).length;
                 _this.task.title = '';
                 _this.task.description = '';
+                _this.task.personal = 0;
             }).catch(function (err) {
                 return console.log(err);
             });
 
             __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_timers__["setInterval"])(function () {
                 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/tasks').then(function (res) {
-                    if (_this.countTask != res.data.length) {
+                    if (_this.countTask + _this.countPersonalTask != res.data.length) {
                         _this.tasks = res.data;
-                        _this.countTask = res.data.length;
+                        _this.countTask = res.data.filter(function (data) {
+                            return data.personal != true;
+                        }).length;
+                        _this.countPersonalTask = res.data.filter(function (data) {
+                            return data.personal == true;
+                        }).length;
                         _this.task.title = '';
                         _this.task.description = '';
+                        _this.task.personal = 0;
                     }
                 });
             }, 3000);
@@ -12461,16 +12476,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 //console.log(result.data);
                 _this2.getAllTasks();
                 _this2.showAdd = false;
+                _this2.showPersonal = false;
                 _this2.showActive = true;
             }).catch(function (err) {
                 return console.log(err);
             });
         },
         complatedTask: function complatedTask(id, index) {
+            var removeTask = this.tasks.filter(function (task) {
+                return task.id == id;
+            });
+            console.log(removeTask);
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/api/tasks/' + id).then(function (result) {}).catch(function (err) {
                 return console.log(err);
             });
-            this.countTask--;
+            if (removeTask[0].personal) {
+                this.countPersonalTask--;
+            } else {
+                this.countTask--;
+            }
             this.countComplTask++;
             this.tasks.splice(index, 1);
         },
@@ -25537,7 +25561,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(6)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 226 */
@@ -57329,7 +57353,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "click": function($event) {
-        _vm.showActive = false, _vm.showAdd = true, _vm.showHistory = false
+        _vm.showActive = false, _vm.showPerosnal = true, _vm.showAdd = true, _vm.showHistory = false, _vm.showPerosnal = false
       }
     }
   }, [_c('i', {
@@ -57341,14 +57365,28 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "click": function($event) {
-        _vm.showActive = true, _vm.showAdd = false, _vm.showHistory = false
+        _vm.showActive = true, _vm.showAdd = false, _vm.showHistory = false, _vm.showPerosnal = false
       }
     }
   }, [_c('i', {
     staticClass: "fas fa-check"
   }), _vm._v(" "), _c('span', {
     staticClass: "badge badge-light"
-  }, [_vm._v(_vm._s(_vm.countTask))])]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('button', {
+  }, [_vm._v(_vm._s(_vm.countTask))])]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-sm btn-outline-info",
+    attrs: {
+      "disabled": _vm.showPerosnal ? true : false
+    },
+    on: {
+      "click": function($event) {
+        _vm.showActive = false, _vm.showAdd = false, _vm.showHistory = false, _vm.showPerosnal = true
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fas fa-user"
+  }), _vm._v(" "), _c('span', {
+    staticClass: "badge badge-light"
+  }, [_vm._v(_vm._s(_vm.countPersonalTask))])]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-sm btn-outline-danger",
     attrs: {
       "disabled": _vm.showHistory ? true : false
@@ -57423,6 +57461,46 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   })]), _vm._v(" "), _c('div', {
+    staticClass: "custom-control custom-switch ml-3"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.task.personal),
+      expression: "task.personal"
+    }],
+    staticClass: "custom-control-input",
+    attrs: {
+      "type": "checkbox",
+      "id": "personal"
+    },
+    domProps: {
+      "checked": Array.isArray(_vm.task.personal) ? _vm._i(_vm.task.personal, null) > -1 : (_vm.task.personal)
+    },
+    on: {
+      "change": function($event) {
+        var $$a = _vm.task.personal,
+          $$el = $event.target,
+          $$c = $$el.checked ? (true) : (false);
+        if (Array.isArray($$a)) {
+          var $$v = null,
+            $$i = _vm._i($$a, $$v);
+          if ($$el.checked) {
+            $$i < 0 && (_vm.$set(_vm.task, "personal", $$a.concat([$$v])))
+          } else {
+            $$i > -1 && (_vm.$set(_vm.task, "personal", $$a.slice(0, $$i).concat($$a.slice($$i + 1))))
+          }
+        } else {
+          _vm.$set(_vm.task, "personal", $$c)
+        }
+      }
+    }
+  }), _vm._v(" "), _c('label', {
+    staticClass: "custom-control-label",
+    attrs: {
+      "for": "personal"
+    }
+  }, [_vm._v("Лична")])]), _vm._v(" "), _c('div', {
     staticClass: "form-group text-right"
   }, [_c('button', {
     staticClass: "btn btn-sm btn-outline-success",
@@ -57440,7 +57518,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, _vm._l((_vm.tasks), function(task, index) {
     return _c('tr', {
       key: task.id
-    }, [_c('td', [_c('h5', [_vm._v(_vm._s(task.title))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(task.description))]), _vm._v(" "), _c('small', [_vm._v(_vm._s(task.user.name))])]), _vm._v(" "), _c('td', {
+    }, [(!task.personal) ? _c('td', [_c('h5', [_vm._v(_vm._s(task.title))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(task.description))]), _vm._v(" "), _c('small', [_vm._v(_vm._s(task.user.name))])]) : _vm._e(), _vm._v(" "), (!task.personal) ? _c('td', {
       staticClass: "text-right",
       staticStyle: {
         "max-width": "45px"
@@ -57454,7 +57532,31 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }, [_c('i', {
       staticClass: "fas fa-check"
-    })])])])
+    })])]) : _vm._e()])
+  }), 0)]) : _vm._e(), _vm._v(" "), (_vm.showPerosnal) ? _c('table', {
+    staticClass: "table table-hover table-dark"
+  }, [_c('tbody', {
+    attrs: {
+      "id": "tolltipsEnable"
+    }
+  }, _vm._l((_vm.tasks), function(task, index) {
+    return _c('tr', {
+      key: task.id
+    }, [(task.personal) ? _c('td', [_c('h5', [_vm._v(_vm._s(task.title))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(task.description))]), _vm._v(" "), _c('small', [_vm._v(_vm._s(task.user.name))])]) : _vm._e(), _vm._v(" "), (task.personal) ? _c('td', {
+      staticClass: "text-right",
+      staticStyle: {
+        "max-width": "45px"
+      }
+    }, [_c('button', {
+      staticClass: "btn btn-sm btn-outline-light",
+      on: {
+        "click": function($event) {
+          _vm.complatedTask(task.id, index)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fas fa-check"
+    })])]) : _vm._e()])
   }), 0)]) : _vm._e(), _vm._v(" "), (_vm.showHistory) ? _c('table', {
     staticClass: "table table-hover table-dark"
   }, [_c('tbody', {
@@ -57464,17 +57566,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, _vm._l((_vm.compTask), function(task) {
     return _c('tr', {
       key: task.id
-    }, [_c('td', [_c('h5', [_vm._v(_vm._s(task.title))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(task.description))]), _vm._v(" "), _c('small', [_vm._v(_vm._s(task.user.name))])])])
+    }, [(!task.personal) ? _c('td', [_c('h5', [_vm._v(_vm._s(task.title))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(task.description))]), _vm._v(" "), _c('small', [_vm._v(_vm._s(task.user.name))])]) : _vm._e()])
   }), 0)]) : _vm._e()])])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('button', {
-    staticClass: "btn btn-sm btn-outline-info"
-  }, [_c('i', {
-    staticClass: "fas fa-user"
-  }), _vm._v(" "), _c('span', {
-    staticClass: "badge badge-light"
-  }, [_vm._v("5")])])
-}]}
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()

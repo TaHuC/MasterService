@@ -71,6 +71,7 @@ class TaskController extends Controller
         $task->description = $request->description;
         $task->userId = Auth::user()->id;
         $task->completed = false;
+        $task->personal = $request->personal;
         $task->save();
 
         return 'OK';

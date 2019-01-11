@@ -3,9 +3,9 @@
     <div class="card-header">
         Задачи
         <div class="text-right w-100">
-            <button class="btn btn-sm btn-outline-warning" @click="showActive = false, showAdd = true, showHistory = false" :disabled="showAdd ? true : false"><i class="fas fa-plus"></i></button>
-            <button class="btn btn-sm btn-outline-info" @click="showActive = true, showAdd = false, showHistory = false" :disabled="showActive ? true : false"><i class="fas fa-check"></i> <span class="badge badge-light">{{ countTask }}</span></button>
-            <button class="btn btn-sm btn-outline-info"><i class="fas fa-user"></i> <span class="badge badge-light">5</span></button>
+            <button class="btn btn-sm btn-outline-warning" @click="showActive = false, showPerosnal = true, showAdd = true, showHistory = false, showPerosnal = false" :disabled="showAdd ? true : false"><i class="fas fa-plus"></i></button>
+            <button class="btn btn-sm btn-outline-info" @click="showActive = true, showAdd = false, showHistory = false, showPerosnal = false" :disabled="showActive ? true : false"><i class="fas fa-check"></i> <span class="badge badge-light">{{ countTask }}</span></button>
+            <button class="btn btn-sm btn-outline-info" @click="showActive = false, showAdd = false, showHistory = false, showPerosnal = true" :disabled="showPerosnal ? true : false"><i class="fas fa-user"></i> <span class="badge badge-light">{{ countPersonalTask }}</span></button>
             <button class="btn btn-sm btn-outline-danger" @click="getCompletedTask" :disabled="showHistory ? true : false"><i class="fas fa-history"></i></button>
         </div>
     </div>
@@ -21,6 +21,10 @@
                     <label for="description">Доп. информация</label>
                     <textarea name="" id="description" class="form-control" v-model="task.description" ></textarea>
                 </div>
+                <div class="custom-control custom-switch ml-3">
+                    <input type="checkbox" v-model="task.personal" class="custom-control-input" id="personal">
+                    <label class="custom-control-label" for="personal">Лична</label>
+                </div>
                 <div class="form-group text-right">
                     <button @click="addNewTask" class="btn btn-sm btn-outline-success"><i class="fas fa-save"></i></button>
                 </div>
@@ -29,12 +33,29 @@
             <table class="table table-hover table-dark" v-if="showActive">
                 <tbody id="tolltipsEnable">
                     <tr v-for="(task, index) in tasks" :key="task.id">
-                        <td>
+                        <td v-if="!task.personal">
                             <h5>{{ task.title }}</h5>
                             <p>{{ task.description }}</p>
                             <small>{{ task.user.name }}</small>
                         </td>
-                        <td class="text-right" style="max-width: 45px;">
+                        <td v-if="!task.personal" class="text-right" style="max-width: 45px;">
+                            <button @click="complatedTask(task.id, index)" class="btn btn-sm btn-outline-light">
+                            <i class="fas fa-check"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table table-hover table-dark" v-if="showPerosnal">
+                <tbody id="tolltipsEnable">
+                    <tr v-for="(task, index) in tasks" :key="task.id">
+                        <td v-if="task.personal">
+                            <h5>{{ task.title }}</h5>
+                            <p>{{ task.description }}</p>
+                            <small>{{ task.user.name }}</small>
+                        </td>
+                        <td v-if="task.personal" class="text-right" style="max-width: 45px;">
                             <button @click="complatedTask(task.id, index)" class="btn btn-sm btn-outline-light">
                             <i class="fas fa-check"></i>
                             </button>
@@ -46,7 +67,7 @@
             <table class="table table-hover table-dark" v-if="showHistory">
                 <tbody id="tolltipsEnable">
                     <tr v-for="task in compTask" :key="task.id">
-                        <td>
+                        <td v-if="!task.personal">
                             <h5>{{ task.title }}</h5>
                             <p>{{ task.description }}</p>
                             <small>{{ task.user.name }}</small>
@@ -70,12 +91,15 @@
             return {
                 tasks: '',
                 countTask: 0,
+                countPersonalTask: 0,
                 showAdd: false,
                 showTasksLs: false,
                 showHistory: false,
+                showPerosnal: false,
                 task: {
                     title: '',
-                    description: ''
+                    description: '',
+                    personal: 0
                 },
                 compTask: '',
                 showActive: true,
@@ -89,22 +113,25 @@
                 this.showActive = true;
                 axios.get('/api/tasks')
                     .then(results => {
-                        // console.log(results.data)
                         this.tasks = results.data;
-                        this.countTask = results.data.length;
+                        this.countTask = res.data.filter(data => data.personal != true).length;
+                        this.countPersonalTask = res.data.filter(data => data.personal == true).length;
                         this.task.title = '';
                         this.task.description = '';
+                        this.task.personal = 0;
                     })
                     .catch(err => console.log(err));
 
                     setInterval(() => {
                         axios.get('/api/tasks')
                         .then(res => {
-                            if(this.countTask != res.data.length) {
+                            if((this.countTask + this.countPersonalTask) != res.data.length) {
                                 this.tasks = res.data;
-                                this.countTask = res.data.length;
+                                this.countTask = res.data.filter(data => data.personal != true).length;
+                                this.countPersonalTask = res.data.filter(data => data.personal == true).length;
                                 this.task.title = '';
                                 this.task.description = '';
+                                this.task.personal = 0;
                             }
                         })
                     }, 3000)
@@ -121,18 +148,23 @@
                     //console.log(result.data);
                     this.getAllTasks();
                     this.showAdd = false;
+                    this.showPersonal = false;
                     this.showActive = true
 
                 })
                 .catch(err => console.log(err))
             },
             complatedTask(id, index) {
+                let removeTask = this.tasks.filter(task => task.id == id)
+                console.log(removeTask)
                 axios.put(`/api/tasks/${id}`)
-                .then(result => {
-
-                })
+                .then(result => {})
                 .catch(err => console.log(err));
-                this.countTask--
+                if(removeTask[0].personal) {
+                    this.countPersonalTask--
+                } else {
+                    this.countTask--
+                }
                 this.countComplTask++
                 this.tasks.splice(index, 1)
             },

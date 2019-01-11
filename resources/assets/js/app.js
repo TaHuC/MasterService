@@ -60,26 +60,6 @@ Vue.component('instantly', require('./components/wigets/instantly'));
 
 Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-// axios.interceptors.request.use(function (config) {
-//     this.$refs.topProgress.start()
-// }, function (err) {
-//     console.log(err.response)
-// })
-
-// axios.interceptors.response.use(function () {
-//     this.$refs.topProgress.done()
-// }, function (err) {
-//     console.log(err.response)
-// })
-
-// $(document).ajaxComplete(function (event, request, settings) {
-//     console.log(2)
-//     this.$refs.topProgress.done()
-// })
-// $(document).ajaxStart(function () {
-//     this.$refs.topProgress.start()
-// })
-
 let routes = [
     { path: '/search/:search', name: 'search', component: require('./components/Results')},
     { path: '/clients/:client', name: 'client', component: require('./components/routes/Clients')},

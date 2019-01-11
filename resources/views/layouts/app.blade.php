@@ -14,7 +14,7 @@
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     {{--  <link href="{{ asset('css/master.css') }}" rel="stylesheet">  --}}
     <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
     {{--  <link href="{{ asset('css/plugins/dataTables.bootstrap4.min.css') }}" rel="stylesheet">  --}}
@@ -36,7 +36,7 @@
       <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Company name</a>
       
         <div class="input-group">
-            <input class="form-control form-control-dark" type="text" @keyup.enter="searchit" v-model="search"  placeholder="Search" aria-label="Search">
+            <input class="form-control form-control-dark" type="text" @keyup.enter="searchit" v-model="search" @click="search = null" placeholder="Search" aria-label="Search">
           <div class="input-group-append" id="button-addon4">
               <button class="btn btn-outline-light" style="border-radius: 0%;" @click="searchit" type="button"><i class="fa fa-search"></i></button>
               <button class="btn btn-outline-light" style="border-radius: 0%;" @click="addNewClient" type="button"><i class="fa fa-plus"></i></button>
@@ -196,9 +196,12 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
+    <!-- <script type="text/javascript" src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script> -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
     <script src="{{ asset('js/remote.js') }}"></script>
     <script src="{{ asset('js/notifycations.js') }}"></script>
     {{--  <script src="{{ asset('js/plugins/jquery.dataTables.min.js') }}"></script>  --}}
