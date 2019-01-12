@@ -50,12 +50,12 @@
             <table class="table table-hover table-dark" v-if="showPerosnal">
                 <tbody id="tolltipsEnable">
                     <tr v-for="(task, index) in tasks" :key="task.id">
-                        <td v-if="task.personal">
+                        <td v-if="task.personal && task.userId == user.id">
                             <h5>{{ task.title }}</h5>
                             <p>{{ task.description }}</p>
                             <small>{{ task.user.name }}</small>
                         </td>
-                        <td v-if="task.personal" class="text-right" style="max-width: 45px;">
+                        <td v-if="task.personal && task.userId == user.id" class="text-right" style="max-width: 45px;">
                             <button @click="complatedTask(task.id, index)" class="btn btn-sm btn-outline-light">
                             <i class="fas fa-check"></i>
                             </button>
@@ -67,7 +67,7 @@
             <table class="table table-hover table-dark" v-if="showHistory">
                 <tbody id="tolltipsEnable">
                     <tr v-for="task in compTask" :key="task.id">
-                        <td v-if="!task.personal">
+                        <td v-if="!task.personal || task.userId == user.id">
                             <h5>{{ task.title }}</h5>
                             <p>{{ task.description }}</p>
                             <small>{{ task.user.name }}</small>
@@ -84,12 +84,14 @@
 <script>
     import axios from 'axios';
     import { setInterval } from 'timers';
+    import userSettings from './UserSettings'
 
     export default {
         name: "tasks",
         data() {
             return {
                 tasks: '',
+                user: '',
                 countTask: 0,
                 countPersonalTask: 0,
                 showAdd: false,
@@ -106,32 +108,35 @@
             }
         },
         created() {
-            this.getAllTasks()
+            this.getAllTasks() 
         },
         methods: {
             getAllTasks() {
                 this.showActive = true;
-                axios.get('/api/tasks')
+                axios.get('/users')
+                .then(res => {
+                    this.user = res.data[0]
+
+                    axios.get('/api/tasks')
                     .then(results => {
                         this.tasks = results.data;
-                        this.countTask = res.data.filter(data => data.personal != true).length;
-                        this.countPersonalTask = res.data.filter(data => data.personal == true).length;
-                        this.task.title = '';
-                        this.task.description = '';
-                        this.task.personal = 0;
+                        this.countTask = results.data.filter(data => data.personal != true).length;
+                        this.countPersonalTask = results.data.filter(data => data.personal == true).filter(data => data.userId == this.user.id).length;
                     })
                     .catch(err => console.log(err));
+                    })
+                .catch(err => console.log(err.response))
 
-                    setInterval(() => {
+                setInterval(() => {
                         axios.get('/api/tasks')
                         .then(res => {
-                            if((this.countTask + this.countPersonalTask) != res.data.length) {
+                            let count = res.data.filter(task => task.personal == false).length
+                            if(this.countTask + this.countPersonalTask != count + this.countPersonalTask) {
                                 this.tasks = res.data;
+                                this.tasksCount = res.data.length
                                 this.countTask = res.data.filter(data => data.personal != true).length;
-                                this.countPersonalTask = res.data.filter(data => data.personal == true).length;
-                                this.task.title = '';
-                                this.task.description = '';
-                                this.task.personal = 0;
+                                this.countPersonalTask = res.data.filter(data => data.personal == true).filter(data => data.userId == this.user.id).length;
+                                
                             }
                         })
                     }, 3000)
@@ -147,6 +152,9 @@
                 .then(result => {
                     //console.log(result.data);
                     this.getAllTasks();
+                    this.task.title = '';
+                    this.task.description = '';
+                    this.task.personal = 0;
                     this.showAdd = false;
                     this.showPersonal = false;
                     this.showActive = true
@@ -156,7 +164,6 @@
             },
             complatedTask(id, index) {
                 let removeTask = this.tasks.filter(task => task.id == id)
-                console.log(removeTask)
                 axios.put(`/api/tasks/${id}`)
                 .then(result => {})
                 .catch(err => console.log(err));
