@@ -116,7 +116,6 @@
                 axios.get('/users')
                 .then(res => {
                     this.user = res.data[0]
-
                     axios.get('/api/tasks')
                     .then(results => {
                         this.tasks = results.data;
@@ -131,7 +130,7 @@
                         axios.get('/api/tasks')
                         .then(res => {
                             let count = res.data.filter(task => task.personal == false).length
-                            if(this.countTask + this.countPersonalTask != count + this.countPersonalTask) {
+                            if((this.countTask + this.countPersonalTask) != (count + this.countPersonalTask)) {
                                 this.tasks = res.data;
                                 this.tasksCount = res.data.length
                                 this.countTask = res.data.filter(data => data.personal != true).length;

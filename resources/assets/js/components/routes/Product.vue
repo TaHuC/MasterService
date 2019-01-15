@@ -395,7 +395,8 @@ import Axios from 'axios';
                     url: '/api/tasks',
                     data: {
                         title: this.activeOrder.id + ' Готов',
-                        description: 'Готов'
+                        description: 'Готов',
+                        personal: false
                     }
                 })
                 .then(result => {
