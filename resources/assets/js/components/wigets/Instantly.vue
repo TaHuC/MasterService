@@ -1,14 +1,34 @@
 <template>
     <div class="card bg-dark text-white border border-danger float-right mb-2 w-100">
-        <div class="card-body fadeIn">
+        <div class="card-body">
             <div class="d-flex">
-                <h6 class="card-title text-left mr-1" :class="active ? '' : 'text-muted'" style="cursor: pointer;" @click="active = true">Задачи</h6>
-                <h6 class="card-title text-left " :class="active ? 'text-muted' : ''" style="cursor: pointer;" @click="active = false" >Решения {{instantaneousOut.length}}</h6>
+                <h6 class="card-title text-left mr-1" 
+                :class="active ? '' : 'text-muted'" 
+                style="cursor: pointer;"
+                 @click="active = true"
+                 >
+                 Задачи
+                 </h6>
+                <h6 class="card-title text-left " 
+                :class="active ? 'text-muted' : ''" 
+                style="cursor: pointer;" 
+                @click="active = false" 
+                >
+                Решения {{instantaneousOut.length}}
+                </h6>
             </div>
-            <div class="d-flex" v-if="active">
-                <router-link v-for="(instantly, index) in instantaneous" :key="index" class="badge mr-1 text-white" :style="{ backgroundColor: instantly.userColor }" :to="{name: 'viewProduct', params:{product: instantly.order.productId}}" >{{instantly.order_id}}</router-link>
+            <div class="container" v-if="active">
+                <router-link 
+                v-for="(instantly, index) in instantaneous" 
+                :key="index" 
+                class="badge mr-1 badge-dark text-white" 
+                :style="{ backgroundColor: instantly.userColor }" 
+                :to="{name: 'viewProduct', params:{product: instantly.order.productId}}" 
+                >
+                {{instantly.order_id}}
+                </router-link>
             </div>
-            <div class="d-flex" v-if="!active">
+            <div class="row w-100" v-if="!active">
                 <router-link v-for="(instantly, index) in instantaneousOut" :key="index" class="badge mr-1 text-white" :to="{name: 'viewProduct', params:{product: instantly.order.productId}}" >{{instantly.order_id}}</router-link>
             </div>
             
@@ -27,7 +47,7 @@
                 instantaneous: [],
                 instantaneousOut: [],
                 oldCount: 0,
-                color: [],
+                color: '',
                 active: true
             }
         },
@@ -37,11 +57,11 @@
             //this.getUserColor()
         },
         methods: {
-            getInstantlyOut() 
+           getInstantlyOut() 
             {
                 let count = 0;
 
-                axios.get('/api/instantly/out')
+            axios.get('/api/instantly/out')
                 .then(res => {
                     this.instantaneousOut = res.data
                     for(let i = 0; i < res.data.length; i++) {

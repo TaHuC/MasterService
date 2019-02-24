@@ -13902,6 +13902,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -13913,7 +13933,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             instantaneous: [],
             instantaneousOut: [],
             oldCount: 0,
-            color: [],
+            color: '',
             active: true
         };
     },
@@ -25578,7 +25598,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(6)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 222 */
@@ -56277,7 +56297,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('div', {
     staticClass: "card bg-dark text-white border border-danger float-right mb-2 w-100"
   }, [_c('div', {
-    staticClass: "card-body fadeIn"
+    staticClass: "card-body"
   }, [_c('div', {
     staticClass: "d-flex"
   }, [_c('h6', {
@@ -56291,7 +56311,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.active = true
       }
     }
-  }, [_vm._v("Задачи")]), _vm._v(" "), _c('h6', {
+  }, [_vm._v("\n             Задачи\n             ")]), _vm._v(" "), _c('h6', {
     staticClass: "card-title text-left ",
     class: _vm.active ? 'text-muted' : '',
     staticStyle: {
@@ -56302,12 +56322,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.active = false
       }
     }
-  }, [_vm._v("Решения " + _vm._s(_vm.instantaneousOut.length))])]), _vm._v(" "), (_vm.active) ? _c('div', {
-    staticClass: "d-flex"
+  }, [_vm._v("\n            Решения " + _vm._s(_vm.instantaneousOut.length) + "\n            ")])]), _vm._v(" "), (_vm.active) ? _c('div', {
+    staticClass: "container"
   }, _vm._l((_vm.instantaneous), function(instantly, index) {
     return _c('router-link', {
       key: index,
-      staticClass: "badge mr-1 text-white",
+      staticClass: "badge mr-1 badge-dark text-white",
       style: ({
         backgroundColor: instantly.userColor
       }),
@@ -56319,9 +56339,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           }
         }
       }
-    }, [_vm._v(_vm._s(instantly.order_id))])
+    }, [_vm._v("\n            " + _vm._s(instantly.order_id) + "\n            ")])
   }), 1) : _vm._e(), _vm._v(" "), (!_vm.active) ? _c('div', {
-    staticClass: "d-flex"
+    staticClass: "row w-100"
   }, _vm._l((_vm.instantaneousOut), function(instantly, index) {
     return _c('router-link', {
       key: index,
@@ -57352,10 +57372,7 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "card bg-dark text-white border border-danger float-right mb-2",
-    staticStyle: {
-      "width": "100%"
-    }
+    staticClass: "card bg-dark text-white border border-danger float-right mb-2 w-100"
   }, [_c('div', {
     staticClass: "card-header"
   }, [_vm._v("\n        Задачи\n        "), _c('div', {

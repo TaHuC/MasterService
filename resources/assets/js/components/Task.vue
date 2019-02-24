@@ -1,5 +1,5 @@
 <template>
-<div class="card bg-dark text-white border border-danger float-right mb-2" style="width: 100%;">
+<div class="card bg-dark text-white border border-danger float-right mb-2 w-100">
     <div class="card-header">
         Задачи
         <div class="text-right w-100">
