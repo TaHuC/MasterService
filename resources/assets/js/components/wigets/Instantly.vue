@@ -19,19 +19,19 @@
             </div>
             <div class="container" v-if="active">
                 <router-link 
-                v-for="(instantly, index) in instantaneous" 
-                :key="index" 
-                class="badge mr-1 badge-dark text-white" 
+                v-for="instantly in instantaneous" 
+                :key="instantly.id" 
                 :style="{ backgroundColor: instantly.userColor }" 
+                class="badge mr-1 badge-dark text-white" 
                 :to="{name: 'viewProduct', params:{product: instantly.order.productId}}" 
                 >
                 {{instantly.order_id}}
                 </router-link>
             </div>
-            <div class="row w-100" v-if="!active">
+            <div class="container" v-if="!active">
                 <router-link v-for="(instantly, index) in instantaneousOut" :key="index" class="badge mr-1 text-white" :to="{name: 'viewProduct', params:{product: instantly.order.productId}}" >{{instantly.order_id}}</router-link>
             </div>
-            
+  
         </div> 
     </div>
 </template>
