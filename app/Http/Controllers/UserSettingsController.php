@@ -16,6 +16,8 @@ class UserSettingsController extends Controller
     public function index()
     {
         //
+        $usersColor = UserSettings::all();
+        return $usersColor;
     }
 
     /**

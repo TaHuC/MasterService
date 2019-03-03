@@ -5,10 +5,10 @@
                 <h6 class="card-title text-left mr-1" 
                 :class="active ? '' : 'text-muted'" 
                 style="cursor: pointer;"
-                 @click="active = true"
-                 >
-                 Задачи
-                 </h6>
+                @click="active = true"
+                >
+                Задачи
+                </h6>
                 <h6 class="card-title text-left " 
                 :class="active ? 'text-muted' : ''" 
                 style="cursor: pointer;" 
@@ -21,7 +21,7 @@
                 <router-link 
                 v-for="instantly in instantaneous" 
                 :key="instantly.id" 
-                :style="{ backgroundColor: instantly.userColor }" 
+                :style="{ backgroundColor: color.filter(col => col.user_id == instantly.user_id)[0].user_color }" 
                 class="badge mr-1 badge-dark text-white" 
                 :to="{name: 'viewProduct', params:{product: instantly.order.productId}}" 
                 >
@@ -47,17 +47,23 @@
                 instantaneous: [],
                 instantaneousOut: [],
                 oldCount: 0,
-                color: '',
+                color: [],
                 active: true
             }
         },
         created() {
+            this.getUsersColors()
             this.getInstantaneos()
             this.getInstantlyOut()
             //this.getUserColor()
         },
         methods: {
-           getInstantlyOut() 
+            getUsersColors() {
+                axios.get('/api/usersettings')
+                .then(res => {this.color = res.data})
+                .catch(err => console.log(err))
+            },
+            getInstantlyOut()
             {
                 let count = 0;
 
@@ -100,33 +106,18 @@
                 })
                 .then(res => {
                     this.oldCount = res.data.length
-                    let colorObj = {}
-                    for(let i = 0; i < res.data.length; i++) {
-                        axios.get(`/api/usersettings/${res.data[i].user_id}`)
-                        .then(resColor => {
-                            res.data[i].userColor = resColor.data.user_color
-                            })
-                        .catch(err => console.log(err.response))
-                    }
                     this.instantaneous = res.data
 
                     setInterval(() => {
+                        this.getUsersColors()
                         axios.get('/api/instantly').then(res => {
                             if(this.oldCount != res.data.length) {
-                                this.color = []
-                                colorObj = {}
-                                for(let i = 0; i < res.data.length; i++) {
-                                    axios.get(`/api/usersettings/${res.data[i].user_id}`)
-                                    .then(resColor => {
-                                        res.data[i].userColor = resColor.data.user_color
-                                        })
-                                    .catch(err => console.log(err.response))
-                                }
                                 if(this.oldCount < res.data.length) {
                                     this.$awn.info("<strong>Има нова задача за решение</strong>")
                                 } else {
                                     this.$awn.alert("Нови решения")
                                 }
+
                                 this.oldCount = res.data.length
                                 this.instantaneous = res.data
                                 
@@ -135,6 +126,7 @@
                             }
                         })
                     }, 3000)
+
                 })
                 .catch(err => console.log(err.response))
             }
