@@ -12450,6 +12450,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             tasks: '',
             user: '',
+            userColors: [],
             countTask: 0,
             countPersonalTask: 0,
             showAdd: false,
@@ -12470,21 +12471,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
-        getAllTasks: function getAllTasks() {
+        getUserColor: function getUserColor() {
             var _this = this;
 
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/usersettings').then(function (res) {
+                return _this.userColors = res.data;
+            });
+        },
+        getAllTasks: function getAllTasks() {
+            var _this2 = this;
+
+            this.getUserColor();
             this.showActive = true;
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/users').then(function (res) {
-                _this.user = res.data[0];
+                _this2.user = res.data[0];
                 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/tasks').then(function (results) {
-                    _this.tasks = results.data;
-                    _this.countTask = results.data.filter(function (data) {
+                    _this2.tasks = results.data;
+                    // console.log(results.data)
+                    _this2.countTask = results.data.filter(function (data) {
                         return data.personal != true;
                     }).length;
-                    _this.countPersonalTask = results.data.filter(function (data) {
+                    _this2.countPersonalTask = results.data.filter(function (data) {
                         return data.personal == true;
                     }).filter(function (data) {
-                        return data.userId == _this.user.id;
+                        return data.userId == _this2.user.id;
                     }).length;
                 }).catch(function (err) {
                     return console.log(err);
@@ -12494,27 +12504,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
 
             __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_timers__["setInterval"])(function () {
+                _this2.getUserColor();
                 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/tasks').then(function (res) {
                     var count = res.data.filter(function (task) {
                         return task.personal == false;
                     }).length;
-                    if (_this.countTask + _this.countPersonalTask != count + _this.countPersonalTask) {
-                        _this.tasks = res.data;
-                        _this.tasksCount = res.data.length;
-                        _this.countTask = res.data.filter(function (data) {
+                    if (_this2.countTask + _this2.countPersonalTask != count + _this2.countPersonalTask) {
+                        _this2.tasks = res.data;
+                        _this2.tasksCount = res.data.length;
+                        _this2.countTask = res.data.filter(function (data) {
                             return data.personal != true;
                         }).length;
-                        _this.countPersonalTask = res.data.filter(function (data) {
+                        _this2.countPersonalTask = res.data.filter(function (data) {
                             return data.personal == true;
                         }).filter(function (data) {
-                            return data.userId == _this.user.id;
+                            return data.userId == _this2.user.id;
                         }).length;
                     }
                 });
             }, 3000);
         },
         addNewTask: function addNewTask() {
-            var _this2 = this;
+            var _this3 = this;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default()({
                 method: 'POST',
@@ -12523,13 +12534,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 data: this.task
             }).then(function (result) {
                 //console.log(result.data);
-                _this2.getAllTasks();
-                _this2.task.title = '';
-                _this2.task.description = '';
-                _this2.task.personal = 0;
-                _this2.showAdd = false;
-                _this2.showPersonal = false;
-                _this2.showActive = true;
+                _this3.getAllTasks();
+                _this3.task.title = '';
+                _this3.task.description = '';
+                _this3.task.personal = 0;
+                _this3.showAdd = false;
+                _this3.showPersonal = false;
+                _this3.showActive = true;
             }).catch(function (err) {
                 return console.log(err);
             });
@@ -12550,14 +12561,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.tasks.splice(index, 1);
         },
         getCompletedTask: function getCompletedTask() {
-            var _this3 = this;
+            var _this4 = this;
 
             this.showActive = false;
             this.showHistory = true;
             this.showAdd = false;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/tasks/filter/completed').then(function (results) {
-                _this3.compTask = results.data;
+                _this4.compTask = results.data;
             }).catch(function (err) {
                 return console.log(err);
             });
@@ -25618,7 +25629,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(6)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 227 */
@@ -57534,7 +57545,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, _vm._l((_vm.tasks), function(task, index) {
     return _c('tr', {
       key: task.id
-    }, [(!task.personal) ? _c('td', [_c('h5', [_vm._v(_vm._s(task.title))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(task.description))]), _vm._v(" "), _c('small', [_vm._v(_vm._s(task.user.name))])]) : _vm._e(), _vm._v(" "), (!task.personal) ? _c('td', {
+    }, [(!task.personal) ? _c('td', [_c('h5', [_vm._v(_vm._s(task.title))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(task.description))]), _vm._v(" "), _c('small', {
+      staticClass: "badge",
+      style: ({
+        backgroundColor: _vm.userColors.filter(function (e) { return e.user_id == task.userId; })[0].user_color
+      })
+    }, [_vm._v(_vm._s(task.user.name))])]) : _vm._e(), _vm._v(" "), (!task.personal) ? _c('td', {
       staticClass: "text-right",
       staticStyle: {
         "max-width": "45px"

@@ -36,7 +36,7 @@
                         <td v-if="!task.personal">
                             <h5>{{ task.title }}</h5>
                             <p>{{ task.description }}</p>
-                            <small>{{ task.user.name }}</small>
+                            <small class="badge" :style="{backgroundColor: userColors.filter(e => e.user_id == task.userId)[0].user_color}">{{ task.user.name }}</small>
                         </td>
                         <td v-if="!task.personal" class="text-right" style="max-width: 45px;">
                             <button @click="complatedTask(task.id, index)" class="btn btn-sm btn-outline-light">
@@ -92,6 +92,7 @@
             return {
                 tasks: '',
                 user: '',
+                userColors: [],
                 countTask: 0,
                 countPersonalTask: 0,
                 showAdd: false,
@@ -111,7 +112,11 @@
             this.getAllTasks() 
         },
         methods: {
+            getUserColor() {
+                axios.get('/api/usersettings').then(res => this.userColors = res.data)
+            },
             getAllTasks() {
+                this.getUserColor()
                 this.showActive = true;
                 axios.get('/users')
                 .then(res => {
@@ -119,6 +124,7 @@
                     axios.get('/api/tasks')
                     .then(results => {
                         this.tasks = results.data;
+                       // console.log(results.data)
                         this.countTask = results.data.filter(data => data.personal != true).length;
                         this.countPersonalTask = results.data.filter(data => data.personal == true).filter(data => data.userId == this.user.id).length;
                     })
@@ -127,6 +133,7 @@
                 .catch(err => console.log(err.response))
 
                 setInterval(() => {
+                        this.getUserColor()
                         axios.get('/api/tasks')
                         .then(res => {
                             let count = res.data.filter(task => task.personal == false).length
