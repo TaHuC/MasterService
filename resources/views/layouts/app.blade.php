@@ -103,7 +103,6 @@
                   <vue-topprogress ref="topProgress"></vue-topprogress>
                   <instantly></instantly>
                   <forParts></forParts>
-
                   <tasks></tasks>
                 </div>
                   

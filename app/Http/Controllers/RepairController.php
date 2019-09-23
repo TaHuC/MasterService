@@ -60,11 +60,10 @@ class RepairController extends Controller
         $repair->repair = $request->repair;
         $repair->orderId = $request->orderId;
         $repair->userId = Auth::user()->id;
-        $repair->description = $request->description;
+        // $repair->description = $request->description;
         $repair->save();
 
         $order = Order::find($request->orderId);
-        $order->price = $request->price;
         $order->statusId = 2;
         $order->save();
 

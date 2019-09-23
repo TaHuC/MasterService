@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="">
+    <div class="row">
         <div class="card bg-dark text-white mb-3" style="width: 25rem">
             <div class="card-body">
                 <h5 class="card-title">Настройки</h5>

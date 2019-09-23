@@ -183,8 +183,7 @@ class OrderController extends Controller
     {
         $this->validate($request, [
            'status' => 'required|numeric',
-           'orderId' => 'required|numeric',
-           'productId' => 'required|numeric'
+           'orderId' => 'required|numeric'
         ]);
 
         $order = Order::find($request->orderId);

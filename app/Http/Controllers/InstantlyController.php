@@ -73,7 +73,6 @@ class InstantlyController extends Controller
         $instantly = new Instantly();
         $instantly->order_id = $request->order_id;
         $instantly->quest = $request->quest;
-        $instantly->description = $request->description;
         $instantly->user_id = Auth::user()->id;
         $instantly->save();
 
@@ -122,7 +121,6 @@ class InstantlyController extends Controller
         } else {
             $instantly->answer = $request->answer;
             $instantly->answer_user_id = Auth::user()->id;
-            $instantly->answerDescription = $request->answerDescription;
             $instantly->active = 1;
             $instantly->save();
         }
