@@ -18,7 +18,7 @@
         </div>
         <hr class="bg-light">
         <div class="col-12" v-if="activeOrder.id">
-            <button v-show="orders[0].status.id === 4" class="btn-light btn-sm"><i class="fa fa-plus"></i></button>
+            <button v-show="orders[0].status.id === 4" @click="showAddForm = true" class="btn-light btn-sm"><i class="fa fa-plus"></i></button>
             <button 
                 v-for="order in orders" 
                 :key="order.id" 

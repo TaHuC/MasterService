@@ -55006,7 +55006,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (_vm.orders[0].status.id === 4),
       expression: "orders[0].status.id === 4"
     }],
-    staticClass: "btn-light btn-sm"
+    staticClass: "btn-light btn-sm",
+    on: {
+      "click": function($event) {
+        _vm.showAddForm = true
+      }
+    }
   }, [_c('i', {
     staticClass: "fa fa-plus"
   })]), _vm._v(" "), _vm._l((_vm.orders), function(order) {

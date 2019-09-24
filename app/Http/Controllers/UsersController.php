@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 class UsersController extends Controller
 {
 
+    public function AuthRouteAPI(Request $request) {
+        return $request->user();
+    }
+
     /**
      * Create a new controller instance.
      *
