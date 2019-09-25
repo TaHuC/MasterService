@@ -13436,23 +13436,49 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$children[0].testFunc();
             this.updateOrder(this.order.id);
         },
-        changeStatus: function changeStatus(status) {
+        changeStatusToPart: function changeStatusToPart() {
             var _this = this;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/order/status/', {
                 orderId: this.order.id,
-                status: status
+                status: 5
             }).then(function (res) {
                 if (res.data.id) {
                     _this.updateOrder(_this.order.id);
-                    if (status == 3) {
-                        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/tasks', {
-                            title: '#' + _this.order.id + ' \u0435 \u0433\u043E\u0442\u043E\u0432\u0430',
-                            personal: 0
-                        }).then().catch(function (err) {
-                            return console.log(err);
-                        });
-                    }
+                }
+            }).catch(function (err) {
+                console.log(err);
+            });
+        },
+        changeStatusToComplate: function changeStatusToComplate() {
+            var _this2 = this;
+
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/order/status/', {
+                orderId: this.order.id,
+                status: 3
+            }).then(function (res) {
+                if (res.data.id) {
+                    _this2.updateOrder(_this2.order.id);
+                    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/tasks', {
+                        title: '#' + _this2.order.id + ' \u0435 \u0433\u043E\u0442\u043E\u0432\u0430',
+                        personal: 0
+                    }).then().catch(function (err) {
+                        return console.log(err);
+                    });
+                }
+            }).catch(function (err) {
+                console.log(err);
+            });
+        },
+        changeStatusToBack: function changeStatusToBack() {
+            var _this3 = this;
+
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/order/status/', {
+                orderId: this.order.id,
+                status: 4
+            }).then(function (res) {
+                if (res.data.id) {
+                    _this3.updateOrder(_this3.order.id);
                 }
             }).catch(function (err) {
                 console.log(err);
@@ -25287,7 +25313,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(6)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 228 */
@@ -56250,7 +56276,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "btn btn-outline-warning mr-2",
     on: {
       "click": function($event) {
-        _vm.changeStatus(5)
+        _vm.changeStatusToPart()
       }
     }
   }, [_c('i', {
@@ -56265,7 +56291,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "btn btn-outline-success mr-2",
     on: {
       "click": function($event) {
-        _vm.changeStatus(3)
+        _vm.changeStatusToComplate()
       }
     }
   }, [_c('i', {
@@ -56280,7 +56306,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "btn btn-outline-info",
     on: {
       "click": function($event) {
-        _vm.changeStatus(4)
+        _vm.changeStatusToBack()
       }
     }
   }, [_c('i', {
