@@ -32,8 +32,8 @@
         </div>
         <hr class="bg-light">
         
-        <add v-if="showAddForm" :productId="product.id" :changeStatus="changeStatus" :getProduct="getProduct" />
-        <show v-else :order="activeOrder" :updateOrder="updateOrder" />
+        <add v-if="showAddForm" :productId="product.id" :getProduct="getProduct" />
+        <show v-else :order="activeOrder" :updateOrder="updateOrder" @changeStatus="changeStatus" />
     </div>
 </template>
 
@@ -67,7 +67,7 @@ export default {
                 status: status
             })
             .then((res) => {
-                if (res.activeOrder.id) {
+                if (res.data.id) {
                     this.updateOrder(this.activeOrder.id)
                     if (status == 3) {
                         Axios.post('/api/tasks', {

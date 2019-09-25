@@ -8,9 +8,9 @@
         </div>
         <div class="col-12 d-flex justify-content-end">
             <button class="btn btn-outline-danger mr-2" v-show="order.statusId == 1" @click="setStatusInProgres()"><i class="fa fa-wrench"></i></button>
-            <button class="btn btn-outline-warning mr-2" v-show="order.statusId != 4 && order.statusId != 5" @click="changeStatus(5)"><i class="fa fa-puzzle-piece"></i></button>
-            <button class="btn btn-outline-success mr-2" v-show="order.statusId != 4 && order.statusId != 3" @click="changeStatus(3)"><i class="fa fa-thumbs-up"></i></button>
-            <button class="btn btn-outline-info" v-show="order.statusId != 4" @click="changeStatus(4)"><i class="fa fa-share-square"></i></button>
+            <button class="btn btn-outline-warning mr-2" v-show="order.statusId != 4 && order.statusId != 5" @click="changeStatusEvent(5)"><i class="fa fa-puzzle-piece"></i></button>
+            <button class="btn btn-outline-success mr-2" v-show="order.statusId != 4 && order.statusId != 3" @click="changeStatusEvent(3)"><i class="fa fa-thumbs-up"></i></button>
+            <button class="btn btn-outline-info" v-show="order.statusId != 4" @click="changeStatusEvent(4)"><i class="fa fa-share-square"></i></button>
         </div>
         <div class="col-12 d-sm-none d-md-flex">
             <div class="col-4"><h3>Ремонти</h3></div>
@@ -45,8 +45,7 @@ import Tasks from './witgets/tasks'
 export default {
     props: {
         order: Object,
-        updateOrder: Function,
-        changeStatus: Function
+        updateOrder: Function
     },
     components: {
         Repairs,
@@ -58,29 +57,10 @@ export default {
             this.$children[0].testFunc()
             this.updateOrder(this.order.id)
         },
-        changeStatus(status) {
-            Axios.post(`/order/status/`, {
-                orderId: this.order.id,
-                status: status
-            })
-            .then((res) => {
-                if (res.data.id) {
-                    this.updateOrder(this.order.id)
-                    if (status == 3) {
-                        Axios.post('/api/tasks', {
-                            title: `#${this.order.id} е готова`,
-                            personal: 0
-                        })
-                        .then()
-                        .catch(err => console.log(err))
-                    }
-                }
-            })
-            .catch(err => {
-                console.log(err)
-            })
+        changeStatusEvent(status) {
+            this.$emit('changeStatus', status)
         }
-    },
+    }
 };
 </script>
 
