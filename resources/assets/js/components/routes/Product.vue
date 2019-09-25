@@ -32,7 +32,7 @@
         </div>
         <hr class="bg-light">
         
-        <add v-if="showAddForm" :productId="product.id" :getProduct="getProduct" />
+        <add v-if="showAddForm" :productId="product.id" :changeStatus="changeStatus" :getProduct="getProduct" />
         <show v-else :order="activeOrder" :updateOrder="updateOrder" />
     </div>
 </template>
@@ -61,6 +61,28 @@ export default {
         }
     },
     methods: {
+        changeStatus(status) {
+            Axios.post(`/order/status/`, {
+                orderId: this.activeOrder.id,
+                status: status
+            })
+            .then((res) => {
+                if (res.activeOrder.id) {
+                    this.updateOrder(this.activeOrder.id)
+                    if (status == 3) {
+                        Axios.post('/api/tasks', {
+                            title: `#${this.activeOrder.id} е готова`,
+                            personal: 0
+                        })
+                        .then()
+                        .catch(err => console.log(err))
+                    }
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        },
         updateOrder(id) {
             Axios.get(`/order/${id}`)
             .then((res) => {
