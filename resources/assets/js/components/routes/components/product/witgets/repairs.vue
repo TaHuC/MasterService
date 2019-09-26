@@ -48,9 +48,9 @@ export default {
         }
     },
     methods: {
-        testFunc() {
+        testFunc(repairInfo) {
             Axios.post('/repair', {
-                repair: 'Приет за ремонт',
+                repair: repairInfo,
                 orderId: this.orderId
             })
             .then((res) => {

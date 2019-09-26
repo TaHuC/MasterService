@@ -62,7 +62,9 @@ export default {
     },
     methods: {
         changeStatus(status) {
-
+            if (status === 4) {
+                this.$children[0].$children[0].testFunc('Взет')
+            }
             Axios.post(`/order/status`, {
                 orderId: this.activeOrder.id,
                 status: status

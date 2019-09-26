@@ -75,11 +75,12 @@ export default {
     },
     methods: {
         setStatusInProgres() {
-            this.$children[0].testFunc()
+            this.$children[0].testFunc('Приет за ремонт')
             this.updateOrder(this.order.id)
         },
         setStatus(status) {
             this.$emit('changeStatus', status)
+            
         }
     }
 };
