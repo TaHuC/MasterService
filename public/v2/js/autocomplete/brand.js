@@ -1,0 +1,1 @@
+var brand=["Nokia", "Samsung", "Iphone", "ZTE", "HTC"]

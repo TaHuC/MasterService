@@ -62,7 +62,8 @@ export default {
     },
     methods: {
         changeStatus(status) {
-            Axios.post(`/order/status/`, {
+
+            Axios.post(`/order/status`, {
                 orderId: this.activeOrder.id,
                 status: status
             })

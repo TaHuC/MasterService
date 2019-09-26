@@ -1,0 +1,201 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Nov 27, 2015, Nov 27, 2015 9:54:10 PM
+    Author     : tahuc
+*/
+html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    color: #73879C;
+    background: #2A3F54;
+    /*#ECF0F1; #FCFCFC*/
+
+    font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.471;
+}
+
+video { 
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    transform: translateX(-50%) translateY(-50%);
+    background: url('//demosthenes.info/assets/images/polina.jpg') no-repeat;
+    background-size: cover;
+    transition: 1s opacity;
+}
+
+
+
+.container {
+    display: block;
+}
+
+.panel-reg {
+    margin-top: -5%;
+    max-width: 500px;
+}
+
+.panel-log {
+    background-color: whitesmoke;
+    margin-top: 5%;
+    max-width: 300px;
+}
+
+.panel-log-heading {
+    background-color: #204d74;
+    min-height: 70px;
+}
+.panel-log-title {
+    margin-top: 6%;
+    color: white;
+    font-family: sans-serif;
+    font-weight: bolder;
+}
+
+.btn-log {
+    background-color: #204d74;
+    color: white;
+}
+
+.text-log {
+    color: white;
+    font-weight: bolder;
+}
+
+.text-log-a {
+    color: red;
+    text-decoration: none;
+    font-style: oblique;
+}
+
+.panel-cl {
+    max-width: 400px;
+}
+
+.navbar-osn {
+    background-color: whitesmoke;
+}
+
+.sider {
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background: slategray;
+}
+
+.search-form {
+    max-width: 500px;
+}
+
+.panel-usr {
+    max-width: 500px;
+}
+
+.show {
+    border: 1px solid black;
+}
+
+#show_search {
+    position: absolute;
+    min-width: 320px;
+    margin-top: -15px;
+    margin-left: 11px;
+    border-top:0px;
+    overflow: hidden;
+    background-color: white;
+    z-index: 550;
+}
+
+.show_result{
+    font-family:tahoma;
+    padding:10px; 
+    border-bottom:1px #CDCDCD dashed;
+    font-size:15px; 
+    z-index: 550;
+}
+
+.show_result:hover {
+    background:#364956;
+    color:#FFF;
+    cursor:pointer;
+}
+
+.tab-pane {
+    overflow-y: auto;
+}
+
+#imgUser {
+    display: block;
+    max-width: 44px;
+    max-height: 44px;
+}
+
+#photoSel {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+#username{
+    overflow: scroll;
+}
+
+.dis_user {
+    color: red;
+}
+.ed_user {
+    color: green;
+}
+
+.filter {
+    display: block;
+    text-align: right;
+}
+
+/*.panel-title-name {
+    display: block;
+    text-align: left;
+}
+
+.panel-usr-sm-info {
+    display: block;
+    text-align: right;
+}*/
+
+#tasking {
+    height: 200px;
+    overflow-y: auto;
+}
+
+#delayed {
+    overflow-y: scroll;
+}
+
+#statusTab {
+    overflow-y: hidden;
+}

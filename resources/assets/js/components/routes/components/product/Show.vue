@@ -7,16 +7,36 @@
             <span class="bg-secondary p-2"><i class="fa fa-user text-warning"></i> {{ order.user.name }} | {{ order.created_at }}</span>
         </div>
         <div class="col-12 d-flex justify-content-end">
-            <button class="btn btn-outline-danger mr-2" v-show="order.statusId == 1" @click="setStatusInProgres()"><i class="fa fa-wrench"></i></button>
-            <button class="btn btn-outline-warning mr-2" v-show="order.statusId != 4 && order.statusId != 5" @click="changeStatusEvent(5)"><i class="fa fa-puzzle-piece"></i></button>
-            <button class="btn btn-outline-success mr-2" v-show="order.statusId != 4 && order.statusId != 3" @click="changeStatusEvent(3)"><i class="fa fa-thumbs-up"></i></button>
-            <button class="btn btn-outline-info" v-show="order.statusId != 4" @click="changeStatusEvent(4)"><i class="fa fa-share-square"></i></button>
+            <button 
+            class="btn btn-outline-danger mr-2" 
+            v-show="order.statusId == 1" 
+            @click="setStatusInProgres()"
+            ><i class="fa fa-wrench"></i></button>
+
+            <button 
+            class="btn btn-outline-warning mr-2" 
+            v-show="order.statusId != 4 && order.statusId != 5" 
+            @click="setStatus(5)"
+            ><i class="fa fa-puzzle-piece"></i></button>
+
+            <button 
+            class="btn btn-outline-success mr-2" 
+            v-show="order.statusId != 4 && order.statusId != 3"
+            @click="setStatus(3)"
+            ><i class="fa fa-thumbs-up"></i></button>
+
+            <button class="btn btn-outline-info" 
+            v-show="order.statusId != 4"
+            @click="setStatus(4)"
+            ><i class="fa fa-share-square"></i></button>
         </div>
+
         <div class="col-12 d-sm-none d-md-flex">
             <div class="col-4"><h3>Ремонти</h3></div>
             <div class="col-4"><h4>Бележки</h4></div>
             <div class="col-4"><h3>Задачи</h3></div>
         </div>
+
         <div class="row p-2 overflow-auto" style="height: 400px;">
         <!-- remont -->
             <repairs :orderId="order.id" :updateOrder="updateOrder" />
@@ -26,6 +46,7 @@
             <tasks :orderId="order.id" />
             
         </div>
+
         <hr class="bg-light">
         <div class="d-flex col-12 justify-content-end" style="height: 20px;">
             <h6 class="mr-4 h4 text-success">ЦЕНА: {{ order.price }}лв.</h6>
@@ -57,7 +78,7 @@ export default {
             this.$children[0].testFunc()
             this.updateOrder(this.order.id)
         },
-        changeStatusEvent(status) {
+        setStatus(status) {
             this.$emit('changeStatus', status)
         }
     }
