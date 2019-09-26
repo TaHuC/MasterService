@@ -72,6 +72,8 @@ const router = new VueRouter({
     routes
 })
 
+export const bus = new Vue()
+
 const app = new Vue({
     el: '#app',
     router,

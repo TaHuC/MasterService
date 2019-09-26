@@ -4,7 +4,7 @@
         <div class="" v-show="!loading">
             <h3 class="d-md-none">Задачи</h3>
             <div class="input-group input-group-sm mb-3">
-                <input v-model="task" type="text" class="form-control" placeholder="Задача" aria-describedby="basic-addon2">
+                <input v-model="task" type="text" @keyup.enter="addTask()" class="form-control" placeholder="Задача" aria-describedby="basic-addon2">
                 <div class="input-group-append">
                     <button :disabled="isDisabledAdd" @click="addTask()" class="btn btn-outline-light"><i class="fa fa-plus"></i></button>
                 </div>
@@ -19,20 +19,20 @@
                     <hr class="bg-danger">
                     <!-- form -->
                     <div v-if="!item.answer_user_id" class="input-group input-group-sm">
-                        <input type="text" v-model="answer" class="form-control" placeholder="Решение" aria-describedby="basic-addon2">
+                        <input type="text" @keyup.enter="addAnswer(item.id)" v-model="answer" class="form-control" placeholder="Решение" aria-describedby="basic-addon2">
                         <div class="input-group-append">
                             <button :disabled="isDisabledAnswer" @click="addAnswer(item.id)" class="btn btn-outline-light"><i class="fa fa-plus"></i></button>
                         </div>
                     </div>  
                     <!-- answer -->
                     <div v-else>
-                        <button v-show="item.active" class="close"><i class="fa fa-check"></i></button>
+                        <button v-show="item.active" @click="disableTask(item.id)" class="close"><i class="fa fa-check"></i></button>
                         <p>
                             {{ item.answer }}
                         </p>
                     <footer class="d-flex justify-content-between text-warning">
                         <p class=""><small>{{ item.answer_user.name }}</small></p>
-                        <p><small>{{ item.updated_at }}</small></p>
+                        <p><small>{{ item.answerTime }}</small></p>
                     </footer>
                     </div>
                 </li>
@@ -74,15 +74,23 @@ export default {
         }
     },
     methods: {
+        disableTask(id) {
+            Axios.put(`/api/instantly/${id}`)
+                .then((res) => {
+                    if (res.data.id) {
+                        this.getTasks()
+                    }
+                })
+                .catch(err => console.log(err))
+        },
         getTasks() {
             this.loading = true
             Axios.get(`/api/instantly/${this.orderId}`)
             .then((res) => {
-                // console.log(res.data)
                 this.tasks = res.data
                 setTimeout(() => {
                     this.loading = false
-                }, 500)
+                }, 200)
             })
             .catch(err => console.log(err))
         },

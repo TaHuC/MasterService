@@ -76,7 +76,7 @@ export default {
     methods: {
         setStatusInProgres() {
             this.$children[0].testFunc('Приет за ремонт')
-            this.updateOrder(this.order.id)
+            // this.updateOrder(this.order.id)
         },
         setStatus(status) {
             this.$emit('changeStatus', status)
@@ -86,5 +86,8 @@ export default {
 };
 </script>
 
-<style lang="">
+<style lang="" scoped>
+h6 {
+    cursor: pointer;
+}
 </style>

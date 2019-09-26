@@ -116,11 +116,14 @@ class InstantlyController extends Controller
         //return print($request->active);
         $instantly = Instantly::find($id);
         if(!$request->answer) {
-            $instantly->active = 0;
-            $instantly->save();
+            if ($instantly->user_id == Auth::user()->id) {
+                $instantly->active = 0;
+                $instantly->save();
+            }
         } else {
             $instantly->answer = $request->answer;
             $instantly->answer_user_id = Auth::user()->id;
+            $instantly->answerTime = date('Y-m-d H:i:s');
             $instantly->active = 1;
             $instantly->save();
         }

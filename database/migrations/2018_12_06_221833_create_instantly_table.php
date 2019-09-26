@@ -25,6 +25,7 @@ class CreateInstantlyTable extends Migration
             $table->foreign('answer_user_id')->references('id')->on('users');
             $table->integer('order_id')->unsigned();
             $table->foreign('order_id')->references('id')->on('orders');
+            $table->timestamps('answerTime')->nullable();
             $table->timestamps();
         });
     }

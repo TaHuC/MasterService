@@ -39,6 +39,7 @@
 
 <script>
 import Axios from 'axios'
+import { bus } from '../../app'
 
 import Show from './components/product/Show'
 import Add from './components/product/Add'
@@ -166,6 +167,10 @@ export default {
     },
     created() {
         this.getProduct()
+        bus.$on('updateOrder', (id) => {
+            this.updateOrder(id)
+        })
+        
     }
 }
 </script>
