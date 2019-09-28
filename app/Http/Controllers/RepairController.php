@@ -64,9 +64,11 @@ class RepairController extends Controller
         $repair->save();
 
         $order = Order::find($request->orderId);
-        $order->statusId = 2;
-        $order->save();
-
+        if (!$order->statusId == 4) {
+            $order->statusId = 2;
+            $order->save();
+        }
+        
         //return redirect()->route('product.show', ['id' => $request->productId])->with('messages', 'Add successed!');
         return $repair;
     }
