@@ -64,7 +64,7 @@ class RepairController extends Controller
         $repair->save();
 
         $order = Order::find($request->orderId);
-        if (!$order->statusId == 4) {
+        if ($order->statusId != 4) {
             $order->statusId = 2;
             $order->save();
         }
