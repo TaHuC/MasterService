@@ -13593,6 +13593,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -57398,17 +57400,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "height": "20px"
     }
-  }, [(_vm.showPrice) ? _c('h6', {
-    staticClass: "mr-4 h4 text-success",
-    attrs: {
-      "id": "price"
-    },
-    on: {
-      "click": function($event) {
-        _vm.editPrice()
-      }
-    }
-  }, [_vm._v("ЦЕНА: " + _vm._s(_vm.order.price) + "лв.")]) : _c('div', {
+  }, [(!_vm.showPrice && _vm.order.statusId != 4) ? _c('div', {
     staticClass: "input-group input-group-sm col-3 mb-3"
   }, [_c('input', {
     directives: [{
@@ -57443,14 +57435,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "fa fa-plus"
-  })])])]), _vm._v(" "), (_vm.showDepozit) ? _c('h6', {
+  })])])]) : _c('h6', {
     staticClass: "mr-4 h4 text-success",
+    attrs: {
+      "id": "price"
+    },
     on: {
       "click": function($event) {
-        _vm.editDepozit()
+        _vm.editPrice()
       }
     }
-  }, [_vm._v("ДЕПОЗИТ: " + _vm._s(_vm.order.deposit) + "лв.")]) : _c('div', {
+  }, [_vm._v("ЦЕНА: " + _vm._s(_vm.order.price) + "лв.")]), _vm._v(" "), (!_vm.showDepozit && _vm.order.statusId != 4) ? _c('div', {
     staticClass: "input-group input-group-sm col-3 mb-3"
   }, [_c('input', {
     directives: [{
@@ -57485,7 +57480,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "fa fa-plus"
-  })])])]), _vm._v(" "), _c('h6', {
+  })])])]) : _c('h6', {
+    staticClass: "mr-4 h4 text-success",
+    on: {
+      "click": function($event) {
+        _vm.editDepozit()
+      }
+    }
+  }, [_vm._v("ДЕПОЗИТ: " + _vm._s(_vm.order.deposit) + "лв.")]), _vm._v(" "), _c('h6', {
     staticClass: "h4 text-warning"
   }, [_vm._v("ОСТАВАТ: " + _vm._s(_vm.order.price - _vm.order.deposit) + "лв.")])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
