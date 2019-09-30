@@ -4,7 +4,7 @@
         <div class="" v-show="!loading">
             <h3 class="d-md-none">Задачи</h3>
             <div class="input-group input-group-sm mb-3">
-                <input v-model="task" type="text" @keyup.enter="addTask()" class="form-control" placeholder="Задача" aria-describedby="basic-addon2">
+                <input v-model="task" type="text" class="form-control" placeholder="Задача" aria-describedby="basic-addon2">
                 <div class="input-group-append">
                     <button :disabled="isDisabledAdd" @click="addTask()" class="btn btn-outline-light"><i class="fa fa-plus"></i></button>
                 </div>
@@ -19,7 +19,7 @@
                     <hr class="bg-danger">
                     <!-- form -->
                     <div v-if="!item.answer_user_id" class="input-group input-group-sm">
-                        <input type="text" @keyup.enter="addAnswer(item.id)" v-model="answer" class="form-control" placeholder="Решение" aria-describedby="basic-addon2">
+                        <input type="text" v-model="answer" class="form-control" placeholder="Решение" aria-describedby="basic-addon2">
                         <div class="input-group-append">
                             <button :disabled="isDisabledAnswer" @click="addAnswer(item.id)" class="btn btn-outline-light"><i class="fa fa-plus"></i></button>
                         </div>
@@ -121,6 +121,7 @@ export default {
                     }
                 })
                 .catch(err => console.log(err))
+                
                 this.answer = ''
             }
         }

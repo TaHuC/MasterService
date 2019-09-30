@@ -33,7 +33,7 @@
         <hr class="bg-light">
         
         <add v-if="showAddForm" :productId="product.id" :getProduct="getProduct" />
-        <show v-else :order="activeOrder" :updateOrder="updateOrder" @changeStatus="changeStatus" />
+        <show v-else :order="activeOrder" @changeStatus="changeStatus" />
     </div>
 </template>
 

@@ -39,7 +39,7 @@
 
         <div class="row p-2 overflow-auto" style="height: 400px;">
         <!-- remont -->
-            <repairs :orderId="order.id" :statusId="order.statusId" :updateOrder="updateOrder" />
+            <repairs :orderId="order.id" :statusId="order.statusId" />
         <!-- belejki -->
             <notes :orderId="order.id" :statusId="order.statusId" />
         <!-- zadachi -->
@@ -51,14 +51,14 @@
         <div class="d-flex col-12 justify-content-end" style="height: 20px;">
             <h6 id="price" v-if="showPrice" @click="editPrice()" class="mr-4 h4 text-success">ЦЕНА: {{ order.price }}лв.</h6>
             <div v-else class="input-group input-group-sm col-3 mb-3">
-                <input type="text" v-model="newPrice" @keyup.enter="addNewChange('price')" class="form-control form-control-sm text-right" aria-label="Цена..." aria-describedby="basic-addon2">
+                <input type="text" v-model="newPrice" class="form-control form-control-sm text-right" aria-label="Цена..." aria-describedby="basic-addon2">
                 <div class="input-group-append">
                     <button @click="addNewChange('price')" class="btn btn-outline-light"><i class="fa fa-plus"></i></button>
                 </div>
             </div> 
             <h6 class="mr-4 h4 text-success" @click="editDepozit()" v-if="showDepozit">ДЕПОЗИТ: {{ order.deposit }}лв.</h6>
             <div v-else class="input-group input-group-sm col-3 mb-3">
-                <input type="text" v-model="newDepozit" @keyup.enter="addNewChange('depozit')" class="form-control form-control-sm text-right" aria-label="Цена..." aria-describedby="basic-addon2">
+                <input type="text" v-model="newDepozit" class="form-control form-control-sm text-right" aria-label="Цена..." aria-describedby="basic-addon2">
                 <div class="input-group-append">
                     <button @click="addNewChange('depozit')" class="btn btn-outline-light"><i class="fa fa-plus"></i></button>
                 </div>
@@ -79,7 +79,6 @@ import Tasks from './witgets/tasks'
 export default {
     props: {
         order: Object,
-        updateOrder: Function
     },
     data() {
         return {
@@ -107,8 +106,7 @@ export default {
         },
         setStatusInProgres() {
             this.$children[0].testFunc('Приет за ремонт')
-            // this.updateOrder(this.order.id)
-            bus.$emit('updateOrder', this.order.id)
+            bus.$emit('changeStatus', 2)
         },
         setStatus(status) {
             bus.$emit('changeStatus', status)

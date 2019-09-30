@@ -4,7 +4,7 @@
         <div v-show="!loading">
             <h4 class="d-md-none">Бележки</h4>
             <div class="input-group input-group-sm mb-3">
-                <input type="text" v-model="note" @keyup.enter="addNote()" class="form-control" placeholder="Бележка" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <input type="text" v-model="note" class="form-control" placeholder="Бележка" aria-label="Recipient's username" aria-describedby="basic-addon2">
                 <div class="input-group-append">
                     <button :disabled="isDisabled" @click="addNote()" class="btn btn-outline-light"><i class="fa fa-plus"></i></button>
                 </div>
@@ -61,10 +61,8 @@ export default {
                     }
                 })
                 .catch(err => console.log(err))
-                this.note = ''
-            } else {
-                this.note = ''
             }
+            this.note = ''
         },
         getNotes() {
             this.loading = true

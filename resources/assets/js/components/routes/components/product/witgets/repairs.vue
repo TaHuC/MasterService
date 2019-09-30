@@ -4,7 +4,7 @@
             <div v-show="!loading">
             <h3 class="d-md-none">Ремонти</h3>
             <div class="input-group input-group-sm mb-3">
-                <input type="text" v-model="repair" @keyup.enter="addRepair()" class="form-control" placeholder="Ремонт" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <input type="text" v-model="repair" class="form-control" placeholder="Ремонт" aria-label="Recipient's username" aria-describedby="basic-addon2">
                 <div class="input-group-append">
                     <button @click="addRepair()" :disabled="isDisabled" class="btn btn-outline-light"><i class="fa fa-plus"></i></button>
                 </div>
@@ -30,7 +30,6 @@ import { bus } from '../../../../../app'
 export default {
     props: {
         orderId: Number,
-        updateOrder: Function,
         statusId: Number
     },
     data() {
@@ -72,20 +71,16 @@ export default {
                 }).then((res) => {
                     if (res.data.id) {
                         this.getRepairs()
-                        this.updateOrder(this.orderId)
+                        bus.$emit('updateOrder', this.orderId)
                     }
                 }).catch(err => console.log(err))
-                this.repair = ''
-            } else {
-                this.repair = ''
             }
+            this.repair = ''
         },
         getRepairs() {
             this.loading = true
-            console.log(this.orderId)
             Axios.get(`/repair/${this.orderId}`)
             .then((res) => {
-                // console.log(res.data)
                 if (res.data.length > 0) {
                     this.repairs = res.data.reverse()
                 } else {
@@ -103,7 +98,6 @@ export default {
     },
     watch: {
         orderId: function () {
-            console.log('tuk')
             this.getRepairs()
         }
     },

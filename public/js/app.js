@@ -13603,8 +13603,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
-        order: Object,
-        updateOrder: Function
+        order: Object
     },
     data: function data() {
         return {
@@ -13633,8 +13632,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         setStatusInProgres: function setStatusInProgres() {
             this.$children[0].testFunc('Приет за ремонт');
-            // this.updateOrder(this.order.id)
-            __WEBPACK_IMPORTED_MODULE_1__app__["bus"].$emit('updateOrder', this.order.id);
+            __WEBPACK_IMPORTED_MODULE_1__app__["bus"].$emit('changeStatus', 2);
         },
         setStatus: function setStatus(status) {
             __WEBPACK_IMPORTED_MODULE_1__app__["bus"].$emit('changeStatus', status);
@@ -13738,10 +13736,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }).catch(function (err) {
                     return console.log(err);
                 });
-                this.note = '';
-            } else {
-                this.note = '';
             }
+            this.note = '';
         },
         getNotes: function getNotes() {
             var _this2 = this;
@@ -13810,7 +13806,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
         orderId: Number,
-        updateOrder: Function,
         statusId: Number
     },
     data: function data() {
@@ -13857,23 +13852,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }).then(function (res) {
                     if (res.data.id) {
                         _this2.getRepairs();
-                        _this2.updateOrder(_this2.orderId);
+                        __WEBPACK_IMPORTED_MODULE_1__app__["bus"].$emit('updateOrder', _this2.orderId);
                     }
                 }).catch(function (err) {
                     return console.log(err);
                 });
-                this.repair = '';
-            } else {
-                this.repair = '';
             }
+            this.repair = '';
         },
         getRepairs: function getRepairs() {
             var _this3 = this;
 
             this.loading = true;
-            console.log(this.orderId);
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/repair/' + this.orderId).then(function (res) {
-                // console.log(res.data)
                 if (res.data.length > 0) {
                     _this3.repairs = res.data.reverse();
                 } else {
@@ -13892,7 +13883,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     watch: {
         orderId: function orderId() {
-            console.log('tuk');
             this.getRepairs();
         }
     }
@@ -14038,6 +14028,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }).catch(function (err) {
                     return console.log(err);
                 });
+
                 this.answer = '';
             }
         }
@@ -55971,8 +55962,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }) : _c('show', {
     attrs: {
-      "order": _vm.activeOrder,
-      "updateOrder": _vm.updateOrder
+      "order": _vm.activeOrder
     },
     on: {
       "changeStatus": _vm.changeStatus
@@ -57011,10 +57001,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.task)
     },
     on: {
-      "keyup": function($event) {
-        if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")) { return null; }
-        _vm.addTask()
-      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.task = $event.target.value
@@ -57069,10 +57055,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": (_vm.answer)
       },
       on: {
-        "keyup": function($event) {
-          if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")) { return null; }
-          _vm.addAnswer(item.id)
-        },
         "input": function($event) {
           if ($event.target.composing) { return; }
           _vm.answer = $event.target.value
@@ -57397,8 +57379,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('repairs', {
     attrs: {
       "orderId": _vm.order.id,
-      "statusId": _vm.order.statusId,
-      "updateOrder": _vm.updateOrder
+      "statusId": _vm.order.statusId
     }
   }), _vm._v(" "), _c('notes', {
     attrs: {
@@ -57446,10 +57427,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.newPrice)
     },
     on: {
-      "keyup": function($event) {
-        if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")) { return null; }
-        _vm.addNewChange('price')
-      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.newPrice = $event.target.value
@@ -57492,10 +57469,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.newDepozit)
     },
     on: {
-      "keyup": function($event) {
-        if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")) { return null; }
-        _vm.addNewChange('depozit')
-      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.newDepozit = $event.target.value
@@ -57578,10 +57551,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.note)
     },
     on: {
-      "keyup": function($event) {
-        if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")) { return null; }
-        _vm.addNote()
-      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.note = $event.target.value
@@ -57680,10 +57649,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.repair)
     },
     on: {
-      "keyup": function($event) {
-        if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")) { return null; }
-        _vm.addRepair()
-      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.repair = $event.target.value
