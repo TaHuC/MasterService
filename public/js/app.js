@@ -10711,6 +10711,10 @@ var router = new __WEBPACK_IMPORTED_MODULE_3_vue_router__["a" /* default */]({
 
 var bus = new Vue();
 
+$(function () {
+    $('[data-toggle="popover"]').popover();
+});
+
 var app = new Vue({
     el: '#app',
     router: router,
@@ -13317,6 +13321,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this2.statusId = res.data[0].statusId;
                 _this2.activeOrder.status = res.data[0].status;
                 _this2.activeOrder.price = res.data[0].price;
+                _this2.activeOrder.deposit = res.data[0].deposit;
             });
         },
         changeActiveOrder: function changeActiveOrder(order) {
@@ -13348,7 +13353,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.loading = true;
             // this.$refs.topProgress.start()
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/product/show/' + this.$route.params.product).then(function (res) {
-                // console.log(res.data)
                 _this3.product.id = res.data.id;
                 _this3.product.brand = res.data.brand;
                 _this3.product.model = res.data.model_brand;
@@ -13393,7 +13397,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         this.getProduct();
         __WEBPACK_IMPORTED_MODULE_1__app__["bus"].$on('updateOrder', function (id) {
-            _this4.updateOrder(id);
+            setTimeout(_this4.updateOrder(id), 3000);
+        });
+        __WEBPACK_IMPORTED_MODULE_1__app__["bus"].$on('changeStatus', function (status) {
+            _this4.changeStatus(status);
         });
     }
 });
@@ -13509,12 +13516,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__witgets_repairs__ = __webpack_require__(255);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__witgets_repairs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__witgets_repairs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__witgets_notes__ = __webpack_require__(254);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__witgets_notes___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__witgets_notes__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__witgets_tasks__ = __webpack_require__(256);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__witgets_tasks___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__witgets_tasks__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__witgets_repairs__ = __webpack_require__(255);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__witgets_repairs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__witgets_repairs__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__witgets_notes__ = __webpack_require__(254);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__witgets_notes___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__witgets_notes__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__witgets_tasks__ = __webpack_require__(256);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__witgets_tasks___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__witgets_tasks__);
 //
 //
 //
@@ -13573,6 +13581,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -13585,18 +13606,59 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         order: Object,
         updateOrder: Function
     },
+    data: function data() {
+        return {
+            showPrice: true,
+            showDepozit: true,
+            newPrice: this.order.price,
+            newDepozit: this.order.deposit
+        };
+    },
+
     components: {
-        Repairs: __WEBPACK_IMPORTED_MODULE_1__witgets_repairs___default.a,
-        Notes: __WEBPACK_IMPORTED_MODULE_2__witgets_notes___default.a,
-        Tasks: __WEBPACK_IMPORTED_MODULE_3__witgets_tasks___default.a
+        Repairs: __WEBPACK_IMPORTED_MODULE_2__witgets_repairs___default.a,
+        Notes: __WEBPACK_IMPORTED_MODULE_3__witgets_notes___default.a,
+        Tasks: __WEBPACK_IMPORTED_MODULE_4__witgets_tasks___default.a
     },
     methods: {
+        editPrice: function editPrice() {
+            if (this.order.statusId != 4) {
+                this.showPrice = false;
+            }
+        },
+        editDepozit: function editDepozit() {
+            if (this.order.statusId != 4) {
+                this.showDepozit = false;
+            }
+        },
         setStatusInProgres: function setStatusInProgres() {
             this.$children[0].testFunc('Приет за ремонт');
             // this.updateOrder(this.order.id)
         },
         setStatus: function setStatus(status) {
-            this.$emit('changeStatus', status);
+            __WEBPACK_IMPORTED_MODULE_1__app__["bus"].$emit('changeStatus', status);
+        },
+        addNewChange: function addNewChange(key) {
+            var _this = this;
+
+            switch (key) {
+                case 'price':
+                    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/order/' + this.order.id, { price: this.newPrice }).then(function (res) {
+                        __WEBPACK_IMPORTED_MODULE_1__app__["bus"].$emit('updateOrder', _this.order.id);
+                        _this.showPrice = true;
+                    }).catch(function (err) {
+                        return console.log(err);
+                    });
+                    break;
+                case 'depozit':
+                    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/order/' + this.order.id, { deposit: this.newDepozit }).then(function (res) {
+                        __WEBPACK_IMPORTED_MODULE_1__app__["bus"].$emit('updateOrder', _this.order.id);
+                        _this.showDepozit = true;
+                    }).catch(function (err) {
+                        return console.log(err);
+                    });
+                    break;
+            }
         }
     }
 });
@@ -13783,6 +13845,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this2 = this;
 
             if (this.repair.length > 2) {
+                __WEBPACK_IMPORTED_MODULE_1__app__["bus"].$emit('changeStatus', 2);
                 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/repair', {
                     repair: this.repair,
                     orderId: this.orderId
@@ -25762,7 +25825,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(6)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 226 */
@@ -57230,7 +57293,11 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('div', {
+  return _c('div', {
+    attrs: {
+      "id": "show"
+    }
+  }, [_c('div', {
     staticClass: "d-flex justify-content-between mb-2"
   }, [_c('span', {
     staticClass: "bg-secondary p-2 mr-1"
@@ -57335,11 +57402,102 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "height": "20px"
     }
-  }, [_c('h6', {
-    staticClass: "mr-4 h4 text-success"
-  }, [_vm._v("ЦЕНА: " + _vm._s(_vm.order.price) + "лв.")]), _vm._v(" "), _c('h6', {
-    staticClass: "mr-4 h4 text-success"
-  }, [_vm._v("ДЕПОЗИТ: " + _vm._s(_vm.order.deposit) + "лв.")]), _vm._v(" "), _c('h6', {
+  }, [(_vm.showPrice) ? _c('h6', {
+    staticClass: "mr-4 h4 text-success",
+    attrs: {
+      "id": "price"
+    },
+    on: {
+      "click": function($event) {
+        _vm.editPrice()
+      }
+    }
+  }, [_vm._v("ЦЕНА: " + _vm._s(_vm.order.price) + "лв.")]) : _c('div', {
+    staticClass: "input-group input-group-sm col-3 mb-3"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.newPrice),
+      expression: "newPrice"
+    }],
+    staticClass: "form-control form-control-sm text-right",
+    attrs: {
+      "type": "text",
+      "aria-label": "Цена...",
+      "aria-describedby": "basic-addon2"
+    },
+    domProps: {
+      "value": (_vm.newPrice)
+    },
+    on: {
+      "keyup": function($event) {
+        if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")) { return null; }
+        _vm.addNewChange('price')
+      },
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.newPrice = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('div', {
+    staticClass: "input-group-append"
+  }, [_c('button', {
+    staticClass: "btn btn-outline-light",
+    on: {
+      "click": function($event) {
+        _vm.addNewChange('price')
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-plus"
+  })])])]), _vm._v(" "), (_vm.showDepozit) ? _c('h6', {
+    staticClass: "mr-4 h4 text-success",
+    on: {
+      "click": function($event) {
+        _vm.editDepozit()
+      }
+    }
+  }, [_vm._v("ДЕПОЗИТ: " + _vm._s(_vm.order.deposit) + "лв.")]) : _c('div', {
+    staticClass: "input-group input-group-sm col-3 mb-3"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.newDepozit),
+      expression: "newDepozit"
+    }],
+    staticClass: "form-control form-control-sm text-right",
+    attrs: {
+      "type": "text",
+      "aria-label": "Цена...",
+      "aria-describedby": "basic-addon2"
+    },
+    domProps: {
+      "value": (_vm.newDepozit)
+    },
+    on: {
+      "keyup": function($event) {
+        if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")) { return null; }
+        _vm.addNewChange('depozit')
+      },
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.newDepozit = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('div', {
+    staticClass: "input-group-append"
+  }, [_c('button', {
+    staticClass: "btn btn-outline-light",
+    on: {
+      "click": function($event) {
+        _vm.addNewChange('depozit')
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-plus"
+  })])])]), _vm._v(" "), _c('h6', {
     staticClass: "h4 text-warning"
   }, [_vm._v("ОСТАВАТ: " + _vm._s(_vm.order.price - _vm.order.deposit) + "лв.")])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;

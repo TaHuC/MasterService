@@ -95,6 +95,7 @@ export default {
                 this.statusId = res.data[0].statusId
                 this.activeOrder.status = res.data[0].status
                 this.activeOrder.price = res.data[0].price
+                this.activeOrder.deposit = res.data[0].deposit
             })
         },
         changeActiveOrder(order) {
@@ -124,7 +125,6 @@ export default {
             this.loading = true
             // this.$refs.topProgress.start()
             Axios.get(`/product/show/${this.$route.params.product}`).then(res => {
-                // console.log(res.data)
                 this.product.id = res.data.id
                 this.product.brand = res.data.brand
                 this.product.model = res.data.model_brand
@@ -168,7 +168,10 @@ export default {
     created() {
         this.getProduct()
         bus.$on('updateOrder', (id) => {
-            this.updateOrder(id)
+            setTimeout(this.updateOrder(id), 3000)
+        })
+        bus.$on('changeStatus', (status) => {
+            this.changeStatus(status)
         })
         
     }

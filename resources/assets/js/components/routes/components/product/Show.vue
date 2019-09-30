@@ -1,5 +1,5 @@
 <template lang="">
-    <div>
+    <div id="show">
         <div class="d-flex justify-content-between mb-2">
             <span class="bg-secondary p-2 mr-1"><i class="fa fa-check text-warning"></i> {{ order.now ? order.now : 'Няма информация' }}</span>
             <span class="bg-secondary p-2 mr-1"><i class="fa fa-info text-warning"></i> {{ order.description ? order.description : 'Няма информация' }}</span>
@@ -49,8 +49,20 @@
 
         <hr class="bg-light">
         <div class="d-flex col-12 justify-content-end" style="height: 20px;">
-            <h6 class="mr-4 h4 text-success">ЦЕНА: {{ order.price }}лв.</h6>
-            <h6 class="mr-4 h4 text-success">ДЕПОЗИТ: {{ order.deposit }}лв.</h6>
+            <h6 id="price" v-if="showPrice" @click="editPrice()" class="mr-4 h4 text-success">ЦЕНА: {{ order.price }}лв.</h6>
+            <div v-else class="input-group input-group-sm col-3 mb-3">
+                <input type="text" v-model="newPrice" @keyup.enter="addNewChange('price')" class="form-control form-control-sm text-right" aria-label="Цена..." aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button @click="addNewChange('price')" class="btn btn-outline-light"><i class="fa fa-plus"></i></button>
+                </div>
+            </div> 
+            <h6 class="mr-4 h4 text-success" @click="editDepozit()" v-if="showDepozit">ДЕПОЗИТ: {{ order.deposit }}лв.</h6>
+            <div v-else class="input-group input-group-sm col-3 mb-3">
+                <input type="text" v-model="newDepozit" @keyup.enter="addNewChange('depozit')" class="form-control form-control-sm text-right" aria-label="Цена..." aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button @click="addNewChange('depozit')" class="btn btn-outline-light"><i class="fa fa-plus"></i></button>
+                </div>
+            </div>
             <h6 class="h4 text-warning">ОСТАВАТ: {{ order.price - order.deposit }}лв.</h6>
         </div>
     </div>
@@ -58,6 +70,7 @@
 
 <script>
 import Axios from 'axios'
+import { bus } from '../../../../app'
 
 import Repairs from './witgets/repairs'
 import Notes from './witgets/notes'
@@ -68,19 +81,58 @@ export default {
         order: Object,
         updateOrder: Function
     },
+    data() {
+        return {
+            showPrice: true,
+            showDepozit: true,
+            newPrice: this.order.price,
+            newDepozit: this.order.deposit
+        }
+    },
     components: {
         Repairs,
         Notes,
         Tasks
     },
     methods: {
+        editPrice() {
+            if (this.order.statusId != 4) {
+                this.showPrice = false
+            }
+        },
+        editDepozit() {
+            if (this.order.statusId != 4) {
+                this.showDepozit = false
+            }
+        },
         setStatusInProgres() {
             this.$children[0].testFunc('Приет за ремонт')
             // this.updateOrder(this.order.id)
         },
         setStatus(status) {
-            this.$emit('changeStatus', status)
+            bus.$emit('changeStatus', status)
             
+        },
+        addNewChange(key) {
+            switch (key) {
+                case 'price':
+                        Axios.put(`/order/${this.order.id}`, {price: this.newPrice})
+                        .then((res) => {
+                            bus.$emit('updateOrder', this.order.id)
+                            this.showPrice = true
+                        })
+                        .catch(err => console.log(err))
+                    break;
+                case 'depozit':
+                        Axios.put(`/order/${this.order.id}`, {deposit: this.newDepozit})
+                        .then((res) => {
+                            bus.$emit('updateOrder', this.order.id)
+                            this.showDepozit = true
+                        })
+                        .catch(err => console.log(err))
+                    break;
+            }
+           
         }
     }
 };

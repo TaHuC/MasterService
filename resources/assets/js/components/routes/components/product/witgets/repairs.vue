@@ -64,6 +64,7 @@ export default {
         },
         addRepair() {
             if (this.repair.length > 2) {
+                bus.$emit('changeStatus', 2)
                 Axios.post(`/repair`, {
                     repair: this.repair,
                     orderId: this.orderId

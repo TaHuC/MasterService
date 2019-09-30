@@ -214,19 +214,37 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         //
+        // return $request;
+
         $this->validate($request, [
-            'statusId' => 'required|integer'
+            'statusId' => 'integer',
+            'price' => 'integer',
+            'deposit' => 'integer',
         ]);
 
         $active = 1;
-        if($request->statusId === 4){
-            $active = 0;
-        }
 
         $order = Order::find($id);
-        $order->statusId = $request->statusId;
+
+        if ($request->price) {
+            $order->price = $request->price;
+        }
+
+        if ($request->deposit) {
+            $order->deposit = $request->deposit;
+        }
+        
+        if ($request->statusId) {
+            $order->statusId = $request->statusId;
+
+            if($request->statusId === 4){
+                $active = 0;
+            }
+        }
         $order->active = $active;
         $order->save();
+
+        return $order;
         
     }
 

@@ -74,6 +74,10 @@ const router = new VueRouter({
 
 export const bus = new Vue()
 
+$(function () {
+    $('[data-toggle="popover"]').popover()
+})
+
 const app = new Vue({
     el: '#app',
     router,
