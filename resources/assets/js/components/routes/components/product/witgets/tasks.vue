@@ -47,7 +47,8 @@ import Axios from 'axios'
 
 export default {
     props: {
-        orderId: Number
+        orderId: Number,
+        statusId: Number
     },
     data() {
         return {

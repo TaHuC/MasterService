@@ -13634,6 +13634,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         setStatusInProgres: function setStatusInProgres() {
             this.$children[0].testFunc('Приет за ремонт');
             // this.updateOrder(this.order.id)
+            __WEBPACK_IMPORTED_MODULE_1__app__["bus"].$emit('updateOrder', this.order.id);
         },
         setStatus: function setStatus(status) {
             __WEBPACK_IMPORTED_MODULE_1__app__["bus"].$emit('changeStatus', status);
@@ -13701,7 +13702,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
-        orderId: Number
+        orderId: Number,
+        statusId: Number
     },
     data: function data() {
         return {
@@ -13724,7 +13726,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         addNote: function addNote() {
             var _this = this;
 
-            if (this.note.length > 4) {
+            if (this.note.length > 4 && this.statusId != 4) {
                 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/notes', {
                     note: this.note,
                     orderId: this.orderId
@@ -13736,6 +13738,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }).catch(function (err) {
                     return console.log(err);
                 });
+                this.note = '';
+            } else {
                 this.note = '';
             }
         },
@@ -13806,7 +13810,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
         orderId: Number,
-        updateOrder: Function
+        updateOrder: Function,
+        statusId: Number
     },
     data: function data() {
         return {
@@ -13844,7 +13849,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         addRepair: function addRepair() {
             var _this2 = this;
 
-            if (this.repair.length > 2) {
+            if (this.repair.length > 2 && this.statusId != 4) {
                 __WEBPACK_IMPORTED_MODULE_1__app__["bus"].$emit('changeStatus', 2);
                 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/repair', {
                     repair: this.repair,
@@ -13858,16 +13863,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     return console.log(err);
                 });
                 this.repair = '';
+            } else {
+                this.repair = '';
             }
         },
         getRepairs: function getRepairs() {
             var _this3 = this;
 
             this.loading = true;
+            console.log(this.orderId);
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/repair/' + this.orderId).then(function (res) {
                 // console.log(res.data)
                 if (res.data.length > 0) {
                     _this3.repairs = res.data.reverse();
+                } else {
+                    _this3.repairs = [];
                 }
 
                 setTimeout(function () {
@@ -13882,6 +13892,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     watch: {
         orderId: function orderId() {
+            console.log('tuk');
             this.getRepairs();
         }
     }
@@ -13944,7 +13955,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
-        orderId: Number
+        orderId: Number,
+        statusId: Number
     },
     data: function data() {
         return {
@@ -57385,15 +57397,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('repairs', {
     attrs: {
       "orderId": _vm.order.id,
+      "statusId": _vm.order.statusId,
       "updateOrder": _vm.updateOrder
     }
   }), _vm._v(" "), _c('notes', {
     attrs: {
-      "orderId": _vm.order.id
+      "orderId": _vm.order.id,
+      "statusId": _vm.order.statusId
     }
   }), _vm._v(" "), _c('tasks', {
     attrs: {
-      "orderId": _vm.order.id
+      "orderId": _vm.order.id,
+      "statusId": _vm.order.statusId
     }
   })], 1), _vm._v(" "), _c('hr', {
     staticClass: "bg-light"

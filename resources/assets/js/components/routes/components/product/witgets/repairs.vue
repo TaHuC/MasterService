@@ -30,7 +30,8 @@ import { bus } from '../../../../../app'
 export default {
     props: {
         orderId: Number,
-        updateOrder: Function
+        updateOrder: Function,
+        statusId: Number
     },
     data() {
         return {
@@ -63,7 +64,7 @@ export default {
             .catch(err => console.log(err))
         },
         addRepair() {
-            if (this.repair.length > 2) {
+            if (this.repair.length > 2 && this.statusId != 4) {
                 bus.$emit('changeStatus', 2)
                 Axios.post(`/repair`, {
                     repair: this.repair,
@@ -75,15 +76,20 @@ export default {
                     }
                 }).catch(err => console.log(err))
                 this.repair = ''
+            } else {
+                this.repair = ''
             }
         },
         getRepairs() {
             this.loading = true
+            console.log(this.orderId)
             Axios.get(`/repair/${this.orderId}`)
             .then((res) => {
                 // console.log(res.data)
                 if (res.data.length > 0) {
                     this.repairs = res.data.reverse()
+                } else {
+                    this.repairs = []
                 }
 
                 setTimeout (() => {
@@ -97,6 +103,7 @@ export default {
     },
     watch: {
         orderId: function () {
+            console.log('tuk')
             this.getRepairs()
         }
     },

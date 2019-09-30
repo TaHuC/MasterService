@@ -39,11 +39,11 @@
 
         <div class="row p-2 overflow-auto" style="height: 400px;">
         <!-- remont -->
-            <repairs :orderId="order.id" :updateOrder="updateOrder" />
+            <repairs :orderId="order.id" :statusId="order.statusId" :updateOrder="updateOrder" />
         <!-- belejki -->
-            <notes :orderId="order.id" />
+            <notes :orderId="order.id" :statusId="order.statusId" />
         <!-- zadachi -->
-            <tasks :orderId="order.id" />
+            <tasks :orderId="order.id" :statusId="order.statusId" />
             
         </div>
 
@@ -108,6 +108,7 @@ export default {
         setStatusInProgres() {
             this.$children[0].testFunc('Приет за ремонт')
             // this.updateOrder(this.order.id)
+            bus.$emit('updateOrder', this.order.id)
         },
         setStatus(status) {
             bus.$emit('changeStatus', status)

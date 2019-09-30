@@ -28,7 +28,8 @@ import Axios from 'axios'
 
 export default {
     props: {
-        orderId: Number
+        orderId: Number,
+        statusId: Number
     },
     data() {
         return {
@@ -48,7 +49,7 @@ export default {
     },
     methods: {
         addNote() {
-            if (this.note.length > 4) {
+            if (this.note.length > 4 && this.statusId != 4) {
                 Axios.post('/notes', {
                     note: this.note,
                     orderId: this.orderId
@@ -60,6 +61,8 @@ export default {
                     }
                 })
                 .catch(err => console.log(err))
+                this.note = ''
+            } else {
                 this.note = ''
             }
         },
