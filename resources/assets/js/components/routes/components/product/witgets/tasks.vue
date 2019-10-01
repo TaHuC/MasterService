@@ -60,8 +60,8 @@ export default {
     },
     computed: {
         isDisabledAdd() {
-            if (this.task.length > 2 && this.tasks[0].answer_user_id) {
-                return false
+            if (this.task.length > 2 && (!this.tasks[0] || this.tasks[0].answer_user_id)) {
+                return false                
             } else {
                 return true
             }

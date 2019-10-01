@@ -13298,7 +13298,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 status: status
             }).then(function (res) {
                 if (res.data.id) {
-                    _this.updateOrder(_this.activeOrder.id);
                     if (status == 3) {
                         __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/tasks', {
                             title: '#' + _this.activeOrder.id + ' \u0435 \u0433\u043E\u0442\u043E\u0432\u0430',
@@ -13307,6 +13306,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                             return console.log(err);
                         });
                     }
+
+                    _this.updateOrder(_this.activeOrder.id);
                 }
             }).catch(function (err) {
                 console.log(err);
@@ -13397,7 +13398,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         this.getProduct();
         __WEBPACK_IMPORTED_MODULE_1__app__["bus"].$on('updateOrder', function (id) {
-            setTimeout(_this4.updateOrder(id), 3000);
+            _this4.updateOrder(id);
         });
         __WEBPACK_IMPORTED_MODULE_1__app__["bus"].$on('changeStatus', function (status) {
             _this4.changeStatus(status);
@@ -13837,7 +13838,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).then(function (res) {
                 if (res.data.id) {
                     _this.getRepairs();
-                    __WEBPACK_IMPORTED_MODULE_1__app__["bus"].$emit('updateOrder', _this.orderId);
                 }
             }).catch(function (err) {
                 return console.log(err);
@@ -13847,18 +13847,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this2 = this;
 
             if (this.repair.length > 2 && this.statusId != 4) {
-                __WEBPACK_IMPORTED_MODULE_1__app__["bus"].$emit('changeStatus', 2);
                 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/repair', {
                     repair: this.repair,
                     orderId: this.orderId
                 }).then(function (res) {
                     if (res.data.id) {
                         _this2.getRepairs();
-                        __WEBPACK_IMPORTED_MODULE_1__app__["bus"].$emit('updateOrder', _this2.orderId);
                     }
                 }).catch(function (err) {
                     return console.log(err);
                 });
+                __WEBPACK_IMPORTED_MODULE_1__app__["bus"].$emit('changeStatus', 2);
             }
             this.repair = '';
         },
@@ -13961,7 +13960,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     computed: {
         isDisabledAdd: function isDisabledAdd() {
-            if (this.task.length > 2 && this.tasks[0].answer_user_id) {
+            if (this.task.length > 2 && (!this.tasks[0] || this.tasks[0].answer_user_id)) {
                 return false;
             } else {
                 return true;
@@ -25830,7 +25829,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(6)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 226 */

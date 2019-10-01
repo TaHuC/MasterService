@@ -72,7 +72,6 @@ export default {
             })
             .then((res) => {
                 if (res.data.id) {
-                    this.updateOrder(this.activeOrder.id)
                     if (status == 3) {
                         Axios.post('/api/tasks', {
                             title: `#${this.activeOrder.id} е готова`,
@@ -81,6 +80,8 @@ export default {
                         .then()
                         .catch(err => console.log(err))
                     }
+
+                    this.updateOrder(this.activeOrder.id)
                 }
             })
             .catch(err => {
@@ -168,7 +169,7 @@ export default {
     created() {
         this.getProduct()
         bus.$on('updateOrder', (id) => {
-            setTimeout(this.updateOrder(id), 3000)
+            this.updateOrder(id)
         })
         bus.$on('changeStatus', (status) => {
             this.changeStatus(status)

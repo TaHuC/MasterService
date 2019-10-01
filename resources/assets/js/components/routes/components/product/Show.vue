@@ -112,7 +112,6 @@ export default {
         },
         setStatus(status) {
             bus.$emit('changeStatus', status)
-            
         },
         addNewChange(key) {
             switch (key) {

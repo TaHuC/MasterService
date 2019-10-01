@@ -57,23 +57,22 @@ export default {
             .then((res) => {
                 if (res.data.id) {
                     this.getRepairs()
-                    bus.$emit('updateOrder', this.orderId)
                 }
             })
             .catch(err => console.log(err))
         },
         addRepair() {
             if (this.repair.length > 2 && this.statusId != 4) {
-                bus.$emit('changeStatus', 2)
                 Axios.post(`/repair`, {
-                    repair: this.repair,
+                        repair: this.repair,
                     orderId: this.orderId
                 }).then((res) => {
                     if (res.data.id) {
                         this.getRepairs()
-                        bus.$emit('updateOrder', this.orderId)
                     }
                 }).catch(err => console.log(err))
+                bus.$emit('changeStatus', 2)
+                
             }
             this.repair = ''
         },
