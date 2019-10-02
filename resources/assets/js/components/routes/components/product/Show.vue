@@ -24,8 +24,7 @@
             v-show="order.statusId != 4 && order.statusId != 3"
             @click="setStatus(3)"
             >
-                <!-- <i class="fa fa-thumbs-up"></i> -->
-                {{ order.id }}
+                <i class="fa fa-thumbs-up"></i>
             </button>
 
             <button class="btn btn-outline-info" 

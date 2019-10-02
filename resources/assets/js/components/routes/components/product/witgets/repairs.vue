@@ -71,8 +71,9 @@ export default {
                         this.getRepairs()
                     }
                 }).catch(err => console.log(err))
-                this.$emit('changeStatus', 2)
-                
+                if (this.statusId != 2) {
+                    this.$emit('changeStatus', 2)
+                }
             }
             this.repair = ''
         },

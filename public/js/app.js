@@ -13289,6 +13289,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
 
             // console.log('change Status '+this.activeOrder.id)
+            console.log(this);
             if (status === 4) {
                 this.$children[0].$children[0].testFunc('Взет');
             }
@@ -13516,7 +13517,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__witgets_notes___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__witgets_notes__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__witgets_tasks__ = __webpack_require__(256);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__witgets_tasks___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__witgets_tasks__);
-//
 //
 //
 //
@@ -13855,7 +13855,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }).catch(function (err) {
                     return console.log(err);
                 });
-                this.$emit('changeStatus', 2);
+                if (this.statusId != 2) {
+                    this.$emit('changeStatus', 2);
+                }
             }
             this.repair = '';
         },
@@ -25827,7 +25829,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(6)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 226 */
@@ -57354,7 +57356,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.setStatus(3)
       }
     }
-  }, [_vm._v("\n            " + _vm._s(_vm.order.id) + "\n        ")]), _vm._v(" "), _c('button', {
+  }, [_c('i', {
+    staticClass: "fa fa-thumbs-up"
+  })]), _vm._v(" "), _c('button', {
     directives: [{
       name: "show",
       rawName: "v-show",
