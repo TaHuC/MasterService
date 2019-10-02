@@ -100,6 +100,7 @@ export default {
             })
         },
         changeActiveOrder(order) {
+            this.activeOrder = ''
             this.activeOrder = order
             this.statusId = order.status.id
         },
@@ -163,6 +164,7 @@ export default {
             this.statusClassOrder(val)
         },
         $route (to, from) {
+            this.activeOrder = ''
             this.getProduct()
         }
     },
