@@ -33,13 +33,12 @@
         <hr class="bg-light">
         
         <add v-if="showAddForm" :productId="product.id" :getProduct="getProduct" />
-        <show v-else :order="activeOrder" @changeStatus="changeStatus" />
+        <show v-else :order="activeOrder" @updateOrder="updateOrder" @changeStatus="changeStatus" />
     </div>
 </template>
 
 <script>
 import Axios from 'axios'
-import { bus } from '../../app'
 
 import Show from './components/product/Show'
 import Add from './components/product/Add'
@@ -56,13 +55,14 @@ export default {
             client: [],
             product: [],
             orders: [],
-            activeOrder: '',
+            activeOrder: {},
             statusId: 1,
             statusClass: 'badge-primary',
         }
     },
     methods: {
         changeStatus(status) {
+            // console.log('change Status '+this.activeOrder.id)
             if (status === 4) {
                 this.$children[0].$children[0].testFunc('Взет')
             }
@@ -170,13 +170,6 @@ export default {
     },
     created() {
         this.getProduct()
-        bus.$on('updateOrder', (id) => {
-            this.updateOrder(id)
-        })
-        bus.$on('changeStatus', (status) => {
-            this.changeStatus(status)
-        })
-        
     }
 }
 </script>

@@ -25,12 +25,12 @@
 
 <script>
 import Axios from 'axios'
-import { bus } from '../../../../../app'
 
 export default {
     props: {
         orderId: Number,
-        statusId: Number
+        statusId: Number,
+        changeStatus: Function
     },
     data() {
         return {
@@ -71,7 +71,7 @@ export default {
                         this.getRepairs()
                     }
                 }).catch(err => console.log(err))
-                bus.$emit('changeStatus', 2)
+                this.$emit('changeStatus', 2)
                 
             }
             this.repair = ''

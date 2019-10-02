@@ -23,7 +23,10 @@
             class="btn btn-outline-success mr-2" 
             v-show="order.statusId != 4 && order.statusId != 3"
             @click="setStatus(3)"
-            ><i class="fa fa-thumbs-up"></i></button>
+            >
+                <!-- <i class="fa fa-thumbs-up"></i> -->
+                {{ order.id }}
+            </button>
 
             <button class="btn btn-outline-info" 
             v-show="order.statusId != 4"
@@ -39,7 +42,7 @@
 
         <div class="row p-2 overflow-auto" style="height: 400px;">
         <!-- remont -->
-            <repairs :orderId="order.id" :statusId="order.statusId" />
+            <repairs :orderId="order.id" @changeStatus="changeStatusProp" :statusId="order.statusId" />
         <!-- belejki -->
             <notes :orderId="order.id" :statusId="order.statusId" />
         <!-- zadachi -->
@@ -72,7 +75,6 @@
 
 <script>
 import Axios from 'axios'
-import { bus } from '../../../../app'
 
 import Repairs from './witgets/repairs'
 import Notes from './witgets/notes'
@@ -81,6 +83,8 @@ import Tasks from './witgets/tasks'
 export default {
     props: {
         order: Object,
+        changeStatus: Function,
+        updateOrder: Function
     },
     data() {
         return {
@@ -108,17 +112,17 @@ export default {
         },
         setStatusInProgres() {
             this.$children[0].testFunc('Приет за ремонт')
-            bus.$emit('changeStatus', 2)
+            this.$emit('changeStatus', 2)
         },
         setStatus(status) {
-            bus.$emit('changeStatus', status)
+            this.$emit('changeStatus', status)
         },
         addNewChange(key) {
             switch (key) {
                 case 'price':
                         Axios.put(`/order/${this.order.id}`, {price: this.newPrice})
                         .then((res) => {
-                            bus.$emit('updateOrder', this.order.id)
+                            this.$emit('updateOrder', this.order.id)
                             this.showPrice = true
                         })
                         .catch(err => console.log(err))
@@ -126,13 +130,16 @@ export default {
                 case 'depozit':
                         Axios.put(`/order/${this.order.id}`, {deposit: this.newDepozit})
                         .then((res) => {
-                            bus.$emit('updateOrder', this.order.id)
+                            this.$emit('updateOrder', this.order.id)
                             this.showDepozit = true
                         })
                         .catch(err => console.log(err))
                     break;
             }
            
+        },
+        changeStatusProp(status) {
+            this.$emit('changeStatus', status)
         }
     }
 };

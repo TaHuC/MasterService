@@ -13217,11 +13217,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app__ = __webpack_require__(80);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_product_Show__ = __webpack_require__(253);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_product_Show___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_product_Show__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_product_Add__ = __webpack_require__(252);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_product_Add___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_product_Add__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_product_Show__ = __webpack_require__(253);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_product_Show___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_product_Show__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_product_Add__ = __webpack_require__(252);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_product_Add___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_product_Add__);
 //
 //
 //
@@ -13261,7 +13260,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-
 
 
 
@@ -13270,8 +13268,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {
-        Show: __WEBPACK_IMPORTED_MODULE_2__components_product_Show___default.a,
-        Add: __WEBPACK_IMPORTED_MODULE_3__components_product_Add___default.a
+        Show: __WEBPACK_IMPORTED_MODULE_1__components_product_Show___default.a,
+        Add: __WEBPACK_IMPORTED_MODULE_2__components_product_Add___default.a
     },
     data: function data() {
         return {
@@ -13280,7 +13278,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             client: [],
             product: [],
             orders: [],
-            activeOrder: '',
+            activeOrder: {},
             statusId: 1,
             statusClass: 'badge-primary'
         };
@@ -13290,6 +13288,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         changeStatus: function changeStatus(status) {
             var _this = this;
 
+            // console.log('change Status '+this.activeOrder.id)
             if (status === 4) {
                 this.$children[0].$children[0].testFunc('Взет');
             }
@@ -13396,15 +13395,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     created: function created() {
-        var _this4 = this;
-
         this.getProduct();
-        __WEBPACK_IMPORTED_MODULE_1__app__["bus"].$on('updateOrder', function (id) {
-            _this4.updateOrder(id);
-        });
-        __WEBPACK_IMPORTED_MODULE_1__app__["bus"].$on('changeStatus', function (status) {
-            _this4.changeStatus(status);
-        });
     }
 });
 
@@ -13519,13 +13510,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app__ = __webpack_require__(80);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__witgets_repairs__ = __webpack_require__(255);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__witgets_repairs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__witgets_repairs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__witgets_notes__ = __webpack_require__(254);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__witgets_notes___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__witgets_notes__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__witgets_tasks__ = __webpack_require__(256);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__witgets_tasks___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__witgets_tasks__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__witgets_repairs__ = __webpack_require__(255);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__witgets_repairs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__witgets_repairs__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__witgets_notes__ = __webpack_require__(254);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__witgets_notes___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__witgets_notes__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__witgets_tasks__ = __webpack_require__(256);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__witgets_tasks___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__witgets_tasks__);
 //
 //
 //
@@ -13598,7 +13588,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-
+//
+//
+//
 
 
 
@@ -13608,7 +13600,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
-        order: Object
+        order: Object,
+        changeStatus: Function,
+        updateOrder: Function
     },
     data: function data() {
         return {
@@ -13620,9 +13614,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     components: {
-        Repairs: __WEBPACK_IMPORTED_MODULE_2__witgets_repairs___default.a,
-        Notes: __WEBPACK_IMPORTED_MODULE_3__witgets_notes___default.a,
-        Tasks: __WEBPACK_IMPORTED_MODULE_4__witgets_tasks___default.a
+        Repairs: __WEBPACK_IMPORTED_MODULE_1__witgets_repairs___default.a,
+        Notes: __WEBPACK_IMPORTED_MODULE_2__witgets_notes___default.a,
+        Tasks: __WEBPACK_IMPORTED_MODULE_3__witgets_tasks___default.a
     },
     methods: {
         editPrice: function editPrice() {
@@ -13637,10 +13631,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         setStatusInProgres: function setStatusInProgres() {
             this.$children[0].testFunc('Приет за ремонт');
-            __WEBPACK_IMPORTED_MODULE_1__app__["bus"].$emit('changeStatus', 2);
+            this.$emit('changeStatus', 2);
         },
         setStatus: function setStatus(status) {
-            __WEBPACK_IMPORTED_MODULE_1__app__["bus"].$emit('changeStatus', status);
+            this.$emit('changeStatus', status);
         },
         addNewChange: function addNewChange(key) {
             var _this = this;
@@ -13648,7 +13642,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             switch (key) {
                 case 'price':
                     __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/order/' + this.order.id, { price: this.newPrice }).then(function (res) {
-                        __WEBPACK_IMPORTED_MODULE_1__app__["bus"].$emit('updateOrder', _this.order.id);
+                        _this.$emit('updateOrder', _this.order.id);
                         _this.showPrice = true;
                     }).catch(function (err) {
                         return console.log(err);
@@ -13656,13 +13650,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     break;
                 case 'depozit':
                     __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/order/' + this.order.id, { deposit: this.newDepozit }).then(function (res) {
-                        __WEBPACK_IMPORTED_MODULE_1__app__["bus"].$emit('updateOrder', _this.order.id);
+                        _this.$emit('updateOrder', _this.order.id);
                         _this.showDepozit = true;
                     }).catch(function (err) {
                         return console.log(err);
                     });
                     break;
             }
+        },
+        changeStatusProp: function changeStatusProp(status) {
+            this.$emit('changeStatus', status);
         }
     }
 });
@@ -13778,7 +13775,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app__ = __webpack_require__(80);
 //
 //
 //
@@ -13804,14 +13800,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
         orderId: Number,
-        statusId: Number
+        statusId: Number,
+        changeStatus: Function
     },
     data: function data() {
         return {
@@ -13859,7 +13855,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }).catch(function (err) {
                     return console.log(err);
                 });
-                __WEBPACK_IMPORTED_MODULE_1__app__["bus"].$emit('changeStatus', 2);
+                this.$emit('changeStatus', 2);
             }
             this.repair = '';
         },
@@ -25831,7 +25827,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(6)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 226 */
@@ -55968,6 +55964,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "order": _vm.activeOrder
     },
     on: {
+      "updateOrder": _vm.updateOrder,
       "changeStatus": _vm.changeStatus
     }
   })], 1) : _vm._e()
@@ -57357,9 +57354,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.setStatus(3)
       }
     }
-  }, [_c('i', {
-    staticClass: "fa fa-thumbs-up"
-  })]), _vm._v(" "), _c('button', {
+  }, [_vm._v("\n            " + _vm._s(_vm.order.id) + "\n        ")]), _vm._v(" "), _c('button', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -57383,6 +57378,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "orderId": _vm.order.id,
       "statusId": _vm.order.statusId
+    },
+    on: {
+      "changeStatus": _vm.changeStatusProp
     }
   }), _vm._v(" "), _c('notes', {
     attrs: {
