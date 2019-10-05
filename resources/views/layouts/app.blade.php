@@ -33,8 +33,12 @@
   <div id="app" >
     @if (!Auth::guest())
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Company name</a>
-      
+      <div class="col-sm-3 col-md-2 d-flex justify-content-between mr-0">
+        <span class="navbar-brand pr-2 bg-dark"> {{ $companyName[0]->company_name }} </span>
+        @if (Auth::user()->id == 1)
+        <a href="/app-settings" class="btn btn-sm btn-link text-white-50 pull-right"><i class="fa fa-sliders-h"></i></a>
+        @endif
+      </div>
         <div class="input-group">
             <input class="form-control form-control-dark" type="text" @keyup.enter="searchit" v-model="search" @click="search = null" placeholder="Search" aria-label="Search">
           <div class="input-group-append" id="button-addon4">

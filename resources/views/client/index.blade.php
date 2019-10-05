@@ -10,7 +10,7 @@
                     <label for="filter" class="col-1 text-white">Filter:</label>
                     <input class="form-control col-2 float-right" id="filter" name="filter">
                 </div>
-                <table class="table table-inverse" id="clientsTable">
+                <table class="table table-inverse text-light" id="clientsTable">
                     <thead>
                     <tr>
                         <th>Name</th>

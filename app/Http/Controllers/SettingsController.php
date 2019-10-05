@@ -16,7 +16,8 @@ class SettingsController extends Controller
     {
         //
         $settings = Settings::all();
-        return view('settings.index', compact('settings'));
+        // return view('settings.index', compact('settings'));
+        return $settings;
     }
 
     /**
@@ -71,17 +72,12 @@ class SettingsController extends Controller
     public function update(Request $request)
     {
         //
-        if($request->no_reg) {
-            $settings = Settings::find(1);
-            $settings->no_reg = true;
-            $settings->save();
-        } else {
-            $settings = Settings::find(1);
-            $settings->no_reg = false;
-            $settings->save();
-        }
+        $settings = Settings::find(1);
+        $settings->company_name = $request->company_name;
+        $settings->no_reg = $request->no_reg;
+        $settings->save();
 
-        return redirect()->route('settings');
+        return $settings;
     }
 
     /**

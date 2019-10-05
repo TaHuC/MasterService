@@ -15,6 +15,7 @@ class CreateSettingsTable extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('company_name')->default('No Name');
             $table->boolean('no_reg')->default(false);
             $table->timestamps();
         });

@@ -64,7 +64,8 @@ let routes = [
     { path: '/search/:search', name: 'search', component: require('./components/Results')},
     { path: '/clients/:client', name: 'client', component: require('./components/routes/Clients')},
     { path: '/products/:product', name: 'viewProduct', component: require('./components/routes/Product')},
-    { path: '/usersettings', name:'userSettings', component: require('./components/UserSettings')}
+    { path: '/usersettings', name:'userSettings', component: require('./components/UserSettings')},
+    { path: '/app-settings', name:'settings', component: require('./components/Settings')},
 ]
 
 const router = new VueRouter({

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Order;
+use App\Settings;
 
 class HomeController extends Controller
 {
@@ -25,6 +26,7 @@ class HomeController extends Controller
     public function index()
     {
         $lastOrder = Order::orderBy('id', 'desc')->first();
-        return view('home', compact('lastOrder'));
+        $companyName = Settings::all();
+        return view('home', compact(['lastOrder', 'companyName']));
     }
 }

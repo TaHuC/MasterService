@@ -8,7 +8,7 @@ class Settings extends Model
 {
     //
     protected $table = 'settings';
-    protected $fillable = ['no_reg'];
+    protected $fillable = ['no_reg', 'company_name'];
 
     public static function no_reg()
     {
